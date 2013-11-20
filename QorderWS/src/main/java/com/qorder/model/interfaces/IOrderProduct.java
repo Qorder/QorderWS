@@ -1,4 +1,4 @@
-package com.qorder.model;
+package com.qorder.model.interfaces;
 
 public interface IOrderProduct {
 
@@ -8,5 +8,4 @@ public interface IOrderProduct {
 	public void setProduct(IProduct product);
 	public String getComments();
 	public void setComments(String comments);
-	//change 
 }

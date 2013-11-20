@@ -1,13 +1,16 @@
-package com.qorder.model;
+package com.qorder.model.interfaces;
 
 
 public interface IStore {
 	
-	public int getId();
+	public long getId();
+	public void setId(long id);
 	public String getName();
 	public void setName(String name);
 	public String getAddress();
 	public void setAddress(String address);
+	public IProductMenu getMenu();
+	public void setMenu(IProductMenu menu);
 	
 	//TODO: na mpei owner
 

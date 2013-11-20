@@ -1,11 +1,12 @@
-package com.qorder.model;
+package com.qorder.model.interfaces;
 
 import java.math.BigDecimal;
 import java.util.List;
 
 public interface IProduct {
 	
-	public int getId();
+	public long getId();
+	public void setId(long id);
 	public String getName();
 	public void setName(String name);
 	public BigDecimal getPrice();
