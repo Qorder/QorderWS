@@ -42,7 +42,7 @@
 	</servlet-mapping>
 	<servlet-mapping>
 	    <servlet-name>menuServlet</servlet-name>
-	    <url-pattern>/menus/*</url-pattern>
+	    <url-pattern>/menus/</url-pattern>
 	</servlet-mapping>
 
 </web-app>
