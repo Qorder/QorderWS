@@ -1,6 +1,6 @@
 package com.qorder.qorderws.model.business;
 
-import com.qorder.qorderws.model.menu.IProductMenu;
+import com.qorder.qorderws.model.menu.ProductMenu;
 
 
 public interface IBusiness {
@@ -9,10 +9,8 @@ public interface IBusiness {
 	public void setId(long id);
 	public String getName();
 	public void setName(String name);
-	public String getAddress();
-	public void setAddress(String address);
-	public IProductMenu getMenu();
-	public void setMenu(IProductMenu menu);
+	public ProductMenu getMenu();
+	public void setMenu(ProductMenu menu);
 	
 	//TODO: na mpei owner
 

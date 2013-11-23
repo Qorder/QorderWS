@@ -1,18 +1,17 @@
 package com.qorder.qorderws.model.business;
 
-import com.qorder.qorderws.model.menu.IProductMenu;
+import com.qorder.qorderws.model.menu.ProductMenu;
 
 public class Business implements IBusiness {
 	
 	private long id;
 	private String name;
-	private String address;
-	private IProductMenu menu;
+	private ProductMenu menu;
 
-	public Business(long id) {
-		this.id = id;
+	public Business(String name) {
+		this.name = name;
 	}
-
+	
 	@Override
 	public long getId() {
 		return this.id;
@@ -34,23 +33,14 @@ public class Business implements IBusiness {
 		this.name=name;
 	}
 
-	@Override
-	public String getAddress() {
-		return this.address;
-	}
-
-	@Override
-	public void setAddress(String address) {
-		this.address=address;
-	}
 	
 	@Override
-	public void setMenu(IProductMenu menu) {
+	public void setMenu(ProductMenu menu) {
 		this.menu = menu;
 	}
 	
 	@Override
-	public IProductMenu getMenu() {
+	public ProductMenu getMenu() {
 		return menu;
 	}
 

@@ -1,9 +1,9 @@
 package com.qorder.qorderws.service;
 
-import com.qorder.qorderws.model.menu.IProductMenu;
+import com.qorder.qorderws.model.menu.ProductMenu;
 
 public interface IMenuService {
 	
-	IProductMenu fetchMenuById(Long businessID);
+	ProductMenu fetchMenuById(Long businessID);
 
 }

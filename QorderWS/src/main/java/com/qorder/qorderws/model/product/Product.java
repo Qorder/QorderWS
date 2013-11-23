@@ -10,6 +10,12 @@ public class Product implements IProduct{
 	private BigDecimal price;
 	private List<String> attributes;
 	
+	
+	public Product(String name, BigDecimal price) {
+		this.name = name;
+		this.price = price;
+	}
+	
 	@Override
 	public long getId() {
 		return id;
