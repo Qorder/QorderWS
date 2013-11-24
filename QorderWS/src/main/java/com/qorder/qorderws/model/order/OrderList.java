@@ -47,6 +47,4 @@ public class OrderList {
 		this.productOrderList.add(orderProd);
 	}
 	
-	
-
 }

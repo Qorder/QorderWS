@@ -26,8 +26,13 @@ public class ProductMenu {
 		this.prodTypeList.add(prodType);
 	}
 
-	public List<ProductType> getProductTypes() {
-		return this.prodTypeList;
+	public List<ProductType> getProdTypeList() {
+		return prodTypeList;
 	}
 
+
+	public void setProdTypeList(List<ProductType> prodTypeList) {
+		this.prodTypeList = prodTypeList;
+	}
+	
 }

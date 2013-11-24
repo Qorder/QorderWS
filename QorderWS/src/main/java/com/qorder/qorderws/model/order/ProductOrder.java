@@ -31,8 +31,5 @@ public class ProductOrder implements IProductOrder {
 	public void setProduct(IProduct product) {
 		this.product = product;
 	}
-	
-	
-	
 
 }

@@ -9,7 +9,7 @@ public class ProductType {
 
 	private long id;
 	private String name;
-	private List<IProduct> ProdList = new ArrayList<IProduct>();	
+	private List<IProduct> productList = new ArrayList<IProduct>();	
 	
 		
 	public long getId() {
@@ -33,12 +33,18 @@ public class ProductType {
 
 
 	public void addProduct(IProduct product) {
-		this.ProdList.add(product);
+		this.productList.add(product);
 	}
 
 
 	public List<IProduct> getProductList() {
-		return this.ProdList;
+		return productList;
 	}
+
+
+	public void setProductList(List<IProduct> productList) {
+		this.productList = productList;
+	}
+
 
 }
