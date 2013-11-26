@@ -4,12 +4,27 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="ORDER_LIST")
 public class OrderList {
 	
+	@Id
+	@GeneratedValue
+	@Column(name="ORDER_LIST_ID")
 	private long id;
+	@Column(name="TABLE_NUMBER")
 	private String tableNumber;
+	@Column(name="DATE_TIME")
 	private Date dateTime;
-	private List<IProductOrder> productOrderList = new ArrayList<IProductOrder>();
+	@OneToMany(mappedBy="orderList")
+	private List<ProductOrder> productOrderList = new ArrayList<ProductOrder>();
 	
 	
 	public long getId() {
@@ -39,11 +54,11 @@ public class OrderList {
 	}
 
 
-	public List<IProductOrder> getOrderProductList() {
+	public List<ProductOrder> getOrderProductList() {
 		return this.productOrderList;
 	}
 
-	public void addProductOrder(IProductOrder orderProd) {
+	public void addProductOrder(ProductOrder orderProd) {
 		this.productOrderList.add(orderProd);
 	}
 	

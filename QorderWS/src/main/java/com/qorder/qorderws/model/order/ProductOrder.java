@@ -1,35 +1,63 @@
 package com.qorder.qorderws.model.order;
 
-import com.qorder.qorderws.model.product.IProduct;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
-public class ProductOrder implements IProductOrder {
+import com.qorder.qorderws.model.product.Product;
+
+@Entity
+@Table(name="PRODUCT_ORDER")
+public class ProductOrder {
 	
+	@Id
+	@GeneratedValue
+	@Column(name="PRODUCT_ORDER_ID")
+	private long id;
+	@Column(name="COMMENTS")
 	private String comments;
-	private IProduct product;
+	@ManyToOne
+	@JoinColumn(name="PRODUCT_ID")
+	private Product product;
+	@ManyToOne
+	@JoinColumn(name="ORDER_LIST_ID")
+	private OrderList orderList;
 	
 	
-	public ProductOrder(IProduct product) {
+	public ProductOrder(Product product) {
 		this.product = product;
 	}
 
-	@Override
+
 	public String getComments() {
 		return comments;
 	}
 
-	@Override
+
 	public void setComments(String comments) {
 		this.comments = comments;
 	}
 
-	@Override
-	public IProduct getProduct() {
+
+	public Product getProduct() {
 		return product;
 	}
 
-	@Override
-	public void setProduct(IProduct product) {
+
+	public void setProduct(Product product) {
 		this.product = product;
 	}
+
+
+	public ProductOrder(long id) {
+		super();
+		this.id = id;
+	}
+	
+	
 
 }
