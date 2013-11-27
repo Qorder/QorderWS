@@ -12,6 +12,7 @@ public interface IProductType {
 	public void setName(String name);
 	public void addProduct(IProduct product);
 	public List<IProduct> getProductList();
+	void setProductList(List<IProduct> productList);
 	
 	
 

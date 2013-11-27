@@ -3,13 +3,11 @@ package com.qorder.qorderws.model.business;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -27,30 +25,32 @@ public class Business implements IBusiness {
 	private long id;
 	@Column(name="NAME")
 	private String name;
+	@OneToMany(targetEntity=ProductType.class)
+	@JoinColumn(name="BUSINESS_ID")
+	private List<IProductType> productTypeList= new ArrayList<IProductType>();	
 	
-	@OneToMany(targetEntity=ProductType.class, cascade = CascadeType.ALL)
-	@JoinTable(name = "BUSSINES_PRODUCT_TYPE", joinColumns = { @JoinColumn(name = "BUSINESS_ID") }, inverseJoinColumns = { @JoinColumn(name = "PRODUCT_TYPE_ID") })
-	private List<IProductType> productTypes = new ArrayList<IProductType>();
-
+	
 	public Business(String name) {
 		this.name = name;
 	}
-
+	
+	@Override
 	public long getId() {
 		return this.id;
 	}
 	
-
+	@Override
 	public void setId(long id) {
 		this.id = id;
 	}
 
 
-
+	@Override
 	public String getName() {
 		return this.name;
 	}
-
+	
+	@Override
 	public void setName(String name) {
 		this.name=name;
 	}
@@ -64,6 +64,22 @@ public class Business implements IBusiness {
 	@Override
 	public void setMenu(ProductMenu menu) {
 		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public java.util.List<IProductType> getProductTypeList() {
+		return this.productTypeList;
+	}
+
+	@Override
+	public void setProductTypeList(java.util.List<IProductType> productTypeList) {
+		this.productTypeList=productTypeList;
+	}
+
+	@Override
+	public void addProductType(IProductType productType) {
+		this.productTypeList.add(productType);
 		
 	}
 

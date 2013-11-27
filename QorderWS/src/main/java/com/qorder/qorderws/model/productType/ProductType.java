@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -23,37 +24,37 @@ public class ProductType  implements IProductType{
 	private long id;
 	@Column(name="NAME")
 	private String name;
-	@OneToMany(targetEntity=Product.class, mappedBy="ProductType")
+	@OneToMany(targetEntity=Product.class)
+	@JoinColumn(name="PRODUCT_TYPE_ID")
 	private List<IProduct> productList = new ArrayList<IProduct>();	
 	
-		
+	
+	@Override	
 	public long getId() {
 		return this.id;
 	}
 
-
+	@Override
 	public void setId(long id) {
 		this.id = id;
 	}
 
-
+	@Override
 	public String getName() {
 		return this.name;
 	}
 
-
+	@Override
 	public void setName(String name) {
 		this.name = name;
 	}
 
-
+	@Override
 	public void addProduct(IProduct product) {
 		this.productList.add(product);
 	}
 
-
-
-
+	@Override
 	public void setProductList(List<IProduct> productList) {
 		this.productList = productList;
 	}
@@ -62,8 +63,8 @@ public class ProductType  implements IProductType{
 
 	@Override
 	public List<IProduct> getProductList() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return this.productList;
 	}
 
 

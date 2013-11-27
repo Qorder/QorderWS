@@ -1,22 +1,13 @@
 package com.qorder.qorderws.model.product;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import com.qorder.qorderws.model.order.IProductOrder;
-import com.qorder.qorderws.model.order.ProductOrder;
-import com.qorder.qorderws.model.productType.IProductType;
-import com.qorder.qorderws.model.productType.ProductType;
 
 @Entity
 @Table(name="PRODUCT")
@@ -30,13 +21,6 @@ public class Product implements IProduct{
 	private String name;
 	@Column(name="PRICE")
 	private BigDecimal price;
-	@ManyToOne(targetEntity=ProductType.class)
-	@JoinColumn(name="PRODUCT_TYPE_ID")
-	private IProductType ProductType;
-	@OneToMany(targetEntity=ProductOrder.class, mappedBy="product")
-    private List<IProductOrder> productOrders = new ArrayList<IProductOrder>();
-	
-	//private List<String> attributes;
 	
 	public Product(String name, BigDecimal price) {
 		this.name = name;

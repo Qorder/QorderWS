@@ -24,10 +24,6 @@ public class ProductOrder implements IProductOrder{
 	@ManyToOne(targetEntity=Product.class)
 	@JoinColumn(name="PRODUCT_ID")
 	private IProduct product;
-	@ManyToOne
-	@JoinColumn(name="ORDER_LIST_ID")
-	private OrderList orderList;
-	
 	
 	public ProductOrder(IProduct product) {
 		this.product = product;
