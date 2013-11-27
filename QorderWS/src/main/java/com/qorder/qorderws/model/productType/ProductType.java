@@ -7,15 +7,15 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.qorder.qorderws.model.product.IProduct;
 import com.qorder.qorderws.model.product.Product;
 
 @Entity
 @Table(name="PRODUCT_TYPE")
-public class ProductType {
+public class ProductType  implements IProductType{
 	
 	@Id
     @GeneratedValue
@@ -23,8 +23,8 @@ public class ProductType {
 	private long id;
 	@Column(name="NAME")
 	private String name;
-	@OneToMany(mappedBy="ProductType")
-	private List<Product> productList = new ArrayList<Product>();	
+	@OneToMany(targetEntity=Product.class, mappedBy="ProductType")
+	private List<IProduct> productList = new ArrayList<IProduct>();	
 	
 		
 	public long getId() {
@@ -47,18 +47,23 @@ public class ProductType {
 	}
 
 
-	public void addProduct(Product product) {
+	public void addProduct(IProduct product) {
 		this.productList.add(product);
 	}
 
 
-	public List<Product> getProductList() {
-		return productList;
+
+
+	public void setProductList(List<IProduct> productList) {
+		this.productList = productList;
 	}
 
 
-	public void setProductList(List<Product> productList) {
-		this.productList = productList;
+
+	@Override
+	public List<IProduct> getProductList() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 

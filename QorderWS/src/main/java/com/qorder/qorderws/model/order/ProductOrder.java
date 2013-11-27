@@ -8,11 +8,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.qorder.qorderws.model.product.IProduct;
 import com.qorder.qorderws.model.product.Product;
 
 @Entity
 @Table(name="PRODUCT_ORDER")
-public class ProductOrder {
+public class ProductOrder implements IProductOrder{
 	
 	@Id
 	@GeneratedValue
@@ -20,15 +21,15 @@ public class ProductOrder {
 	private long id;
 	@Column(name="COMMENTS")
 	private String comments;
-	@ManyToOne
+	@ManyToOne(targetEntity=Product.class)
 	@JoinColumn(name="PRODUCT_ID")
-	private Product product;
+	private IProduct product;
 	@ManyToOne
 	@JoinColumn(name="ORDER_LIST_ID")
 	private OrderList orderList;
 	
 	
-	public ProductOrder(Product product) {
+	public ProductOrder(IProduct product) {
 		this.product = product;
 	}
 
@@ -43,12 +44,12 @@ public class ProductOrder {
 	}
 
 
-	public Product getProduct() {
+	public IProduct getProduct() {
 		return product;
 	}
 
 
-	public void setProduct(Product product) {
+	public void setProduct(IProduct product) {
 		this.product = product;
 	}
 
@@ -57,6 +58,8 @@ public class ProductOrder {
 		super();
 		this.id = id;
 	}
+
+
 	
 	
 

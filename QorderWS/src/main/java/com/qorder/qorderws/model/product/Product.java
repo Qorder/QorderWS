@@ -13,12 +13,14 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.qorder.qorderws.model.order.IProductOrder;
 import com.qorder.qorderws.model.order.ProductOrder;
+import com.qorder.qorderws.model.productType.IProductType;
 import com.qorder.qorderws.model.productType.ProductType;
 
 @Entity
 @Table(name="PRODUCT")
-public class Product {
+public class Product implements IProduct{
 	
 	@Id
     @GeneratedValue
@@ -28,11 +30,11 @@ public class Product {
 	private String name;
 	@Column(name="PRICE")
 	private BigDecimal price;
-	@ManyToOne
+	@ManyToOne(targetEntity=ProductType.class)
 	@JoinColumn(name="PRODUCT_TYPE_ID")
-	private ProductType ProductType;
+	private IProductType ProductType;
 	@OneToMany(targetEntity=ProductOrder.class, mappedBy="product")
-    private List<ProductOrder> productOrders = new ArrayList<ProductOrder>();
+    private List<IProductOrder> productOrders = new ArrayList<IProductOrder>();
 	
 	//private List<String> attributes;
 	
@@ -68,6 +70,20 @@ public class Product {
 
 	public void setPrice(BigDecimal price) {
 		this.price = price;
+	}
+
+
+	@Override
+	public List<String> getAttributes() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public void addAttribute(String attribute) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 /*

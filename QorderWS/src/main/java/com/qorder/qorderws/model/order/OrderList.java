@@ -23,8 +23,8 @@ public class OrderList {
 	private String tableNumber;
 	@Column(name="DATE_TIME")
 	private Date dateTime;
-	@OneToMany(mappedBy="orderList")
-	private List<ProductOrder> productOrderList = new ArrayList<ProductOrder>();
+	@OneToMany(targetEntity=ProductOrder.class, mappedBy="orderList")
+	private List<IProductOrder> productOrderList = new ArrayList<IProductOrder>();
 	
 	
 	public long getId() {
@@ -54,11 +54,11 @@ public class OrderList {
 	}
 
 
-	public List<ProductOrder> getOrderProductList() {
+	public List<IProductOrder> getOrderProductList() {
 		return this.productOrderList;
 	}
 
-	public void addProductOrder(ProductOrder orderProd) {
+	public void addProductOrder(IProductOrder orderProd) {
 		this.productOrderList.add(orderProd);
 	}
 	

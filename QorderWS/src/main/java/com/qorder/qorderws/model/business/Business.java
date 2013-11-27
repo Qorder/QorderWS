@@ -14,11 +14,12 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.qorder.qorderws.model.menu.ProductMenu;
+import com.qorder.qorderws.model.productType.IProductType;
 import com.qorder.qorderws.model.productType.ProductType;
 
 @Entity
 @Table(name="BUSINESS")
-public class Business {
+public class Business implements IBusiness {
 	
 	@Id
 	@GeneratedValue
@@ -27,9 +28,9 @@ public class Business {
 	@Column(name="NAME")
 	private String name;
 	
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(targetEntity=ProductType.class, cascade = CascadeType.ALL)
 	@JoinTable(name = "BUSSINES_PRODUCT_TYPE", joinColumns = { @JoinColumn(name = "BUSINESS_ID") }, inverseJoinColumns = { @JoinColumn(name = "PRODUCT_TYPE_ID") })
-	private List<ProductType> productTypes = new ArrayList<ProductType>();
+	private List<IProductType> productTypes = new ArrayList<IProductType>();
 
 	public Business(String name) {
 		this.name = name;
@@ -52,6 +53,18 @@ public class Business {
 
 	public void setName(String name) {
 		this.name=name;
+	}
+
+	@Override
+	public ProductMenu getMenu() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setMenu(ProductMenu menu) {
+		// TODO Auto-generated method stub
+		
 	}
 
 
