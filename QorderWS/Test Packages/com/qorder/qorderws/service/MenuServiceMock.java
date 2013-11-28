@@ -1,13 +1,13 @@
 package com.qorder.qorderws.service;
 
-import com.qorder.qorderws.model.menu.ProductMenu;
+import com.qorder.qorderws.model.menu.Menu;
 
 public class MenuServiceMock implements IMenuService {
 
 	
 	@Override
-	public ProductMenu fetchMenuById(Long businessId) {
+	public Menu fetchMenuById(Long businessId) {
 		
-		return new ProductMenu();
+		return new Menu();
 	}
 }

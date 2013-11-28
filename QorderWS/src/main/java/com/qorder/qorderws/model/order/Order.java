@@ -13,22 +13,24 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="ORDER_LIST")
-public class OrderList {
-	
+@Table(name = "ORDER_LIST")
+public class Order {
+
 	@Id
 	@GeneratedValue
-	@Column(name="ORDER_LIST_ID")
+	@Column(name = "ORDER_LIST_ID")
 	private long id;
-	@Column(name="TABLE_NUMBER")
+
+	@Column(name = "TABLE_NUMBER")
 	private String tableNumber;
-	@Column(name="DATE_TIME")
+
+	@Column(name = "DATE_TIME")
 	private Date dateTime;
-	@OneToMany(targetEntity=ProductOrder.class)
-	@JoinColumn(name="ORDER_LIST_ID")
-	private List<IProductOrder> productOrderList = new ArrayList<IProductOrder>();
-	
-	
+
+	@OneToMany(targetEntity = ProductHolder.class)
+	@JoinColumn(name = "ORDER_LIST_ID")
+	private List<IProductHolder> orderList = new ArrayList<IProductHolder>();
+
 	public long getId() {
 		return id;
 	}
@@ -37,11 +39,9 @@ public class OrderList {
 		this.id = id;
 	}
 
-
 	public String getTableNumber() {
 		return tableNumber;
 	}
-
 
 	public void setTableNumber(String tableNumber) {
 		this.tableNumber = tableNumber;
@@ -50,18 +50,17 @@ public class OrderList {
 	public Date getDateTime() {
 		return dateTime;
 	}
-	
+
 	public void setDateTime() {
 		this.dateTime = new Date();
 	}
 
-
-	public List<IProductOrder> getOrderProductList() {
-		return this.productOrderList;
+	public List<IProductHolder> getOrderList() {
+		return this.orderList;
 	}
 
-	public void addProductOrder(IProductOrder orderProd) {
-		this.productOrderList.add(orderProd);
+	public void addProductOrder(IProductHolder orderProd) {
+		this.orderList.add(orderProd);
 	}
-	
+
 }

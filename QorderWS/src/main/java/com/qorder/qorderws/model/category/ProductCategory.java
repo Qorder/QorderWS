@@ -1,4 +1,4 @@
-package com.qorder.qorderws.model.productType;
+package com.qorder.qorderws.model.category;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,21 +15,22 @@ import com.qorder.qorderws.model.product.IProduct;
 import com.qorder.qorderws.model.product.Product;
 
 @Entity
-@Table(name="PRODUCT_TYPE")
-public class ProductType  implements IProductType{
-	
+@Table(name = "PRODUCT_TYPE")
+public class ProductCategory implements ICategory {
+
 	@Id
-    @GeneratedValue
-    @Column(name="PRODUCT_TYPE_ID")
+	@GeneratedValue
+	@Column(name = "PRODUCT_TYPE_ID")
 	private long id;
-	@Column(name="NAME")
+
+	@Column(name = "NAME")
 	private String name;
-	@OneToMany(targetEntity=Product.class)
-	@JoinColumn(name="PRODUCT_TYPE_ID")
-	private List<IProduct> productList = new ArrayList<IProduct>();	
-	
-	
-	@Override	
+
+	@OneToMany(targetEntity = Product.class)
+	@JoinColumn(name = "PRODUCT_TYPE_ID")
+	private List<IProduct> productList = new ArrayList<IProduct>();
+
+	@Override
 	public long getId() {
 		return this.id;
 	}
@@ -59,13 +60,9 @@ public class ProductType  implements IProductType{
 		this.productList = productList;
 	}
 
-
-
 	@Override
 	public List<IProduct> getProductList() {
-		
 		return this.productList;
 	}
-
 
 }

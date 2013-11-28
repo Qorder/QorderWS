@@ -13,50 +13,44 @@ import com.qorder.qorderws.model.product.Product;
 
 @Entity
 @Table(name="PRODUCT_ORDER")
-public class ProductOrder implements IProductOrder{
+public class ProductHolder implements IProductHolder{
 	
 	@Id
 	@GeneratedValue
 	@Column(name="PRODUCT_ORDER_ID")
 	private long id;
+	
 	@Column(name="COMMENTS")
 	private String comments;
+	
 	@ManyToOne(targetEntity=Product.class)
 	@JoinColumn(name="PRODUCT_ID")
 	private IProduct product;
 	
-	public ProductOrder(IProduct product) {
+	public ProductHolder(IProduct product) {
 		this.product = product;
 	}
 
-
-	public String getComments() {
-		return comments;
-	}
-
-
-	public void setComments(String comments) {
-		this.comments = comments;
-	}
-
-
+	@Override
 	public IProduct getProduct() {
 		return product;
 	}
 
-
+	@Override
 	public void setProduct(IProduct product) {
 		this.product = product;
+		
 	}
 
-
-	public ProductOrder(long id) {
-		super();
-		this.id = id;
+	@Override
+	public String getComments() {
+		return comments;
 	}
 
-
+	@Override
+	public void setComments(String comments) {
+		this.comments = comments;
+		
+	}
 	
-	
-
 }

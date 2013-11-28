@@ -4,15 +4,21 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public interface IProduct {
-	
-	public long getId();
-	public void setId(long id);
-	public String getName();
-	public void setName(String name);
-	public BigDecimal getPrice();
-	public void setPrice(BigDecimal price);
-	public List<String> getAttributes();
-	public void addAttribute(String attribute);
-	
-	
+
+	long getId();
+
+	void setId(long id);
+
+	String getName();
+
+	void setName(String name);
+
+	BigDecimal getPrice();
+
+	void setPrice(BigDecimal price);
+
+	List<String> getAttributes();
+
+	void addAttribute(String attribute);
+
 }
