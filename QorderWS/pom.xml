@@ -14,9 +14,10 @@
 		<org.slf4j-version>1.6.6</org.slf4j-version>
 		<org.hibernate-version>4.2.7.SP1</org.hibernate-version>
 		<mysql-version>5.1.27</mysql-version>
-		
+
 	</properties>
 	<dependencies>
+
 		<!-- Spring -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -35,20 +36,32 @@
 			<artifactId>spring-webmvc</artifactId>
 			<version>${org.springframework-version}</version>
 		</dependency>
-		<!--  Hibernate  -->
-			<dependency>
-		<groupId>org.hibernate</groupId>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-orm</artifactId>
+			<version>3.2.0.RELEASE</version>
+		</dependency>
+
+		<!-- Hibernate -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
 			<version>${org.hibernate-version}</version>
 		</dependency>
-            
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+			<version>4.1.9.Final</version>
+			<!-- will come with Hibernate core -->
+		</dependency>
+
 		<!-- Mysql -->
-		    <dependency>
-		      <groupId>mysql</groupId>
-		      <artifactId>mysql-connector-java</artifactId>
-		      <version>${mysql-version}</version>
-		    </dependency>
-		
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>${mysql-version}</version>
+		</dependency>
+
 
 		<!-- AspectJ -->
 		<dependency>

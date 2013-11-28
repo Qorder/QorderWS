@@ -6,12 +6,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.qorder.qorderws.model.menu.ProductMenu;
 import com.qorder.qorderws.service.IMenuService;
+import com.qorder.qorderws.service.MenuServiceMock;
 
 @Controller
 @RequestMapping(value = "/menus")
@@ -26,10 +27,11 @@ public class MenuController {
 	 * @param businessId
 	 * @return
 	 */
-	@RequestMapping(value = "/{businessId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	ResponseEntity<ProductMenu> getMenuById(@PathVariable Long businessId) {
-		LOGGER.info("Request for user with id parameter equal "+ businessId.toString(), businessId);
-		ProductMenu menu = menuService.fetchMenuById(businessId);
+	@RequestMapping(value = "/business", params="id", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	ResponseEntity<ProductMenu> getMenuById(@RequestParam Long id) {
+		LOGGER.info("Request for user with id parameter equal "+ id.toString(), id);
+		menuService = new MenuServiceMock();
+		ProductMenu menu = menuService.fetchMenuById(id);
 		return new ResponseEntity<ProductMenu>( menu, HttpStatus.OK);
 	}
 
@@ -44,13 +46,4 @@ public class MenuController {
 	public void setMenuService(IMenuService menuService) {
 		this.menuService = menuService;
 	}
-	
-	//second way
-	/*@RequestMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseBody
-	public IProductMenu getMenubyID(@PathVariable Long id) {
-		LOGGER.info("Request for user with json value id parameter equal "+ id.toString(), id);
-		return new ProductMenu((long) 5);
-	}
-	*/
 }

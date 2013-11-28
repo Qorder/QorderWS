@@ -1,9 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
-	
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans.xsd 
+	http://www.springframework.org/schema/tx
+    http://www.springframework.org/schema/tx/spring-tx-3.1.xsd">
+
 	<!-- Root Context: defines shared resources visible to all other web components -->
+
+	<tx:annotation-driven transaction-manager="transactionManager"/>
 	
-		
+	<bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager" autowire="byName"/>
+
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean" autowire="byName">
+		<property name="packagesToScan" value="com.qorder.qorderws.model" />
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+				<prop key="hubernate.show_sql">true</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+	    <property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="$(jdbc.url)" />
+		<property name="username" value="$(jdbc.user)" />
+		<property name="password" value="$(jdbc.password)" />
+	</bean>
+	
 </beans>
