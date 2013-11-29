@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans 
 	http://www.springframework.org/schema/beans/spring-beans.xsd 
+	http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-3.1.xsd
 	http://www.springframework.org/schema/tx
     http://www.springframework.org/schema/tx/spring-tx-3.1.xsd">
 
 	<!-- Root Context: defines shared resources visible to all other web components -->
 
+	<context:property-placeholder location="/WEB-INF/hibernate/dataSource.properties"/>
+	
 	<tx:annotation-driven transaction-manager="transactionManager" />
 
 	<bean id="transactionManager"
@@ -23,14 +28,10 @@
 
 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-		<property name="url" value="$(jdbc.url)" />
-		<property name="username" value="$(jdbc.user)" />
-		<property name="password" value="$(jdbc.password)" />
+		<property name="driverClassName" value="${dataSource.driver}" />
+		<property name="url" value="${dataSource.url}" />
+		<property name="username" value="${dataSource.username}" />
+		<property name="password" value="${dataSource.password}" />
 	</bean>
 
 </beans>
-
-<!-- <property name="mappingResources"> <list> <value>/WEB-INF/hibernate/hibernate.cfg.xml</value> 
-	</list> </property> <property name="hibernateProperties"> <props> <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop> 
-	<prop key="hubernate.show_sql">true</prop> </props> </property> -->
