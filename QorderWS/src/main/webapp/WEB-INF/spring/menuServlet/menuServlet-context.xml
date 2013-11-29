@@ -14,7 +14,7 @@
 
 	<!-- Spring bean definitions here -->
 	
-	<beans:bean name="menuServiceMock" class="com.qorder.qorderws.service.MenuServiceMock" />
+	<beans:bean name="menuServiceMock" class="com.qorder.qorderws.service.MenuService" />
 	
 	
 	<context:component-scan base-package="com.qorder.qorderws" />

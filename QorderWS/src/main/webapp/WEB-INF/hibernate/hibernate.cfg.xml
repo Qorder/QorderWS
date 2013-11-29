@@ -26,7 +26,7 @@
 		<mapping class="com.qorder.qorderws.model.order.Order" />
 		<mapping class="com.qorder.qorderws.model.order.ProductHolder" />
 		<mapping class="com.qorder.qorderws.model.product.Product" />
-		<mapping class="com.qorder.qorderws.model.category.ProductCategory" />
+		<mapping class="com.qorder.qorderws.model.category.Category" />
 		<mapping class="com.qorder.qorderws.model.business.Business" />
 
 	</session-factory>

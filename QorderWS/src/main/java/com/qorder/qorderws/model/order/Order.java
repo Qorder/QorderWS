@@ -29,7 +29,7 @@ public class Order {
 
 	@OneToMany(targetEntity = ProductHolder.class)
 	@JoinColumn(name = "ORDER_LIST_ID")
-	private List<IProductHolder> orderList = new ArrayList<IProductHolder>();
+	private List<ProductHolder> orderList = new ArrayList<ProductHolder>();
 
 	public long getId() {
 		return id;
@@ -55,11 +55,11 @@ public class Order {
 		this.dateTime = new Date();
 	}
 
-	public List<IProductHolder> getOrderList() {
+	public List<ProductHolder> getOrderList() {
 		return this.orderList;
 	}
 
-	public void addProductOrder(IProductHolder orderProd) {
+	public void addProductOrder(ProductHolder orderProd) {
 		this.orderList.add(orderProd);
 	}
 

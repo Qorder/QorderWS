@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.qorder.qorderws.model.menu.Menu;
 import com.qorder.qorderws.service.IMenuService;
-import com.qorder.qorderws.service.MenuServiceMock;
+import com.qorder.qorderws.service.MenuService;
 
 @Controller
 @RequestMapping(value = "/menus")
@@ -32,8 +32,8 @@ public class MenuController {
 	ResponseEntity<Menu> getMenuById(@RequestParam Long id) {
 		LOGGER.info(
 				"Request for user with id parameter equal " + id.toString(), id);
-		menuService = new MenuServiceMock();
-		Menu menu = menuService.fetchMenuById(id);
+		menuService = new MenuService();
+		Menu menu = menuService.fetchProxyMenuById(id);
 		return new ResponseEntity<Menu>(menu, HttpStatus.OK);
 	}
 

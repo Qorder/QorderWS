@@ -16,7 +16,7 @@ import com.qorder.qorderws.model.product.Product;
 
 @Entity
 @Table(name = "PRODUCT_TYPE")
-public class ProductCategory implements ICategory {
+public class Category implements ICategory {
 
 	@Id
 	@GeneratedValue
@@ -50,17 +50,14 @@ public class ProductCategory implements ICategory {
 		this.name = name;
 	}
 
-	@Override
 	public void addProduct(IProduct product) {
 		this.productList.add(product);
 	}
 
-	@Override
 	public void setProductList(List<IProduct> productList) {
 		this.productList = productList;
 	}
 
-	@Override
 	public List<IProduct> getProductList() {
 		return this.productList;
 	}

@@ -12,7 +12,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.qorder.qorderws.model.category.ICategory;
-import com.qorder.qorderws.model.category.ProductCategory;
+import com.qorder.qorderws.model.category.Category;
 import com.qorder.qorderws.model.menu.Menu;
 
 @Entity
@@ -27,7 +27,7 @@ public class Business implements IBusiness {
 	@Column(name = "NAME")
 	private String name;
 
-	@OneToMany(targetEntity = ProductCategory.class)
+	@OneToMany(targetEntity = Category.class)
 	@JoinColumn(name = "BUSINESS_ID")
 	private List<ICategory> productTypeList = new ArrayList<ICategory>();
 

@@ -13,7 +13,7 @@ import com.qorder.qorderws.model.product.Product;
 
 @Entity
 @Table(name="PRODUCT_ORDER")
-public class ProductHolder implements IProductHolder{
+public class ProductHolder {
 	
 	@Id
 	@GeneratedValue
@@ -31,23 +31,19 @@ public class ProductHolder implements IProductHolder{
 		this.product = product;
 	}
 
-	@Override
 	public IProduct getProduct() {
 		return product;
 	}
 
-	@Override
 	public void setProduct(IProduct product) {
 		this.product = product;
 		
 	}
 
-	@Override
 	public String getComments() {
 		return comments;
 	}
 
-	@Override
 	public void setComments(String comments) {
 		this.comments = comments;
 		

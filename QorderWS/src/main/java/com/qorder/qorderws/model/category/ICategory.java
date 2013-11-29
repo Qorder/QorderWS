@@ -1,8 +1,5 @@
 package com.qorder.qorderws.model.category;
 
-import java.util.List;
-
-import com.qorder.qorderws.model.product.IProduct;
 
 public interface ICategory {
 
@@ -13,11 +10,4 @@ public interface ICategory {
 	String getName();
 
 	void setName(String name);
-
-	void addProduct(IProduct product);
-
-	List<IProduct> getProductList();
-
-	void setProductList(List<IProduct> productList);
-
 }
