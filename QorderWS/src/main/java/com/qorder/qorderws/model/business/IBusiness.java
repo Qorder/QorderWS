@@ -19,10 +19,10 @@ public interface IBusiness {
 
 	void setMenu(Menu menu);
 
-	List<ICategory> getProductTypeList();
+	List<ICategory> getProductCategoryList();
 
-	void setProductTypeList(List<ICategory> productTypeList);
+	void setProductCategoryList(List<ICategory> productCategoryList);
 
-	void addProductType(ICategory productType);
+	void addProductCategory(ICategory productCategory);
 
 }

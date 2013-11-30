@@ -12,12 +12,12 @@ import com.qorder.qorderws.model.product.IProduct;
 import com.qorder.qorderws.model.product.Product;
 
 @Entity
-@Table(name="PRODUCT_ORDER")
+@Table(name="PRODUCT_HOLDER")
 public class ProductHolder {
 	
 	@Id
 	@GeneratedValue
-	@Column(name="PRODUCT_ORDER_ID")
+	@Column(name="PRODUCT_HOLDER_ID")
 	private long id;
 	
 	@Column(name="COMMENTS")

@@ -29,7 +29,7 @@ public class Business implements IBusiness {
 
 	@OneToMany(targetEntity = Category.class)
 	@JoinColumn(name = "BUSINESS_ID")
-	private List<ICategory> productTypeList = new ArrayList<ICategory>();
+	private List<ICategory> productCategoryList = new ArrayList<ICategory>();
 
 	public Business(String name) {
 		this.name = name;
@@ -68,18 +68,18 @@ public class Business implements IBusiness {
 	}
 
 	@Override
-	public java.util.List<ICategory> getProductTypeList() {
-		return this.productTypeList;
+	public java.util.List<ICategory> getProductCategoryList() {
+		return this.productCategoryList;
 	}
 
 	@Override
-	public void setProductTypeList(java.util.List<ICategory> productTypeList) {
-		this.productTypeList = productTypeList;
+	public void setProductCategoryList(java.util.List<ICategory> productCategoryList) {
+		this.productCategoryList = productCategoryList;
 	}
 
 	@Override
-	public void addProductType(ICategory productType) {
-		this.productTypeList.add(productType);
+	public void addProductCategory(ICategory productCategory) {
+		this.productCategoryList.add(productCategory);
 	}
 
 }

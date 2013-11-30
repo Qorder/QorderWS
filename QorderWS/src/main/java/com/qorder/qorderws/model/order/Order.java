@@ -13,12 +13,12 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "ORDER_LIST")
+@Table(name = "ORDER")
 public class Order {
 
 	@Id
 	@GeneratedValue
-	@Column(name = "ORDER_LIST_ID")
+	@Column(name = "ORDER_ID")
 	private long id;
 
 	@Column(name = "TABLE_NUMBER")
@@ -28,8 +28,8 @@ public class Order {
 	private Date dateTime;
 
 	@OneToMany(targetEntity = ProductHolder.class)
-	@JoinColumn(name = "ORDER_LIST_ID")
-	private List<ProductHolder> orderList = new ArrayList<ProductHolder>();
+	@JoinColumn(name = "ORDER_ID")
+	private List<ProductHolder> order = new ArrayList<ProductHolder>();
 
 	public long getId() {
 		return id;
@@ -55,12 +55,12 @@ public class Order {
 		this.dateTime = new Date();
 	}
 
-	public List<ProductHolder> getOrderList() {
-		return this.orderList;
+	public List<ProductHolder> getOrder() {
+		return this.order;
 	}
 
 	public void addProductOrder(ProductHolder orderProd) {
-		this.orderList.add(orderProd);
+		this.order.add(orderProd);
 	}
 
 }

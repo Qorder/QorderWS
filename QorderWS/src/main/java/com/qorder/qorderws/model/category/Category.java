@@ -15,19 +15,19 @@ import com.qorder.qorderws.model.product.IProduct;
 import com.qorder.qorderws.model.product.Product;
 
 @Entity
-@Table(name = "PRODUCT_TYPE")
+@Table(name = "PRODUCT_CATEGORY")
 public class Category implements ICategory {
 
 	@Id
 	@GeneratedValue
-	@Column(name = "PRODUCT_TYPE_ID")
+	@Column(name = "PRODUCT_CATEGORY_ID")
 	private long id;
 
 	@Column(name = "NAME")
 	private String name;
 
 	@OneToMany(targetEntity = Product.class)
-	@JoinColumn(name = "PRODUCT_TYPE_ID")
+	@JoinColumn(name = "PRODUCT_CATEGORY_ID")
 	private List<IProduct> productList = new ArrayList<IProduct>();
 
 	@Override
