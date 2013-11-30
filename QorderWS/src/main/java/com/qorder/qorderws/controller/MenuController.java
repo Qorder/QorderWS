@@ -33,7 +33,7 @@ public class MenuController {
 		LOGGER.info(
 				"Request for user with id parameter equal " + id.toString(), id);
 		menuService = new MenuService();
-		Menu menu = menuService.fetchProxyMenuById(id);
+		Menu menu = menuService.fetchMenuById(id);
 		return new ResponseEntity<Menu>(menu, HttpStatus.OK);
 	}
 

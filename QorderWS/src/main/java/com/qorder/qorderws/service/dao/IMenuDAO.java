@@ -2,10 +2,10 @@ package com.qorder.qorderws.service.dao;
 
 import java.util.List;
 
+import com.qorder.qorderws.model.category.ICategory;
+
 public interface IMenuDAO {
 	
-	List getProxyCategoryById(long businessId);
-	
-	List getCategoryById(long businessId);
+	List<ICategory> getCategoryListById(long businessId);
 
 }

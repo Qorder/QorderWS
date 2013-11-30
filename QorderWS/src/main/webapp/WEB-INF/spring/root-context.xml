@@ -11,8 +11,9 @@
 
 	<!-- Root Context: defines shared resources visible to all other web components -->
 
-	<context:property-placeholder location="/WEB-INF/hibernate/dataSource.properties"/>
-	
+	<context:property-placeholder
+		location="/WEB-INF/hibernate/dataSource.properties" />
+
 	<tx:annotation-driven transaction-manager="transactionManager" />
 
 	<bean id="transactionManager"

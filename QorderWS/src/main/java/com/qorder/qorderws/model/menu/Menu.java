@@ -3,22 +3,22 @@ package com.qorder.qorderws.model.menu;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.qorder.qorderws.model.category.ProxyCategory;
+import com.qorder.qorderws.model.category.CategoryDTO;
 
 public class Menu {
 
-	private List<ProxyCategory> prodTypeList = new ArrayList<ProxyCategory>();
+	private List<CategoryDTO> categoryList = new ArrayList<CategoryDTO>();
 
-	public void addProductType(ProxyCategory prodType) {
-		this.prodTypeList.add(prodType);
+	public void addCategoryList(CategoryDTO category) {
+		this.categoryList.add(category);
 	}
 
-	public List<ProxyCategory> getProdTypeList() {
-		return prodTypeList;
+	public List<CategoryDTO> getCategoryList() {
+		return categoryList;
 	}
 
-	public void setProdTypeList(List<ProxyCategory> prodTypeList) {
-		this.prodTypeList = prodTypeList;
+	public void setCategoryList(List<CategoryDTO> categoryList) {
+		this.categoryList = categoryList;
 	}
 
 }
