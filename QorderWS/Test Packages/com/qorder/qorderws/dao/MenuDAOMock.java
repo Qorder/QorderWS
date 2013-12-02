@@ -3,11 +3,13 @@ package com.qorder.qorderws.dao;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.SessionFactory;
+
 import com.qorder.qorderws.model.category.Category;
-import com.qorder.qorderws.service.dao.IMenuDAO;
 
 public class MenuDAOMock implements IMenuDAO {
 
+	private SessionFactory sessionFactory = null;
 	private List<Category> mockDB = new ArrayList<Category>();
 	
 	public MenuDAOMock() {

@@ -2,6 +2,7 @@ package com.qorder.qorderws.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.qorder.qorderws.model.menu.Menu;
 import com.qorder.qorderws.service.IMenuService;
-import com.qorder.qorderws.service.MenuService;
 
 @Controller
 @RequestMapping(value = "/menus")
@@ -21,6 +21,7 @@ public class MenuController {
 	private static final Logger LOGGER = LoggerFactory
 			.getLogger(MenuController.class);
 
+	@Autowired
 	private IMenuService menuService;
 
 	/**
@@ -32,7 +33,6 @@ public class MenuController {
 	ResponseEntity<Menu> getMenuById(@RequestParam Long id) {
 		LOGGER.info(
 				"Request for user with id parameter equal " + id.toString(), id);
-		menuService = new MenuService();
 		Menu menu = menuService.fetchMenuById(id);
 		return new ResponseEntity<Menu>(menu, HttpStatus.OK);
 	}

@@ -10,12 +10,12 @@
     http://www.springframework.org/schema/tx/spring-tx-3.1.xsd">
 
 	<!-- Root Context: defines shared resources visible to all other web components -->
-
+	<context:annotation-config />
 	<context:property-placeholder
 		location="/WEB-INF/hibernate/dataSource.properties" />
-
+	
 	<tx:annotation-driven transaction-manager="transactionManager" />
-
+	
 	<bean id="transactionManager"
 		class="org.springframework.orm.hibernate4.HibernateTransactionManager"
 		autowire="byName" />
@@ -35,4 +35,10 @@
 		<property name="password" value="${dataSource.password}" />
 	</bean>
 
+	<bean id="menuService" class="com.qorder.qorderws.service.MenuService">
+		<property name="menuDAO" ref="menuDAO" />
+	</bean>
+
+	<bean id="menuDAO" class="com.qorder.qorderws.dao.MenuDAO"
+		autowire="byName" />
 </beans>

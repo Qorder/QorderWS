@@ -1,4 +1,4 @@
-package com.qorder.qorderws.service.dao;
+package com.qorder.qorderws.dao;
 
 import java.util.List;
 

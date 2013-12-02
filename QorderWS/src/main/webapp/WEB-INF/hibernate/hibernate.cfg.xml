@@ -5,15 +5,11 @@
 
 <hibernate-configuration>
 	<session-factory>
-	    
 		<!-- JDBC connection pool (use the built-in) -->
 		<property name="connection.pool_size">1</property>
 
 		<!-- SQL dialect -->
 		<property name="dialect">org.hibernate.dialect.MySQLDialect</property>
-
-		<!-- Enable Hibernate's automatic session context management -->
-		<property name="current_session_context_class">thread</property>
 
 		<!-- Disable the second-level cache -->
 		<property name="cache.provider_class">org.hibernate.cache.NoCacheProvider</property>
@@ -28,6 +24,5 @@
 		<mapping class="com.qorder.qorderws.model.product.Product" />
 		<mapping class="com.qorder.qorderws.model.category.Category" />
 		<mapping class="com.qorder.qorderws.model.business.Business" />
-
 	</session-factory>
 </hibernate-configuration>
