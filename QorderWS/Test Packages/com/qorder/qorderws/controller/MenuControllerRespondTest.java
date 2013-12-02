@@ -8,7 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.qorder.qorderws.client.AppClient;
-import com.qorder.qorderws.model.category.CategoryDTO;
+import com.qorder.qorderws.model.category.Category;
 import com.qorder.qorderws.model.menu.Menu;
 
 public class MenuControllerRespondTest {
@@ -26,10 +26,10 @@ public class MenuControllerRespondTest {
 		long businessId = 2;
 		Menu fetchedMenu =  client.requestForMenu("http://localhost:8080/qorderws/menus/business?id=5",businessId);
 		System.out.println("Check object characteristics after parsing from Json:\n\n");
-		Iterator<CategoryDTO> categoryItr = fetchedMenu.getCategoryList().iterator();
+		Iterator<Category> categoryItr = fetchedMenu.getCategoryList().iterator();
 		while(categoryItr.hasNext())
 		{
-			CategoryDTO proxyCategory = categoryItr.next();
+			Category proxyCategory = categoryItr.next();
 			System.out.println(proxyCategory.toString());
 		}
 		assertNotNull(fetchedMenu);

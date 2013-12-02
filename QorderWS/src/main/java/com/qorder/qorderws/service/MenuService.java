@@ -3,7 +3,7 @@ package com.qorder.qorderws.service;
 import java.util.List;
 
 import com.qorder.qorderws.dao.MenuDAOMock;
-import com.qorder.qorderws.model.category.ICategory;
+import com.qorder.qorderws.model.category.Category;
 import com.qorder.qorderws.model.menu.Menu;
 import com.qorder.qorderws.service.dao.IMenuDAO;
 
@@ -14,8 +14,8 @@ public class MenuService implements IMenuService {
 	@Override
 	public Menu fetchMenuById(long businessId) {
 		Menu menu = new Menu();
-		List<ICategory> categoryList = menuDAO.getCategoryListById(businessId);
-		//TODO: find a way to create a DTO for category
+		List<Category> categoryList = menuDAO.getCategoryListById(businessId);
+		menu.setCategoryList(categoryList);
 		return menu;
 	}
 }

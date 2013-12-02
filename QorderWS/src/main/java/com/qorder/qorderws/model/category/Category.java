@@ -11,12 +11,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.qorder.qorderws.model.product.IProduct;
 import com.qorder.qorderws.model.product.Product;
 
 @Entity
 @Table(name = "PRODUCT_CATEGORY")
-public class Category implements ICategory {
+public class Category {
 
 	@Id
 	@GeneratedValue
@@ -28,38 +27,29 @@ public class Category implements ICategory {
 
 	@OneToMany(targetEntity = Product.class)
 	@JoinColumn(name = "PRODUCT_CATEGORY_ID")
-	private List<IProduct> productList = new ArrayList<IProduct>();
+	private List<Product> productList = new ArrayList<Product>();
 
-	@Override
 	public long getId() {
-		return this.id;
+		return id;
 	}
 
-	@Override
 	public void setId(long id) {
 		this.id = id;
 	}
 
-	@Override
 	public String getName() {
-		return this.name;
+		return name;
 	}
 
-	@Override
 	public void setName(String name) {
 		this.name = name;
 	}
 
-	public void addProduct(IProduct product) {
-		this.productList.add(product);
+	public List<Product> getProductList() {
+		return productList;
 	}
 
-	public void setProductList(List<IProduct> productList) {
+	public void setProductList(List<Product> productList) {
 		this.productList = productList;
 	}
-
-	public List<IProduct> getProductList() {
-		return this.productList;
-	}
-
 }

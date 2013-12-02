@@ -8,7 +8,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.qorder.qorderws.model.product.IProduct;
 import com.qorder.qorderws.model.product.Product;
 
 @Entity
@@ -25,17 +24,17 @@ public class ProductHolder {
 	
 	@ManyToOne(targetEntity=Product.class)
 	@JoinColumn(name="PRODUCT_ID")
-	private IProduct product;
+	private Product product;
 	
-	public ProductHolder(IProduct product) {
+	public ProductHolder(Product product) {
 		this.product = product;
 	}
 
-	public IProduct getProduct() {
+	public Product getProduct() {
 		return product;
 	}
 
-	public void setProduct(IProduct product) {
+	public void setProduct(Product product) {
 		this.product = product;
 		
 	}
