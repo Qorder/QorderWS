@@ -18,8 +18,7 @@ import com.qorder.qorderws.service.IMenuService;
 @RequestMapping(value = "/menus")
 public class MenuController {
 
-	private static final Logger LOGGER = LoggerFactory
-			.getLogger(MenuController.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(MenuController.class);
 
 	@Autowired
 	private IMenuService menuService;

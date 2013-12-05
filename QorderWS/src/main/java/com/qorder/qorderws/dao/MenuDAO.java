@@ -5,12 +5,11 @@ import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.qorder.qorderws.model.category.Category;
 
-@Transactional(propagation=Propagation.REQUIRED)
+@Transactional
 public class MenuDAO implements IMenuDAO {
 
 	private SessionFactory sessionFactory = null;

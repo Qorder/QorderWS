@@ -2,6 +2,8 @@ package com.qorder.qorderws.service;
 
 import java.util.List;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import com.qorder.qorderws.dao.IMenuDAO;
 import com.qorder.qorderws.model.category.Category;
 import com.qorder.qorderws.model.menu.Menu;
@@ -18,6 +20,7 @@ public class MenuService implements IMenuService {
 		this.menuDAO = menuDAO;
 	}
 
+	@Transactional
 	@Override
 	public Menu fetchMenuById(long businessId) {
 		Menu menu = new Menu();

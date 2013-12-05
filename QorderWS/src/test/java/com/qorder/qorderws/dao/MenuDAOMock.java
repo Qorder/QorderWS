@@ -28,4 +28,12 @@ public class MenuDAOMock implements IMenuDAO {
 		return mockDB;
 	}
 
+	public SessionFactory getSessionFactory() {
+		return sessionFactory;
+	}
+
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}
+
 }
