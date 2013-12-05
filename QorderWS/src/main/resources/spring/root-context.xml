@@ -43,5 +43,11 @@
 	autowire="byName">
 		<qualifier value="main" />
 	</bean>
+	
+	<bean id="businessDAO" class="com.qorder.qorderws.dao.BusinessDAO"
+ autowire="byName" />
+	
+	<bean id="categoryDAO" class="com.qorder.qorderws.dao.CategoryDAO"
+ autowire="byName" />
 
 </beans>
