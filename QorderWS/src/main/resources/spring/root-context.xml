@@ -12,7 +12,8 @@
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	<context:annotation-config />
 
-	<context:property-placeholder location="classpath:/hibernate/dataSource.properties" />
+	<context:property-placeholder
+		location="classpath:/hibernate/dataSource.properties" />
 
 	<bean id="transactionManager"
 		class="org.springframework.orm.hibernate4.HibernateTransactionManager"
@@ -34,14 +35,9 @@
 		<property name="username" value="${dataSource.username}" />
 		<property name="password" value="${dataSource.password}" />
 	</bean>
-
-	<bean id="menuService" class="com.qorder.qorderws.service.MenuService">
-		<property name="menuDAO" ref="menuDAO" />
-	</bean>
-
-	<bean id="menuDAO" class="com.qorder.qorderws.dao.MenuDAO"
-	autowire="byName">
-		<qualifier value="main" />
-	</bean>
-
+	
+	<!-- <bean id="businessService" class="com.qorder.qorderws.service.BusinessService"> 
+		<property name="businessDAO" ref="businessDAO"/> 
+		</bean>
+		 <bean id="businessDAO" class="com.qorder.qorderws.dao.BusinessDAO" autowire="byName"/> -->
 </beans>
