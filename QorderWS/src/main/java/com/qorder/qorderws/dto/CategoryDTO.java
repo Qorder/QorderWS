@@ -1,23 +1,37 @@
 package com.qorder.qorderws.dto;
 
-import java.util.List;
-
 public class CategoryDTO {
 	
+	private Long id = null;
 	private String name;
-	private List<ProductDTO> productList;
+	private String uri = ""+id;
 	
 	public String getName() {
 		return name;
 	}
+	
 	public void setName(String name) {
 		this.name = name;
 	}
-	public List<ProductDTO> getProductList() {
-		return productList;
-	}
-	public void setProductList(List<ProductDTO> productList) {
-		this.productList = productList;
+	
+	@Override
+	public String toString() {
+		return name + " id " + id;
 	}
 	
+	public String getUri() {
+		return uri;
+	}
+	
+	public void setUri(String realReference) {
+		this.uri = realReference;
+	}
+	
+	public void setId(Long id) {
+		this.id = id;
+	}
+	
+	public Long getId() {
+		return id;
+	}
 }

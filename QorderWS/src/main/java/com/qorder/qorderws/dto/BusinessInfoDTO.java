@@ -8,7 +8,7 @@ public class BusinessInfoDTO {
 	
 	private String businessName;
 	
-	private List<CategoryInfoDTO> categoryInfoList = new ArrayList<CategoryInfoDTO>();
+	private List<CategoryDTO> categoryInfoList = new ArrayList<CategoryDTO>();
 	
 	public String getBusinessName() {
 		return businessName;
@@ -17,14 +17,14 @@ public class BusinessInfoDTO {
 	public void setBusinessName(String businessName) {
 		this.businessName = businessName;
 	}
-	public List<CategoryInfoDTO> getCategoryInfoList() {
+	public List<CategoryDTO> getCategoryInfoList() {
 		return categoryInfoList;
 	}
-	public void setCategoryInfoList(List<CategoryInfoDTO> categoryInfoList) {
+	public void setCategoryInfoList(List<CategoryDTO> categoryInfoList) {
 		this.categoryInfoList = categoryInfoList;
 	}
 	
-	public void addCategoryInfo(CategoryInfoDTO categoryInfo) {
+	public void addCategoryInfo(CategoryDTO categoryInfo) {
 		categoryInfoList.add(categoryInfo);
 	}
 }

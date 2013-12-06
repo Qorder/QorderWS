@@ -6,5 +6,9 @@ import com.qorder.qorderws.model.category.Category;
 public interface ICategoryService {
 	
 	boolean createCategory(long businessId, Category category) throws BusinessDoesNotExistException;
+	
+	//TODO: throws CategoryNotFoundException
+	
+	Category getCategoryByID(long categoryId);
 
 }

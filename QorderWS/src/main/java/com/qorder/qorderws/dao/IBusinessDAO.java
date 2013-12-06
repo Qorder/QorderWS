@@ -9,7 +9,7 @@ public interface IBusinessDAO {
 	
 	boolean update(Business business) throws BusinessDoesNotExistException;
 	
-	boolean delete(long businessId);
+	boolean delete(Business business);
 	
 	Business findById(long businessId) throws BusinessDoesNotExistException;
 }

@@ -13,9 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.qorder.qorderws.dto.CategoryInfoDTO;
+import com.qorder.qorderws.dto.DetailedCategoryDTO;
+import com.qorder.qorderws.dto.CategoryDTO;
 import com.qorder.qorderws.exception.BusinessDoesNotExistException;
 import com.qorder.qorderws.mapper.CategoryInfoDTOtoCategoryMapper;
+import com.qorder.qorderws.mapper.CategoryToDtoMapper;
 import com.qorder.qorderws.model.category.Category;
 import com.qorder.qorderws.service.ICategoryService;
 
@@ -30,10 +32,17 @@ public class CategoryController {
 	private ICategoryService categoryService;
 
 	@RequestMapping(value = "/business", params = "id", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
-	ResponseEntity<Void> crateCategory(@RequestParam Long id, @RequestBody CategoryInfoDTO categoryDTO) throws BusinessDoesNotExistException {
+	ResponseEntity<Void> crateCategory(@RequestParam Long id, @RequestBody CategoryDTO categoryDTO) throws BusinessDoesNotExistException {
 		LOGGER.info("Request for category creation");
 		categoryService.createCategory(id, new CategoryInfoDTOtoCategoryMapper().map(categoryDTO, new Category()));
 		return new ResponseEntity<Void>(HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/category", params = "id", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	ResponseEntity<DetailedCategoryDTO> getCategory(@RequestParam Long id) {
+		LOGGER.info("Request for category with id equals "+id);
+		Category fetchedCategory = categoryService.getCategoryByID(id);
+		return new ResponseEntity<DetailedCategoryDTO>( new CategoryToDtoMapper().map(fetchedCategory, new DetailedCategoryDTO()) , HttpStatus.OK);
 	}
 	
 	@ExceptionHandler(BusinessDoesNotExistException.class)

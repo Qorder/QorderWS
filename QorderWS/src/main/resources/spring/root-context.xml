@@ -36,15 +36,18 @@
 		<property name="password" value="${dataSource.password}" />
 	</bean>
 
-	<bean id="businessService" class="com.qorder.qorderws.service.BusinessService">
-		<property name="businessDAO" ref="businessDAO" />
+	<bean id="businessService" class="com.qorder.qorderws.service.BusinessService" autowire="byName">
+		 <property name="businessDAO" ref="businessDAOmock" /> 
 	</bean>
-	
+
 	<bean id="categoryService" class="com.qorder.qorderws.service.CategoryService">
-		<property name="businessDAO" ref="businessDAO" />
+		 <property name="businessDAO" ref="businessDAOmock" /> 
 	</bean>
-	
-	<bean id="businessDAO" class="com.qorder.qorderws.dao.BusinessDaoMock"
+
+	<bean id="businessDAOmock" class="com.qorder.qorderws.dao.BusinessDaoMock"
 		autowire="byName" />
-	
+
+	<bean id="businessDAO" class="com.qorder.qorderws.dao.BusinessDAO"
+		autowire="byName" />
+
 </beans>

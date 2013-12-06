@@ -34,10 +34,6 @@ public class BusinessDaoMock implements IBusinessDAO {
 		
 	}
 
-	@Override
-	public boolean delete(long businessId) {
-		return false;
-	}
 
 	@Override
 	public Business findById(long businessId)
@@ -50,6 +46,12 @@ public class BusinessDaoMock implements IBusinessDAO {
 		{
 			throw new BusinessDoesNotExistException();
 		}
+	}
+
+	@Override
+	public boolean delete(Business business) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

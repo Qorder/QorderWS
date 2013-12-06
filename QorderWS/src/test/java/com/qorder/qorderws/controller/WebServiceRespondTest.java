@@ -15,7 +15,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.qorder.qorderws.client.AppClient;
 import com.qorder.qorderws.dto.BusinessInfoDTO;
-import com.qorder.qorderws.dto.CategoryInfoDTO;
+import com.qorder.qorderws.dto.CategoryDTO;
 import com.qorder.qorderws.model.category.Category;
 import com.qorder.qorderws.model.product.Product;
 
@@ -38,10 +38,10 @@ public class WebServiceRespondTest {
 		
 		System.out.println("1: Check object characteristics after parsing from Json:");
 		System.out.println("Business info: " + businessInfo.getBusinessName());
-		Iterator<CategoryInfoDTO> categoryItr = businessInfo.getCategoryInfoList().iterator();
+		Iterator<CategoryDTO> categoryItr = businessInfo.getCategoryInfoList().iterator();
 		while(categoryItr.hasNext())
 		{
-			CategoryInfoDTO categoryInfo = categoryItr.next();
+			CategoryDTO categoryInfo = categoryItr.next();
 			System.out.println(categoryInfo.toString());
 		}
 		assertNotNull(businessInfo);
@@ -78,10 +78,10 @@ public class WebServiceRespondTest {
 		BusinessInfoDTO businessInfo =  client.requestForMenu("http://localhost:8080/qorderws/businesses/menus/business?id=",businessId);
 		System.out.println("Check object characteristics after parsing from Json:\n\n");
 		System.out.println("Business info: " + businessInfo.getBusinessName());
-		Iterator<CategoryInfoDTO> categoryItr = businessInfo.getCategoryInfoList().iterator();
+		Iterator<CategoryDTO> categoryItr = businessInfo.getCategoryInfoList().iterator();
 		while(categoryItr.hasNext())
 		{
-			CategoryInfoDTO categoryInfo = categoryItr.next();
+			CategoryDTO categoryInfo = categoryItr.next();
 			System.out.println(categoryInfo.toString());
 		}
 		assertNotNull(businessInfo);
