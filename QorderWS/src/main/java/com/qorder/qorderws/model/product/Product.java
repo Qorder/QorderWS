@@ -21,12 +21,14 @@ public class Product {
 	@Column(name="PRICE")
 	private BigDecimal price;
 	
+	
 	public Product(String name, BigDecimal price) {
 		this.name = name;
 		this.price = price;
 	}
 	
 	public Product() {
+		
 	}
 
 	public long getId() {

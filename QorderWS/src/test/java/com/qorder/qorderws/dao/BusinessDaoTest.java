@@ -1,6 +1,6 @@
 package com.qorder.qorderws.dao;
 
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 import org.junit.After;
 import org.junit.Before;
@@ -51,14 +51,30 @@ public class BusinessDaoTest {
 	@Test
 	public void testsaveBusiness() {
 		boolean i = businessDAO.save(testBus);
-		assertNotNull(i);
+		assertEquals(i,true);
 		
+	}
+	
+	@Test
+	public void testupdateBusiness(){
+		Business business=this.businessDAO.findById(2);
+		business.setName("mikel");
+		boolean i = businessDAO.update(business);
+		assertEquals(i,true);
+		
+	}
+	
+	@Test
+	public void testdeleteBusiness(){
+		testBus.setId(40);
+		boolean i = businessDAO.delete(testBus);
+		assertEquals(i,true);
 	}
 	
 	@Test
 	public void testfindBusinessById(){
 		Business business=this.businessDAO.findById(2);
-		assertNotNull(business.getCategoryList().get(0).getProductList().size());
+		assertNotNull(business);
 	}
 
 }

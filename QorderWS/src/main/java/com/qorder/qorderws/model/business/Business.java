@@ -36,6 +36,7 @@ public class Business {
 	}
 	
 	public Business() {
+		this.name="";
 	}
 
 	public long getId() {
