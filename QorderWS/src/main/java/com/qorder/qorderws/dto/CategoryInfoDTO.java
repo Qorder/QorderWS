@@ -2,7 +2,7 @@ package com.qorder.qorderws.dto;
 
 public class CategoryInfoDTO {
 	
-	private long id;
+	private Long id = null;
 	private String name;
 	
 	public long getId() {
