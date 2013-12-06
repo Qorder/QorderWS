@@ -49,14 +49,14 @@ public class BusinessDaoTest {
 	}
 
 	@Test
-	public void testsaveBusiness() {
+	public void testSuccessSaveBusiness() {
 		boolean i = businessDAO.save(testBus);
 		assertEquals(i,true);
 		
 	}
 	
 	@Test
-	public void testupdateBusiness(){
+	public void testSuccessUpdateBusiness(){
 		Business business=this.businessDAO.findById(2);
 		business.setName("mikel");
 		boolean i = businessDAO.update(business);
@@ -65,14 +65,14 @@ public class BusinessDaoTest {
 	}
 	
 	@Test
-	public void testdeleteBusiness(){
+	public void testSuccessDeleteBusiness(){
 		testBus.setId(40);
 		boolean i = businessDAO.delete(testBus);
 		assertEquals(i,true);
 	}
 	
 	@Test
-	public void testfindBusinessById(){
+	public void testSuccessfindBusinessById(){
 		Business business=this.businessDAO.findById(2);
 		assertNotNull(business);
 	}
