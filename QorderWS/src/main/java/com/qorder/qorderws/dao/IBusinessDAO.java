@@ -4,9 +4,9 @@ import com.qorder.qorderws.model.business.Business;
 
 public interface IBusinessDAO {
 	
-	long add(Business business);
-	void update(Business business);
-	int delete(long businessId);
+	boolean save(Business business);
+	boolean update(Business business);
+	boolean delete(Business businessId);
 	Business findById(long businessId);
-	public int check();
+
 }

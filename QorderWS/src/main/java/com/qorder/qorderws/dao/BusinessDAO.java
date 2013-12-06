@@ -1,8 +1,6 @@
 package com.qorder.qorderws.dao;
 
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.qorder.qorderws.model.business.Business;
@@ -21,43 +19,30 @@ public class BusinessDAO implements IBusinessDAO {
 	}
 
 	@Override
-	public long add(Business business) {
+	public boolean save(Business business) {
 
 		sessionFactory.getCurrentSession().save(business);
-		return business.getId();
-		//return 9000; //TODO : Na allaxthei me to id tis neas grammis.
+		return true;
 	}
 
 	@Override
-	public void update(Business business) {
-		// TODO Auto-generated method stub
-
+	public boolean update(Business business) {
+		sessionFactory.getCurrentSession().update(business);
+		return true;
 	}
 
 	@Override
-	public int delete(long businessId) {
-		// TODO Auto-generated method stub
-		return 0;
+	public boolean delete(Business business) {
+		sessionFactory.getCurrentSession().delete(business);
+		return true;
 	}
 	
 	@Override
 	public Business findById(long businessId) {
-		// TODO Auto-generated method stub
-		return null;
+			Business business= (Business) sessionFactory.getCurrentSession().get(Business.class, businessId);
+			return business;
+		   
 	}
-	@Override
-	public int check() {
-		Session session = sessionFactory.getCurrentSession();
-		if(session.isOpen() && session!=null && session.isConnected())
-		{
-			System.out.println("is open and works!!");
-			
-		}
-		else
-		{
-			System.out.println("it is not working right");
-		}
-		return 0;
-	}
+
 
 }
