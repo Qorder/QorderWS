@@ -29,7 +29,7 @@ public class CategoryController {
 	@Autowired
 	private ICategoryService categoryService;
 
-	@RequestMapping(value = "/", params = { "business=id" }, method = RequestMethod.PUT)
+	@RequestMapping(value = "/business", params = "id", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
 	ResponseEntity<Void> crateCategory(@RequestParam Long id, @RequestBody CategoryInfoDTO categoryDTO) throws BusinessDoesNotExistException {
 		LOGGER.info("Request for category creation");
 		categoryService.createCategory(id, new CategoryInfoDTOtoCategoryMapper().map(categoryDTO, new Category()));

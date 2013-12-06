@@ -8,10 +8,11 @@ import com.qorder.qorderws.model.business.Business;
 
 public class BusinessDaoMock implements IBusinessDAO {
 
-	private static List<Business> businessList = new ArrayList<Business>();
+	private List<Business> businessList = new ArrayList<Business>();
 
 	public BusinessDaoMock() {
 		businessList.add(new Business("Ta kala paidia"));
+		businessList.add(new Business("Petromulos"));
 	}
 
 	@Override
@@ -21,7 +22,7 @@ public class BusinessDaoMock implements IBusinessDAO {
 
 	@Override
 	public boolean update(Business business) throws BusinessDoesNotExistException {
-		if(businessList.contains(business))
+		if(business.getId()< businessList.size())
 		{
 			businessList.set(0, business);
 			return true;

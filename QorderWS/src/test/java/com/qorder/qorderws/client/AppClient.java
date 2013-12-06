@@ -1,6 +1,5 @@
 package com.qorder.qorderws.client;
 
-import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
