@@ -9,6 +9,9 @@ import com.qorder.qorderws.model.business.Business;
 @Transactional
 public class BusinessDAO implements IBusinessDAO {
 	
+	
+	//TODO : Add checks and throw exceptions
+	
 	private SessionFactory sessionFactory = null;
 	
 	public SessionFactory getSessionFactory() {
