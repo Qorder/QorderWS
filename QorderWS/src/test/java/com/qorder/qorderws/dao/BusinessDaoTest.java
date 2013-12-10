@@ -66,21 +66,19 @@ public class BusinessDaoTest extends DBTestCase {
 		assertEquals("Jumbo3",retBus.getName());	
 	}
 	
-	@Test
+	@Test(expected=BusinessDoesNotExistException.class)
 	public void testDoesNotExistFindById() throws BusinessDoesNotExistException {
 		Business retBus = testBusinessDAO.findById(1337);
-		assertNull(retBus);
 	}
 	
-	//1)Try to delete jumbo2(exists) - 2)Validate
-	@Test
+	//1)Try to delete jumbo2(exists) - 2)Validate by trying to find jumbo2, leading to exception
+	@Test(expected=BusinessDoesNotExistException.class)
 	public void testExistsDelete() throws BusinessDoesNotExistException {
 		this.testBus = new Business("otiKaiNaValwThaDoulepsei-koitaeiMonoId");
 		testBus.setId(2);
 		boolean wasDeleted = testBusinessDAO.delete(testBus);
 		assertEquals(true, wasDeleted);
 		Business retBus = testBusinessDAO.findById(2);
-		assertNull(retBus);	
 	}
 	
 	//1)Try to update jumbo2(exists) - 2)Validate

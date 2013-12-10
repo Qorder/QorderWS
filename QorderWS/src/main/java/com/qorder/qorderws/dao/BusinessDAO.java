@@ -4,13 +4,11 @@ import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.qorder.qorderws.exception.BusinessDoesNotExistException;
 import com.qorder.qorderws.model.business.Business;
 
 @Transactional
 public class BusinessDAO implements IBusinessDAO {
-	
-	
-	//TODO : Add checks and throw exceptions
 	
 	private SessionFactory sessionFactory = null;
 	
@@ -27,42 +25,59 @@ public class BusinessDAO implements IBusinessDAO {
 		try {
 			sessionFactory.getCurrentSession().save(business);
 			return true;
-		} catch(final HibernateException ex){}
+		} catch(final HibernateException ex){
+			//sessionFactory.getCurrentSession().getTransaction().rollback();
+		}
 			return false;
 	}
 	
-	/* Needs the id to actually update a row - that means only single-row updates
-	 * @Throws Exception if the id does not exist
+	/* Only single-row updates
+	 * TODO : Throws BusinessDoesNotExistException
 	 */
 	@Override
 	public boolean update(Business business) {
+		//TODO : kalese tin find gia na deis an iparxei prin pas na to diagrapseis: h vres hiber. opti tropo.
 		try {
 			sessionFactory.getCurrentSession().update(business);
 			return true;
-		} catch(final HibernateException ex){}
+		} catch(final HibernateException ex){
+			//sessionFactory.getCurrentSession().getTransaction().rollback();
+		}
 			return false;
 	}
 
-	/* Needs the id to actually delete a row
-	// XXX add "id not null" check before calling .delete
-	// @Throws StaleObjectException if the id does not exist
+	/* 
+	// TODO : Throws BusinessDoesNotExistException
+	 * @Return boolean
 	*/
 	@Override
-	public boolean delete(Business business) {
+	public boolean delete(Business business) throws BusinessDoesNotExistException {
+		//TODO : kalese tin find gia na deis an iparxei prin pas na to diagrapseis: h vres hiber. opti tropo.
 		try {
 			sessionFactory.getCurrentSession().delete(business);
 			return true;
-		} catch(final HibernateException ex){}
-			return false;
+		} catch(final HibernateException ex){
+			sessionFactory.getCurrentSession().getTransaction().rollback();
+		}
+		return false;
 	}
 	
 	/*
-	// @Return "filled" Business object if the id exists - null if the id does not exist
-	*/
+	 * @Return "filled" Business object if the id exists 
+	 * @Throws BusinessDoesNotExistException 
+	 */
 	@Override
-	public Business findById(long businessId) {
-		Business business= (Business) sessionFactory.getCurrentSession().get(Business.class, businessId);
-		return business;	   
+	public Business findById(long businessId) throws BusinessDoesNotExistException {
+		Business business = null;
+		try {
+			business = (Business) sessionFactory.getCurrentSession().get(Business.class, businessId);
+			if (business==null) {
+				throw new BusinessDoesNotExistException();	
+			}
+		}
+		catch(final HibernateException ex) {	
+		}
+		return business;
 	}
 
 
