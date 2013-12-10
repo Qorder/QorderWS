@@ -43,6 +43,14 @@
 	<bean id="categoryService" class="com.qorder.qorderws.service.CategoryService">
 		 <property name="businessDAO" ref="businessDAOmock" /> 
 	</bean>
+	
+	<bean id="orderService" class="com.qorder.qorderws.service.OrderService">
+		 <property name="businessDAO" ref="businessDAO" />
+		 <property name="orderDAO" ref="orderDAO" />
+	</bean>
+
+	<bean id="orderDAO" class="com.qorder.qorderws.dao.OrderDAO"
+		autowire="byName" />
 
 	<bean id="businessDAOmock" class="com.qorder.qorderws.dao.BusinessDaoMock"
 		autowire="byName" />
