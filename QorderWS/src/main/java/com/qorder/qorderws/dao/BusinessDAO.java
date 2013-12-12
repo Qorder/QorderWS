@@ -4,6 +4,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.qorder.qorderws.exception.BusinessDoesNotExistException;
 import com.qorder.qorderws.model.business.Business;
 
 @Transactional
@@ -47,10 +48,9 @@ public class BusinessDAO implements IBusinessDAO {
 	}
 	
 	@Override
-	public Business findById(long businessId) {
+	public Business findById(long businessId) throws BusinessDoesNotExistException {
 			Business business= (Business) sessionFactory.getCurrentSession().get(Business.class, businessId);
 			return business;
-		   
 	}
 
 

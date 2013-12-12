@@ -1,6 +1,8 @@
 package com.qorder.qorderws.model.product;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,6 +23,7 @@ public class Product {
 	@Column(name="PRICE")
 	private BigDecimal price;
 	
+	//private List<String> attributes = new ArrayList<String>();
 	
 	public Product(String name, BigDecimal price) {
 		this.name = name;
@@ -54,5 +57,18 @@ public class Product {
 	public void setPrice(BigDecimal price) {
 		this.price = price;
 	}
+/*
+	public List<String> getAttributes() {
+		return attributes;
+	}
 
+	public void setAttributes(List<String> attributes) {
+		this.attributes = attributes;
+	}
+	
+	public boolean addAttribute(String attribute) {
+		return attributes.add(attribute);
+	}
+	
+*/
 }

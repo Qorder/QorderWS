@@ -7,7 +7,7 @@ public class ProductDTO {
 	private Long id;
 	private String name;
 	private BigDecimal price;
-	private String url = "" + id;
+	private String url = "http://snf-185147.vm.okeanos.grnet.gr:8080/qorderws/products/product?id=";
 	
 	public Long getId() {
 		return id;
@@ -34,7 +34,7 @@ public class ProductDTO {
 	}
 
 	public String getUrl() {
-		return url;
+		return url + id;
 	}
 
 	public void setUrl(String url) {

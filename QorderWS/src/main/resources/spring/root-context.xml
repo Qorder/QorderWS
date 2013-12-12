@@ -34,9 +34,9 @@
 		<property name="url" value="${dataSource.url}" />
 		<property name="username" value="${dataSource.username}" />
 		<property name="password" value="${dataSource.password}" />
-	</bean>
+	</bean> 
 
-	<bean id="businessService" class="com.qorder.qorderws.service.BusinessService" autowire="byName">
+	<bean id="businessService" class="com.qorder.qorderws.service.BusinessService">
 		 <property name="businessDAO" ref="businessDAOmock" /> 
 	</bean>
 
@@ -44,10 +44,10 @@
 		 <property name="businessDAO" ref="businessDAOmock" /> 
 	</bean>
 	
-	<bean id="orderService" class="com.qorder.qorderws.service.OrderService">
-		 <property name="businessDAO" ref="businessDAO" />
-		 <property name="orderDAO" ref="orderDAO" />
+	<bean id="menuService" class="com.qorder.qorderws.service.MenuService">
+		 <property name="businessDAO" ref="businessDAOmock" /> 
 	</bean>
+	
 
 	<bean id="orderDAO" class="com.qorder.qorderws.dao.OrderDAO"
 		autowire="byName" />

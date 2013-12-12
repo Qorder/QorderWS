@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.qorder.qorderws.dto.DetailedCategoryDTO;
 import com.qorder.qorderws.dto.CategoryDTO;
 import com.qorder.qorderws.exception.BusinessDoesNotExistException;
+import com.qorder.qorderws.exception.CategoryDoesNotExistException;
 import com.qorder.qorderws.mapper.CategoryInfoDTOtoCategoryMapper;
 import com.qorder.qorderws.mapper.CategoryToDtoMapper;
 import com.qorder.qorderws.model.category.Category;
@@ -39,15 +40,15 @@ public class CategoryController {
 	}
 	
 	@RequestMapping(value = "/category", params = "id", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	ResponseEntity<DetailedCategoryDTO> getCategory(@RequestParam Long id) {
+	ResponseEntity<DetailedCategoryDTO> getCategory(@RequestParam Long id) throws CategoryDoesNotExistException, BusinessDoesNotExistException {
 		LOGGER.info("Request for category with id equals "+id);
 		Category fetchedCategory = categoryService.getCategoryByID(id);
 		return new ResponseEntity<DetailedCategoryDTO>( new CategoryToDtoMapper().map(fetchedCategory, new DetailedCategoryDTO()) , HttpStatus.OK);
 	}
 	
-	@ExceptionHandler(BusinessDoesNotExistException.class)
+	
+	@ExceptionHandler({ CategoryDoesNotExistException.class, BusinessDoesNotExistException.class })
 	ResponseEntity<String> sendNotFoundException(Exception ex) {
 		return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
 	}
-
 }

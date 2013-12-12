@@ -3,7 +3,7 @@ package com.qorder.qorderws.client;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
-import com.qorder.qorderws.dto.BusinessInfoDTO;
+import com.qorder.qorderws.dto.MenuDTO;
 import com.qorder.qorderws.dto.CategoryDTO;
 import com.qorder.qorderws.mapper.CategoryToCategoryInfoMapper;
 import com.qorder.qorderws.model.category.Category;
@@ -12,9 +12,9 @@ public class AppClient {
 	
 	private RestTemplate restTemplate = new RestTemplate();
 	
-	public BusinessInfoDTO requestForMenu(String uri, Long businessId) {
-		ResponseEntity<BusinessInfoDTO> response = restTemplate.getForEntity(uri + businessId, BusinessInfoDTO.class);
-		BusinessInfoDTO menu = response.getBody();
+	public MenuDTO requestForMenu(String uri, Long businessId) {
+		ResponseEntity<MenuDTO> response = restTemplate.getForEntity(uri + businessId, MenuDTO.class);
+		MenuDTO menu = response.getBody();
 		return menu;
 	}
 	
