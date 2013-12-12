@@ -1,7 +1,6 @@
 package com.qorder.qorderws.dao;
 
 import java.io.FileInputStream;
-import java.util.List;
 
 import javax.sql.DataSource;
 
@@ -31,6 +30,7 @@ public class CategoryDaoTest extends DBTestCase {
 	@Autowired
 	private DataSource testDataSource;
 	private Business testBus;
+	private Category testCat;
 
 	public IBusinessDAO getBusinessDao() {
 		return testBusinessDAO;
@@ -53,32 +53,58 @@ public class CategoryDaoTest extends DBTestCase {
 	public void setUp() throws Exception {
 		IDatabaseConnection connection = new DatabaseDataSourceConnection(testDataSource);
 		DatabaseOperation.CLEAN_INSERT.execute(connection, getDataSet());
+		this.testCat = new Category();
 	}
 	
-	//test an douleuei to EAGER
+
 	@Test
 	public void testGetCategoryList() throws BusinessDoesNotExistException {
-		Business retBus = testBusinessDAO.findById(1);
-		List<Category> testCatList = retBus.getCategoryList();
-		//an h teleutaia eggrafh apo to dataset einai idia me t teleutaia ts listas, tote OK
-		assertEquals(2,testCatList.get(1).getId());
+		this.testBus=testBusinessDAO.findById(1);
+		assertNotNull(this.testBus.getCategoryList().get(1));
 	}
 	
-	//add new category
 	@Test
-	public void testSetCategoryListAddCategory() throws BusinessDoesNotExistException {
-		//pairnw ta categories
-		Business retBus = testBusinessDAO.findById(1);
-		List<Category> testCatList = retBus.getCategoryList();
-		//vazw new cat kai ta stelnw
-		Category testCat = new Category();
-		testCat.setName("newInjectedCategory");
-		testCatList.add(testCat);
-		retBus.setCategoryList(testCatList);
-		testBusinessDAO.update(retBus);
-		//ksana pernw ta categories apo vash k vlepw an mpike to testCat
-		testCatList= retBus.getCategoryList();
-		assertEquals(7, testCatList.get(2).getId());
+	public void testGetCategoryListThatIsNull() throws BusinessDoesNotExistException {
+		this.testBus=testBusinessDAO.findById(2);
+		assertEquals(0,this.testBus.getCategoryList().size());
 	}
-
+	
+	@Test
+	public void testAddCategory() throws BusinessDoesNotExistException {
+		this.testCat.setName("newInjectedCategory");
+		this.testBus = this.testBusinessDAO.findById(1);
+		this.testBus.getCategoryList().add(testCat);
+		testBusinessDAO.update(this.testBus);
+		this.testBus = this.testBusinessDAO.findById(1);
+		assertEquals(7, this.testBus.getCategoryList().size());
+	}
+	
+	@Test
+	public void testDeleteCategory() throws BusinessDoesNotExistException {
+		this.testBus = this.testBusinessDAO.findById(1);
+		this.testBus.getCategoryList().remove(5);
+		this.testBusinessDAO.update(this.testBus);
+		assertEquals(5, this.testBus.getCategoryList().size());
+		
+	}
+	
+	@Test
+	public void testUpdateCategoryName() throws BusinessDoesNotExistException {
+		this.testBus = this.testBusinessDAO.findById(1);
+		this.testBus.getCategoryList().get(1).setName("banana");
+		this.testBusinessDAO.update(this.testBus);
+		this.testBus = this.testBusinessDAO.findById(1);
+		assertEquals("banana", this.testBus.getCategoryList().get(1).getName());
+	}
+	
+	@Test
+	public void testDeleteAllCategories() throws BusinessDoesNotExistException {
+		this.testBus = this.testBusinessDAO.findById(1);
+		this.testBus.getCategoryList().clear();
+		this.testBusinessDAO.update(this.testBus);
+		assertEquals(0, this.testBus.getCategoryList().size());	
+	}
+	
+	
+	
 }

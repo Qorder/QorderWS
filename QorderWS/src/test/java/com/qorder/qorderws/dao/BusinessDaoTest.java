@@ -52,6 +52,7 @@ public class BusinessDaoTest extends DBTestCase {
 	public void setUp() throws Exception {
 		IDatabaseConnection connection = new DatabaseDataSourceConnection(testDataSource);
 		DatabaseOperation.CLEAN_INSERT.execute(connection, getDataSet());
+		this.testBus = new Business();
 	}
 
 	@After
@@ -62,54 +63,40 @@ public class BusinessDaoTest extends DBTestCase {
 	
 	@Test
 	public void testExistsFindById() throws BusinessDoesNotExistException {
-		Business retBus = testBusinessDAO.findById(3);
-		assertEquals("Jumbo3",retBus.getName());	
+		this.testBus = this.testBusinessDAO.findById(3);
+		assertEquals("Jumbo3",this.testBus.getName());	
 	}
 	
 	@Test(expected=BusinessDoesNotExistException.class)
 	public void testDoesNotExistFindById() throws BusinessDoesNotExistException {
-		Business retBus = testBusinessDAO.findById(1337);
+		this.testBus = this.testBusinessDAO.findById(1337);
 	}
 	
-	//1)Try to delete jumbo2(exists) - 2)Validate by trying to find jumbo2, leading to exception
-	@Test(expected=BusinessDoesNotExistException.class)
+	@Test
 	public void testExistsDelete() throws BusinessDoesNotExistException {
-		this.testBus = new Business("otiKaiNaValwThaDoulepsei-koitaeiMonoId");
-		testBus.setId(2);
-		boolean wasDeleted = testBusinessDAO.delete(testBus);
-		assertEquals(true, wasDeleted);
-		Business retBus = testBusinessDAO.findById(2);
+		this.testBus.setId(3);
+		assertEquals(true, this.testBusinessDAO.delete(testBus));
 	}
 	
-	//1)Try to update jumbo2(exists) - 2)Validate
+
 	@Test
 	public void testExistsUpdate() throws BusinessDoesNotExistException {
-		this.testBus = new Business();
-		testBus.setId(2);
-		testBus.setName("Trakter");
-		boolean wasUpdated = testBusinessDAO.update(testBus);
-		assertEquals(true, wasUpdated);
-		Business retBus = testBusinessDAO.findById(2);
-		assertEquals("Trakter", retBus.getName());
+		this.testBus.setId(2);
+		this.testBus.setName("Trakter");
+		assertEquals(true, this.testBusinessDAO.update(testBus));
 	}
 	
-	//1)Try to save jumbo5(does not exist) - 2)Validate
+	
 	@Test
 	public void testNameDoesNotExistSave() throws BusinessDoesNotExistException {
 		this.testBus = new Business("Jumbo5");
-		boolean wasSaved = testBusinessDAO.save(testBus);
-		assertEquals(true, wasSaved);
-		Business retBus = testBusinessDAO.findById(5); //known state so the id is 5
-		assertEquals("Jumbo5", retBus.getName());
+		assertEquals(true, this.testBusinessDAO.save(testBus));
 	}
 
-	//1)Try to save jumbo4(exists) - 2)Validate
 	@Test
 	public void testNameExistsSave() throws BusinessDoesNotExistException {
 		this.testBus = new Business("Jumbo4");
 		boolean wasSaved = testBusinessDAO.save(testBus);
 		assertEquals(true, wasSaved);
-		Business retBus = testBusinessDAO.findById(6); //id should be 6 if new obj was saved
-		assertEquals("Jumbo4", retBus.getName());
 	}
 }
