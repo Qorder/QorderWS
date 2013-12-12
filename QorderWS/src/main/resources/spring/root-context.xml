@@ -49,6 +49,13 @@
 		 <property name="orderDAO" ref="orderDAO" />
 	</bean>
 
+	<bean id="productService" class="com.qorder.qorderws.service.ProductService">
+		 <property name="productDAO" ref="productDAO" />
+	</bean>
+	
+	<bean id="productDAO" class="com.qorder.qorderws.dao.ProductDAO"
+		autowire="byName" />
+
 	<bean id="orderDAO" class="com.qorder.qorderws.dao.OrderDAO"
 		autowire="byName" />
 

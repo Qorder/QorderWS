@@ -34,10 +34,9 @@ public class OrderService implements IOrderService {
 	}
 
 	@Override
-	public boolean createOrder(long businessId, Order order) {
-		try {
-			Business business = businessDAO.findById(businessId);
-		} catch (BusinessDoesNotExistException e) {}
+	public boolean createOrder(long businessId, Order order) throws BusinessDoesNotExistException {
+	
+		Business business = businessDAO.findById(businessId);
 		return orderDAO.save(order);
 	}
 

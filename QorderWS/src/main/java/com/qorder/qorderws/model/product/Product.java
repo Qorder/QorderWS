@@ -1,6 +1,7 @@
 package com.qorder.qorderws.model.product;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,6 +21,7 @@ public class Product {
 	private String name;
 	@Column(name="PRICE")
 	private BigDecimal price;
+	private List<String> details;
 	
 	
 	public Product(String name, BigDecimal price) {
@@ -55,4 +57,11 @@ public class Product {
 		this.price = price;
 	}
 
+	public List<String> getDetails() {
+		return details;
+	}
+
+	public void setDetails(List<String> details) {
+		this.details = details;
+	}
 }
