@@ -10,6 +10,6 @@ public interface ICategoryService {
 	
 	//TODO: throws CategoryNotFoundException
 	
-	Category getCategoryByID(long categoryId) throws CategoryDoesNotExistException, BusinessDoesNotExistException;
+	Category fetchCategoryByID(long categoryId) throws CategoryDoesNotExistException;
 
 }

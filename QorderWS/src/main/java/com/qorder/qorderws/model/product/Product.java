@@ -11,27 +11,27 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="PRODUCT")
+@Table(name = "PRODUCT")
 public class Product {
-	
+
 	@Id
-    @GeneratedValue
-    @Column(name="PRODUCT_ID")
+	@GeneratedValue
+	@Column(name = "PRODUCT_ID")
 	private long id;
-	@Column(name="NAME")
+	@Column(name = "NAME")
 	private String name;
-	@Column(name="PRICE")
+	@Column(name = "PRICE")
 	private BigDecimal price;
-	
-	//private List<String> attributes = new ArrayList<String>();
-	
+
+	// private List<String> details;
+
 	public Product(String name, BigDecimal price) {
 		this.name = name;
 		this.price = price;
 	}
-	
+
 	public Product() {
-		
+
 	}
 
 	public long getId() {
@@ -57,18 +57,17 @@ public class Product {
 	public void setPrice(BigDecimal price) {
 		this.price = price;
 	}
-/*
-	public List<String> getAttributes() {
-		return attributes;
+
+	public List<String> getDetails() {
+		List<String> details = new ArrayList<String>();
+		details.add("Detail 1");
+		details.add("detail 2");
+		details.add("detail 3");
+		return details;
 	}
 
-	public void setAttributes(List<String> attributes) {
-		this.attributes = attributes;
-	}
-	
-	public boolean addAttribute(String attribute) {
-		return attributes.add(attribute);
-	}
-	
-*/
+	/*
+	public void setDetails(List<String> details) {
+		this.details = details;
+	}*/
 }

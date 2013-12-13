@@ -42,7 +42,7 @@ public class CategoryController {
 	@RequestMapping(value = "/category", params = "id", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	ResponseEntity<DetailedCategoryDTO> getCategory(@RequestParam Long id) throws CategoryDoesNotExistException, BusinessDoesNotExistException {
 		LOGGER.info("Request for category with id equals "+id);
-		Category fetchedCategory = categoryService.getCategoryByID(id);
+		Category fetchedCategory = categoryService.fetchCategoryByID(id);
 		return new ResponseEntity<DetailedCategoryDTO>( new CategoryToDtoMapper().map(fetchedCategory, new DetailedCategoryDTO()) , HttpStatus.OK);
 	}
 	
