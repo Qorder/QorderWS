@@ -42,7 +42,7 @@ public class CategoryDaoTest extends DBTestCase {
 	
 	@Override
 	protected IDataSet getDataSet() throws Exception {
-		return new FlatXmlDataSetBuilder().build(new FileInputStream("src/test/java/com/qorder/qorderws/dao/DemoCategories.xml"));
+		return new FlatXmlDataSetBuilder().build(new FileInputStream("src/test/java/com/qorder/qorderws/dao/DemoDatabase.xml"));
 	}
 	
 	/* Inserts XML dataset into the db before EACH test. if an item gets deleted, it will be reinserted
@@ -60,12 +60,13 @@ public class CategoryDaoTest extends DBTestCase {
 	@Test
 	public void testGetCategoryList() throws BusinessDoesNotExistException {
 		this.testBus=testBusinessDAO.findById(1);
+		System.out.println(this.testBus.getCategoryList().get(0).getProductList().get(0).getAttributeList().get(0).getDescription());
 		assertNotNull(this.testBus.getCategoryList().get(1));
 	}
 	
 	@Test
 	public void testGetCategoryListThatIsNull() throws BusinessDoesNotExistException {
-		this.testBus=testBusinessDAO.findById(2);
+		this.testBus=testBusinessDAO.findById(4);
 		assertEquals(0,this.testBus.getCategoryList().size());
 	}
 	

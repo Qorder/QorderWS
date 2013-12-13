@@ -41,7 +41,7 @@ public class BusinessDaoTest extends DBTestCase {
 	
 	@Override
 	protected IDataSet getDataSet() throws Exception {
-		return new FlatXmlDataSetBuilder().build(new FileInputStream("src/test/java/com/qorder/qorderws/dao/DemoBusinesses.xml"));
+		return new FlatXmlDataSetBuilder().build(new FileInputStream("src/test/java/com/qorder/qorderws/dao/DemoDatabase.xml"));
 	}
 	
 	/* Inserts XML dataset into the db before EACH test. if an item gets deleted, it will be reinserted
@@ -63,19 +63,21 @@ public class BusinessDaoTest extends DBTestCase {
 	
 	@Test
 	public void testExistsFindById() throws BusinessDoesNotExistException {
-		this.testBus = this.testBusinessDAO.findById(3);
-		assertEquals("Jumbo3",this.testBus.getName());	
+		this.testBus = this.testBusinessDAO.findById(1);
+		assertEquals("Jumbo1",this.testBus.getName());	
 	}
+	
 	
 	@Test(expected=BusinessDoesNotExistException.class)
 	public void testDoesNotExistFindById() throws BusinessDoesNotExistException {
 		this.testBus = this.testBusinessDAO.findById(1337);
 	}
 	
-	@Test
+	@Test(expected=BusinessDoesNotExistException.class)
 	public void testExistsDelete() throws BusinessDoesNotExistException {
 		this.testBus.setId(3);
-		assertEquals(true, this.testBusinessDAO.delete(testBus));
+		this.testBusinessDAO.delete(testBus);
+		this.testBusinessDAO.findById(3);
 	}
 	
 
@@ -83,20 +85,18 @@ public class BusinessDaoTest extends DBTestCase {
 	public void testExistsUpdate() throws BusinessDoesNotExistException {
 		this.testBus.setId(2);
 		this.testBus.setName("Trakter");
-		assertEquals(true, this.testBusinessDAO.update(testBus));
+		this.testBusinessDAO.update(testBus);
+		this.testBus = this.testBusinessDAO.findById(2);
+		assertTrue(this.testBus.getName().contentEquals("Trakter"));
 	}
 	
 	
 	@Test
 	public void testNameDoesNotExistSave() throws BusinessDoesNotExistException {
-		this.testBus = new Business("Jumbo5");
-		assertEquals(true, this.testBusinessDAO.save(testBus));
+		this.testBus = new Business("Jumbo9");
+		this.testBusinessDAO.save(testBus);
+		this.testBus = this.testBusinessDAO.findById(9);
+		assertTrue(this.testBus.getName().contentEquals("Jumbo9"));
 	}
 
-	@Test
-	public void testNameExistsSave() throws BusinessDoesNotExistException {
-		this.testBus = new Business("Jumbo4");
-		boolean wasSaved = testBusinessDAO.save(testBus);
-		assertEquals(true, wasSaved);
-	}
 }

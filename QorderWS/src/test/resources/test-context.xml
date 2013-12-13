@@ -42,5 +42,7 @@
 	<bean id="testBusinessDAO" class="com.qorder.qorderws.dao.BusinessDAO">
 	    <property name="sessionFactory" ref="testSessionFactory"></property>
 	</bean>
+	
+
 
 </beans>
