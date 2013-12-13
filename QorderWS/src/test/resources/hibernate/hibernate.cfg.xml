@@ -24,6 +24,5 @@
 		<mapping class="com.qorder.qorderws.model.product.Product" />
 		<mapping class="com.qorder.qorderws.model.category.Category" />
 		<mapping class="com.qorder.qorderws.model.business.Business" />
-		<mapping class="com.qorder.qorderws.model.attribute.Attribute" />
 	</session-factory>
 </hibernate-configuration>

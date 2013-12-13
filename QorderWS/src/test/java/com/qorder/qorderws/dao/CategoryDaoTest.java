@@ -60,7 +60,6 @@ public class CategoryDaoTest extends DBTestCase {
 	@Test
 	public void testGetCategoryList() throws BusinessDoesNotExistException {
 		this.testBus=testBusinessDAO.findById(1);
-		System.out.println(this.testBus.getCategoryList().get(0).getProductList().get(0).getAttributeList().get(0).getDescription());
 		assertNotNull(this.testBus.getCategoryList().get(1));
 	}
 	
