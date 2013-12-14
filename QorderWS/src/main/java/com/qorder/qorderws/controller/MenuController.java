@@ -41,7 +41,7 @@ public class MenuController {
 	
 	@ExceptionHandler(BusinessDoesNotExistException.class)
 	ResponseEntity<String> sendNotFoundException(Exception ex) {
-		return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
+		return new ResponseEntity<String>("Entity does not exist", HttpStatus.NOT_FOUND);
 	}
 	
 }
