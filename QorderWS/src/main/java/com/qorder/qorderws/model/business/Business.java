@@ -27,7 +27,7 @@ public class Business {
 	@Column(name = "NAME")
 	private String name;
 
-	@OneToMany(targetEntity = Category.class, cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@OneToMany(targetEntity = Category.class, cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	@JoinColumn(name = "BUSINESS_ID")
 	private List<Category> CategoryList = new ArrayList<Category>();
 

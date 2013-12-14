@@ -43,6 +43,11 @@
 	    <property name="sessionFactory" ref="testSessionFactory"></property>
 	</bean>
 	
-
-
+	<bean id="testCategoryDAO" class="com.qorder.qorderws.dao.CategoryDAO">
+	    <property name="sessionFactory" ref="testSessionFactory"></property>
+	</bean>
+	
+	<bean id="testProductDAO" class="com.qorder.qorderws.dao.ProductDAO">
+	    <property name="sessionFactory" ref="testSessionFactory"></property>
+	</bean>
 </beans>

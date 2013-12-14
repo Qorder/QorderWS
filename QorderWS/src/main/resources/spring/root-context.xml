@@ -36,18 +36,46 @@
 		<property name="password" value="${dataSource.password}" />
 	</bean>
 
-	<bean id="businessService" class="com.qorder.qorderws.service.BusinessService" autowire="byName">
-		 <property name="businessDAO" ref="businessDAOmock" /> 
+	<bean id="businessService" class="com.qorder.qorderws.service.BusinessService">
+		<property name="businessDAO" ref="businessDAOmock" />
 	</bean>
-
+	
+	<!-- not in use now, use mockinstead   
 	<bean id="categoryService" class="com.qorder.qorderws.service.CategoryService">
-		 <property name="businessDAO" ref="businessDAOmock" /> 
+		<property name="categoryDAO" ref="categoryDAO" />
+	</bean> -->
+
+	<bean id="categoryService" class="com.qorder.qorderws.service.CategoryServiceMock">
+		<property name="businessDAO" ref="businessDAOmock" />
 	</bean>
 
-	<bean id="businessDAOmock" class="com.qorder.qorderws.dao.BusinessDaoMock"
+	<bean id="menuService" class="com.qorder.qorderws.service.MenuService">
+		<property name="businessDAO" ref="businessDAOmock" />
+	</bean>
+
+	<!-- not in use now, use mockinstead 
+	<bean id="productService" class="com.qorder.qorderws.service.ProductService">
+		<property name="productDAO" ref="productDAO" />
+	</bean> -->
+
+	<bean id="productService" class="com.qorder.qorderws.service.ProductServiceMock">
+		<property name="businessDAO" ref="businessDAOmock" />
+	</bean>
+
+	<bean id="orderService" class="com.qorder.qorderws.service.OrderService">
+		<property name="businessDAO" ref="businessDAO" />
+		<property name="orderDAO" ref="orderDAO" />
+	</bean>
+
+	<bean id="productDAO" class="com.qorder.qorderws.dao.ProductDAO"
+		autowire="byName" />
+
+	<bean id="orderDAO" class="com.qorder.qorderws.dao.OrderDAO"
 		autowire="byName" />
 
 	<bean id="businessDAO" class="com.qorder.qorderws.dao.BusinessDAO"
 		autowire="byName" />
-
+	
+	<bean id="businessDAOmock" class="com.qorder.qorderws.dao.BusinessDaoMock"
+		autowire="byName" />
 </beans>

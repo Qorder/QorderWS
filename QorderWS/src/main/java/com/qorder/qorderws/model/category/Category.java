@@ -30,7 +30,7 @@ public class Category {
 	@Column(name = "NAME")
 	private String name;
 
-	@OneToMany(targetEntity = Product.class,cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@OneToMany(targetEntity = Product.class,cascade=CascadeType.ALL,fetch=FetchType.LAZY)
 	@Fetch(value = FetchMode.SUBSELECT)
 	@JoinColumn(name = "PRODUCT_CATEGORY_ID")
 	private List<Product> productList = new ArrayList<Product>();

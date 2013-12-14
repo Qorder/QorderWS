@@ -14,7 +14,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.qorder.qorderws.client.AppClient;
-import com.qorder.qorderws.dto.BusinessInfoDTO;
+import com.qorder.qorderws.dto.MenuDTO;
 import com.qorder.qorderws.dto.CategoryDTO;
 import com.qorder.qorderws.model.category.Category;
 import com.qorder.qorderws.model.product.Product;
@@ -34,7 +34,7 @@ public class WebServiceRespondTest {
 	public final void testSuccessfulGetMenuById() {
 		System.out.println("Test menu controller succesful respond:");
 		long businessId=0;
-		BusinessInfoDTO businessInfo =  client.requestForMenu("http://localhost:8080/qorderws/businesses/menus/business?id=",businessId);
+		MenuDTO businessInfo =  client.requestForMenu("http://localhost:8080/qorderws/businesses/menus/business?id=",businessId);
 		
 		System.out.println("1: Check object characteristics after parsing from Json:");
 		System.out.println("Business info: " + businessInfo.getBusinessName());
@@ -51,7 +51,7 @@ public class WebServiceRespondTest {
 	public final void testFailedGetMenuById() {
 		System.out.println("\n\n2: Test menu controller exceptions for non stored objects:");
 		long businessId = 2;
-		BusinessInfoDTO fetchedInfo = null;
+		MenuDTO fetchedInfo = null;
 		try
 		{
 			 fetchedInfo =  client.requestForMenu("http://localhost:8080/qorderws/businesses/menus/business?id=",businessId);
@@ -75,7 +75,7 @@ public class WebServiceRespondTest {
 		
 		client.postNewCategory("http://localhost:8080/qorderws/categories/business?id=",businessId, category);
 		
-		BusinessInfoDTO businessInfo =  client.requestForMenu("http://localhost:8080/qorderws/businesses/menus/business?id=",businessId);
+		MenuDTO businessInfo =  client.requestForMenu("http://localhost:8080/qorderws/businesses/menus/business?id=",businessId);
 		System.out.println("Check object characteristics after parsing from Json:\n\n");
 		System.out.println("Business info: " + businessInfo.getBusinessName());
 		Iterator<CategoryDTO> categoryItr = businessInfo.getCategoryInfoList().iterator();

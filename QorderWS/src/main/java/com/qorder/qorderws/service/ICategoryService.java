@@ -1,6 +1,7 @@
 package com.qorder.qorderws.service;
 
 import com.qorder.qorderws.exception.BusinessDoesNotExistException;
+import com.qorder.qorderws.exception.CategoryDoesNotExistException;
 import com.qorder.qorderws.model.category.Category;
 
 public interface ICategoryService {
@@ -9,6 +10,6 @@ public interface ICategoryService {
 	
 	//TODO: throws CategoryNotFoundException
 	
-	Category getCategoryByID(long categoryId);
+	Category fetchCategoryByID(long categoryId) throws CategoryDoesNotExistException;
 
 }

@@ -26,7 +26,6 @@ public class BusinessDAO implements IBusinessDAO {
 			sessionFactory.getCurrentSession().save(business);
 			return true;
 		} catch(final HibernateException ex){
-			//sessionFactory.getCurrentSession().getTransaction().rollback();
 		}
 			return false;
 	}
@@ -36,12 +35,10 @@ public class BusinessDAO implements IBusinessDAO {
 	 */
 	@Override
 	public boolean update(Business business) {
-		//TODO : kalese tin find gia na deis an iparxei prin pas na to diagrapseis: h vres hiber. opti tropo.
 		try {
 			sessionFactory.getCurrentSession().update(business);
 			return true;
 		} catch(final HibernateException ex){
-			//sessionFactory.getCurrentSession().getTransaction().rollback();
 		}
 			return false;
 	}

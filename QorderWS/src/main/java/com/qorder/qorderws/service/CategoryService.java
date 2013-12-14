@@ -1,44 +1,27 @@
 package com.qorder.qorderws.service;
 
-import java.math.BigDecimal;
-
 import org.springframework.transaction.annotation.Transactional;
 
-import com.qorder.qorderws.dao.IBusinessDAO;
+import com.qorder.qorderws.dao.ICategoryDAO;
 import com.qorder.qorderws.exception.BusinessDoesNotExistException;
-import com.qorder.qorderws.model.business.Business;
+import com.qorder.qorderws.exception.CategoryDoesNotExistException;
 import com.qorder.qorderws.model.category.Category;
-import com.qorder.qorderws.model.product.Product;
 
 @Transactional
 public class CategoryService implements ICategoryService {
 
-	private IBusinessDAO businessDAO;
+	private ICategoryDAO categoryDAO;
 
-	public IBusinessDAO getBusinessDAO() {
-		return businessDAO;
+	//when the test are finished we should use categoryDAO instead of BusinessDoesNotExistException and businessDAO.
+	@Override
+	public Category fetchCategoryByID(long categoryId) throws CategoryDoesNotExistException {
+		return categoryDAO.findById(categoryId);	
 	}
 
-	public void setBusinessDAO(IBusinessDAO businessDAO) {
-		this.businessDAO = businessDAO;
-	}
 
 	@Override
 	public boolean createCategory(long businessId, Category category) throws BusinessDoesNotExistException {
-		Business business = businessDAO.findById(businessId);
-		business.getCategoryList().add(category);
-		return businessDAO.update(business);
-	}
-
-	@Override
-	public Category getCategoryByID(long categoryId) {
-		Category category = new Category();
-		category.setName("food");
-		Product product = new Product();
-		product.setName("souvlaki");
-		product.setPrice(BigDecimal.valueOf(1,4));
-		category.addProduct(product);
-		return category;
+		return false;
 	}
 	
 }
