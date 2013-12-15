@@ -14,7 +14,7 @@
 
 	<context:property-placeholder
 		location="classpath:/hibernate/dataSource.properties" />
-
+	
 	<bean id="transactionManager"
 		class="org.springframework.orm.hibernate4.HibernateTransactionManager"
 		autowire="byName" />
@@ -36,6 +36,9 @@
 		<property name="password" value="${dataSource.password}" />
 	</bean>
 
+	
+	<!-- Service beans declerations here -->
+	
 	<bean id="businessService" class="com.qorder.qorderws.service.BusinessService">
 		<property name="businessDAO" ref="businessDAOmock" />
 	</bean>
@@ -66,6 +69,9 @@
 		<property name="businessDAO" ref="businessDAO" />
 		<property name="orderDAO" ref="orderDAO" />
 	</bean>
+	
+	
+	<!-- DAO beans declerations here -->
 
 	<bean id="productDAO" class="com.qorder.qorderws.dao.ProductDAO"
 		autowire="byName" />
