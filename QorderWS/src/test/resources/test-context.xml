@@ -50,4 +50,8 @@
 	<bean id="testProductDAO" class="com.qorder.qorderws.dao.ProductDAO">
 	    <property name="sessionFactory" ref="testSessionFactory"></property>
 	</bean>
+	
+	<bean id="testOrderDAO" class="com.qorder.qorderws.dao.OrderDAO">
+	    <property name="sessionFactory" ref="testSessionFactory"></property>
+	</bean>
 </beans>

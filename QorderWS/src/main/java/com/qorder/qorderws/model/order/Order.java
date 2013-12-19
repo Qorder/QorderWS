@@ -14,6 +14,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import com.qorder.qorderws.model.business.Business;
 
 @Entity
@@ -31,20 +34,22 @@ public class Order {
 	@Column(name = "DATE_TIME")
 	private Date dateTime;
 
-	@OneToMany(targetEntity = ProductHolder.class)
+	@OneToMany(targetEntity = ProductHolder.class, cascade=CascadeType.ALL)
 	@JoinColumn(name = "ORDER_ID")
+	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<ProductHolder> order = new ArrayList<ProductHolder>();
 	
 	@ManyToOne(targetEntity=Business.class,cascade=CascadeType.ALL )
     @JoinColumn(name="BUSINESS_ID")
-	private long businessId;
+	private Business business;
 
-	public long getBusinessId() {
-		return businessId;
+
+	public Business getBusiness() {
+		return business;
 	}
 
-	public void setBusinessId(long businessId) {
-		this.businessId = businessId;
+	public void setBusiness(Business business) {
+		this.business = business;
 	}
 
 	public void setDateTime(Date dateTime) {

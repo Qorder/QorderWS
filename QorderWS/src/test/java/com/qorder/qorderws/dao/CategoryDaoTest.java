@@ -11,7 +11,6 @@ import org.dbunit.database.IDatabaseConnection;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
 import org.dbunit.operation.DatabaseOperation;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,7 +20,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.qorder.qorderws.exception.BusinessDoesNotExistException;
 import com.qorder.qorderws.exception.CategoryDoesNotExistException;
-import com.qorder.qorderws.model.business.Business;
 import com.qorder.qorderws.model.category.Category;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -72,7 +70,7 @@ public class CategoryDaoTest extends DBTestCase {
 		assertEquals(6, testCatsList.size());
 		assertEquals("Jumbo1Kafes6", testCatsList.get(5).getName());
 	}
-	
+		
 	@Test
 	public void testExistsUpdate() throws CategoryDoesNotExistException {
 		this.testCat.setId(1);
@@ -89,6 +87,8 @@ public class CategoryDaoTest extends DBTestCase {
 		this.testCategoryDAO.delete(testCat);
 		this.testCategoryDAO.findById(8);
 	}
+	
+	
 
 
 

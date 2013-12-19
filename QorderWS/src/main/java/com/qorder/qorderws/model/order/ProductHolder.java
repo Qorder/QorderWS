@@ -8,6 +8,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import com.qorder.qorderws.model.product.Product;
 
 @Entity
@@ -24,8 +27,14 @@ public class ProductHolder {
 	
 	@ManyToOne(targetEntity=Product.class)
 	@JoinColumn(name="PRODUCT_ID")
+	@LazyCollection(LazyCollectionOption.FALSE)
 	private Product product;
 	
+	
+	public ProductHolder() {
+		super();
+	}
+
 	public ProductHolder(Product product) {
 		this.product = product;
 	}
