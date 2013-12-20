@@ -13,35 +13,34 @@ import com.qorder.qorderws.model.category.Category;
 
 @Transactional
 public class CategoryDAO implements ICategoryDAO {
-	
+
 	private SessionFactory sessionFactory;
 
 	public SessionFactory getSessionFactory() {
 		return sessionFactory;
 	}
+
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
 	}
 
 	@Override
-	public List<Category> fetchCategoriesForBusiness(long businessId) throws BusinessDoesNotExistException {
-		 Query q = sessionFactory.getCurrentSession()
-			.createQuery("SELECT CategoryList FROM Business as b WHERE b.id= :id");
-		 q.setParameter("id", businessId);
-		 List<Category> fetchedList = q.list();
-		 return fetchedList;
+	public List<Category> fetchCategoriesForBusiness(long businessId)
+			throws BusinessDoesNotExistException {
+		Query q = sessionFactory.getCurrentSession().createQuery(
+				"SELECT CategoryList FROM Business as b WHERE b.id= :id");
+		q.setParameter("id", businessId);
+		List<Category> fetchedList = q.list();
+		return fetchedList;
 	}
 
 	@Override
 	public Category findById(long categoryId) throws CategoryDoesNotExistException {
-		Category category= null;
-		try {
-			category = (Category) sessionFactory.getCurrentSession().get(Category.class, categoryId);
-			if (category==null) {
-				throw new CategoryDoesNotExistException();	
-			}
-		}
-		catch(final HibernateException ex) {	
+
+		Category category = (Category) sessionFactory.getCurrentSession().get(Category.class, categoryId);
+		if (category == null) 
+		{
+			throw new CategoryDoesNotExistException();
 		}
 		return category;
 	}
@@ -51,32 +50,34 @@ public class CategoryDAO implements ICategoryDAO {
 		try {
 			sessionFactory.getCurrentSession().save(category);
 			return true;
-		} catch(final HibernateException ex){
+		} catch (final HibernateException ex) {
 		}
-			return false;
+		return false;
 	}
 
-	//TODO : Throws CategoryDoesNotExistException
+	// TODO : Throws CategoryDoesNotExistException
 	@Override
-	public boolean update(Category category) throws CategoryDoesNotExistException {
+	public boolean update(Category category)
+			throws CategoryDoesNotExistException {
 		try {
 			sessionFactory.getCurrentSession().update(category);
 			return true;
-		} catch(final HibernateException ex){
+		} catch (final HibernateException ex) {
 		}
-			return false;
+		return false;
 	}
 
-	//TODO : Throws CategoryDoesNotExistException
+	// TODO : Throws CategoryDoesNotExistException
 	@Override
-	public boolean delete(Category category) throws CategoryDoesNotExistException {
+	public boolean delete(Category category)
+			throws CategoryDoesNotExistException {
 		try {
 			sessionFactory.getCurrentSession().delete(category);
 			return true;
-		} catch(final HibernateException ex){
+		} catch (final HibernateException ex) {
 			sessionFactory.getCurrentSession().getTransaction().rollback();
 		}
-		return false;	
+		return false;
 	}
 
 }

@@ -2,7 +2,7 @@ package com.qorder.qorderws.dto;
 
 public class CategoryDTO {
 	
-	private Long id;
+	private Long id = null;
 	private String name;
 	private String uri = "http://snf-185147.vm.okeanos.grnet.gr:8080/qorderws/categories/category?id=";
 	
@@ -23,8 +23,8 @@ public class CategoryDTO {
 		return uri + id;
 	}
 	
-	public void setUri(String realReference) {
-		this.uri = realReference;
+	public void setUri(String uri) {
+		this.uri = uri;
 	}
 	
 	public void setId(Long id) {

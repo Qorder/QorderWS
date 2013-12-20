@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -26,21 +27,31 @@ public class MenuController {
 	@Autowired
 	private IMenuService menuService;
 	
+	public IMenuService getMenuService() {
+		return menuService;
+	}
+
+	public void setMenuService(IMenuService menuService) {
+		this.menuService = menuService;
+	}
+
 	/**
 	 * 
-	 * @param businessId
-	 * @return
+	 * @param id
+	 * @return menu transfer object to client
 	 * @throws BusinessDoesNotExistException
 	 */
+	@Transactional(readOnly = true)
 	@RequestMapping(value = "/business", params = "id", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	ResponseEntity<MenuDTO> getMenuById(@RequestParam Long id) throws BusinessDoesNotExistException {
+	public ResponseEntity<MenuDTO> getMenuById(@RequestParam Long id) throws BusinessDoesNotExistException {
 		LOGGER.info("Request for menu with id parameter equal " + id.toString(), id);
 		MenuDTO menuDto = menuService.getMenuByBusinessId(id);
 		return new ResponseEntity<MenuDTO>(menuDto, HttpStatus.OK);
 	}
 	
 	@ExceptionHandler(BusinessDoesNotExistException.class)
-	ResponseEntity<String> sendNotFoundException(Exception ex) {
+	public ResponseEntity<String> sendNotFoundException(Exception ex) {
+		LOGGER.info("Exception was thrown, with cause " + ex.getCause() + "\nMessage: " + ex.getLocalizedMessage(), ex );
 		return new ResponseEntity<String>("Entity does not exist", HttpStatus.NOT_FOUND);
 	}
 	

@@ -1,10 +1,12 @@
 package com.qorder.qorderws.service;
 
+import java.io.IOException;
 import java.util.Iterator;
 
 import com.qorder.qorderws.dao.IBusinessDAO;
 import com.qorder.qorderws.dto.DetailedProductDTO;
 import com.qorder.qorderws.exception.BusinessDoesNotExistException;
+import com.qorder.qorderws.exception.CategoryDoesNotExistException;
 import com.qorder.qorderws.mapper.ProductToDetailedProductDTOMapper;
 import com.qorder.qorderws.model.business.Business;
 import com.qorder.qorderws.model.category.Category;
@@ -41,6 +43,13 @@ public class ProductServiceMock implements IProductService {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	@Override
+	public void createProduct(long categoryId, Product product)
+			throws CategoryDoesNotExistException, IOException {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

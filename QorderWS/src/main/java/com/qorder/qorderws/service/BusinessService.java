@@ -6,6 +6,7 @@ import com.qorder.qorderws.dao.IBusinessDAO;
 import com.qorder.qorderws.exception.BusinessDoesNotExistException;
 import com.qorder.qorderws.model.business.Business;
 
+
 @Transactional
 public class BusinessService implements IBusinessService {
 
@@ -22,6 +23,11 @@ public class BusinessService implements IBusinessService {
 	@Override
 	public Business fetchBusinessById(long businessId) throws BusinessDoesNotExistException {
 		return businessDAO.findById(businessId);
+	}
+
+	@Override
+	public void createBusiness(Business business) {
+		businessDAO.save(business);
 	}
 
 }

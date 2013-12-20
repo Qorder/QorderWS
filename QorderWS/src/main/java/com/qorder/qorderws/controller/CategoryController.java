@@ -1,5 +1,7 @@
 package com.qorder.qorderws.controller;
 
+import java.io.IOException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,9 +34,17 @@ public class CategoryController {
 	@Autowired
 	private ICategoryService categoryService;
 
+	public ICategoryService getCategoryService() {
+		return categoryService;
+	}
+
+	public void setCategoryService(ICategoryService categoryService) {
+		this.categoryService = categoryService;
+	}
+
 	@RequestMapping(value = "/business", params = "id", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
 	ResponseEntity<Void> crateCategory(@RequestParam Long id, @RequestBody CategoryDTO categoryDTO) throws BusinessDoesNotExistException {
-		LOGGER.info("Request for category creation");
+		LOGGER.info("Request for category creation with business id equals :" + id);
 		categoryService.createCategory(id, new CategoryInfoDTOtoCategoryMapper().map(categoryDTO, new Category()));
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
@@ -42,13 +52,18 @@ public class CategoryController {
 	@RequestMapping(value = "/category", params = "id", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	ResponseEntity<DetailedCategoryDTO> getCategory(@RequestParam Long id) throws CategoryDoesNotExistException {
 		LOGGER.info("Request for category with id equals "+id);
-		Category fetchedCategory = categoryService.fetchCategoryByID(id);
-		return new ResponseEntity<DetailedCategoryDTO>( new CategoryToDtoMapper().map(fetchedCategory, new DetailedCategoryDTO()) , HttpStatus.OK);
+		DetailedCategoryDTO detailedCategory = categoryService.fetchCategoryByID(id);
+		return new ResponseEntity<DetailedCategoryDTO>( detailedCategory, HttpStatus.OK);
 	}
 	
 	
-	@ExceptionHandler({ CategoryDoesNotExistException.class, BusinessDoesNotExistException.class })
+	@ExceptionHandler({ CategoryDoesNotExistException.class, BusinessDoesNotExistException.class})
 	ResponseEntity<String> sendNotFoundException(Exception ex) {
 		return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
+	}
+	
+	@ExceptionHandler({ IOException.class })
+	ResponseEntity<String> sendIOException(Exception ex) {
+		return new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 }

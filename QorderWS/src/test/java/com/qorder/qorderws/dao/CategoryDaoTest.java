@@ -1,6 +1,7 @@
 package com.qorder.qorderws.dao;
 
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -11,7 +12,6 @@ import org.dbunit.database.IDatabaseConnection;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
 import org.dbunit.operation.DatabaseOperation;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,7 +21,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.qorder.qorderws.exception.BusinessDoesNotExistException;
 import com.qorder.qorderws.exception.CategoryDoesNotExistException;
-import com.qorder.qorderws.model.business.Business;
 import com.qorder.qorderws.model.category.Category;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -55,14 +54,14 @@ public class CategoryDaoTest extends DBTestCase {
 	//TODO : Tests gia periptoseis pou den iparxei to category 
 
 	@Test
-	public void testExistsFindById() throws CategoryDoesNotExistException
+	public void testExistsFindById() throws CategoryDoesNotExistException, IOException
 	{
 		this.testCat = this.testCategoryDAO.findById(1);
 		assertEquals("Jumbo1mpyres",this.testCat.getName());	
 	}
 	
 	@Test(expected=CategoryDoesNotExistException.class)
-	public void testDoesNotExistFindById() throws CategoryDoesNotExistException {
+	public void testDoesNotExistFindById() throws CategoryDoesNotExistException, IOException {
 		this.testCat = this.testCategoryDAO.findById(1337);
 	}
 	
@@ -74,7 +73,7 @@ public class CategoryDaoTest extends DBTestCase {
 	}
 	
 	@Test
-	public void testExistsUpdate() throws CategoryDoesNotExistException {
+	public void testExistsUpdate() throws CategoryDoesNotExistException, IOException {
 		this.testCat.setId(1);
 		this.testCat.setName("Jumbo1mpyresUPDATEDMEGALE");
 		this.testCategoryDAO.update(testCat);
@@ -84,7 +83,7 @@ public class CategoryDaoTest extends DBTestCase {
 	}
 	
 	@Test(expected=CategoryDoesNotExistException.class)
-	public void testExistsDelete() throws CategoryDoesNotExistException {
+	public void testExistsDelete() throws CategoryDoesNotExistException, IOException {
 		this.testCat.setId(8);
 		this.testCategoryDAO.delete(testCat);
 		this.testCategoryDAO.findById(8);

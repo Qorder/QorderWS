@@ -26,11 +26,10 @@ public class Product {
 	@Column(name="PRICE")
 	private BigDecimal price;
 	
-	
 	 @ElementCollection
 	   @CollectionTable(name="ATTRIBUTE", joinColumns=@JoinColumn(name="PRODUCT_ID"))
 	   @Column(name="DESCRIPTION")
-	private List<String> AttributeList = new ArrayList<String>();
+	private List<String> detailList = new ArrayList<String>();
 	
 	
 	public Product(String name, BigDecimal price) {
@@ -66,12 +65,16 @@ public class Product {
 		this.price = price;
 	}
 
-	public List<String> getAttributeList() {
-		return AttributeList;
+	public List<String> getDetailList() {
+		return detailList;
 	}
 
-	public void setAttributeList(List<String> attributeList) {
-		AttributeList = attributeList;
+	public void setDetailList(List<String> detailList) {
+		this.detailList = detailList;
+	}
+
+	public void addDetail(String detail) {
+		this.detailList.add(detail);
 	}
 	
 	

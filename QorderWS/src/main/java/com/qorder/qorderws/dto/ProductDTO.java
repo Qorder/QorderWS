@@ -41,4 +41,9 @@ public class ProductDTO {
 		this.uri = uri;
 	}
 	
+	@Override
+	public String toString() {
+		return name + " id " + id;
+	}
+	
 }
