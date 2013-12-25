@@ -1,11 +1,15 @@
 package com.qorder.qorderws.dao;
 
+import java.util.List;
+
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.qorder.qorderws.exception.OrderDoesNotExistException;
 import com.qorder.qorderws.model.order.Order;
-
+@Transactional
 public class OrderDAO implements IOrderDAO {
 
 	private SessionFactory sessionFactory;
@@ -55,5 +59,17 @@ public class OrderDAO implements IOrderDAO {
 				Order.class, orderId);
 		return order;
 	}
+	
+	@Override
+	@SuppressWarnings("unchecked")
+	public List<Order> fetchOrderForBusiness(long businessId) throws OrderDoesNotExistException {
+		List<Order> fetchedList = sessionFactory.getCurrentSession()
+												.createCriteria(Order.class)
+												.add(Restrictions.eq("business.id",businessId))
+												.list(); 
+		
+		 return fetchedList;
+	}
+	
 
 }

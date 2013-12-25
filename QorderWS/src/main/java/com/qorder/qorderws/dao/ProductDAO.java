@@ -3,13 +3,11 @@ package com.qorder.qorderws.dao;
 import java.util.List;
 
 import org.hibernate.HibernateException;
-import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.qorder.qorderws.exception.CategoryDoesNotExistException;
 import com.qorder.qorderws.exception.ProductDoesNotExistException;
-import com.qorder.qorderws.model.category.Category;
 import com.qorder.qorderws.model.product.Product;
 @Transactional
 public class ProductDAO implements IProductDAO {
@@ -24,14 +22,15 @@ public class ProductDAO implements IProductDAO {
 		this.sessionFactory = sessionFactory;
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Product> fetchProductsForCategory(long categoryId) throws CategoryDoesNotExistException {
-		Query q = sessionFactory.getCurrentSession()
-				.createQuery("SELECT productList FROM Category as c WHERE c.id= :id");
-			 q.setParameter("id", categoryId);
-			 List<Product> fetchedList = q.list();
+		List<Product> fetchedList= sessionFactory.getCurrentSession()
+				.createQuery("SELECT productList FROM Category as c WHERE c.id= :id").
+				setParameter("id", categoryId).list();
 			 return fetchedList;
 	}
+	
 	
 	@Override
 	public Product findById(long productId) throws ProductDoesNotExistException {

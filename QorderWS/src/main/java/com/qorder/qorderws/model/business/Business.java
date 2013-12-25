@@ -3,7 +3,6 @@ package com.qorder.qorderws.model.business;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -27,7 +26,7 @@ public class Business {
 	@Column(name = "NAME")
 	private String name;
 
-	@OneToMany(targetEntity = Category.class, cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+	@OneToMany(targetEntity = Category.class, fetch=FetchType.LAZY, orphanRemoval=true)
 	@JoinColumn(name = "BUSINESS_ID")
 	private List<Category> CategoryList = new ArrayList<Category>();
 

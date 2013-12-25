@@ -71,7 +71,7 @@ public class CategoryDaoTest extends DBTestCase {
 		assertEquals(6, testCatsList.size());
 		assertEquals("Jumbo1Kafes6", testCatsList.get(5).getName());
 	}
-	
+		
 	@Test
 	public void testExistsUpdate() throws CategoryDoesNotExistException, IOException {
 		this.testCat.setId(1);
@@ -88,6 +88,8 @@ public class CategoryDaoTest extends DBTestCase {
 		this.testCategoryDAO.delete(testCat);
 		this.testCategoryDAO.findById(8);
 	}
+	
+	
 
 
 

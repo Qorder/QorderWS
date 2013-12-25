@@ -41,7 +41,7 @@ public class BusinessDaoTest extends DBTestCase {
 	
 	@Override
 	protected IDataSet getDataSet() throws Exception {
-		return new FlatXmlDataSetBuilder().build(new FileInputStream("src/test/java/com/qorder/qorderws/dao/DemoDatabase.xml"));
+		return new FlatXmlDataSetBuilder().build(new FileInputStream("src/test/java/com/qorder/qorderws/dao/DemoBusinesses.xml"));
 	}
 	
 	/* Inserts XML dataset into the db before EACH test. if an item gets deleted, it will be reinserted

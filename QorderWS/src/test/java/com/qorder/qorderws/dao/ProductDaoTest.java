@@ -1,6 +1,7 @@
 package com.qorder.qorderws.dao;
 
 import java.io.FileInputStream;
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -18,11 +19,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.qorder.qorderws.exception.BusinessDoesNotExistException;
 import com.qorder.qorderws.exception.CategoryDoesNotExistException;
 import com.qorder.qorderws.exception.ProductDoesNotExistException;
-import com.qorder.qorderws.model.business.Business;
-import com.qorder.qorderws.model.category.Category;
 import com.qorder.qorderws.model.product.Product;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -102,4 +100,44 @@ public class ProductDaoTest extends DBTestCase {
 	}
 	
 	//TODO : test gia attributes
+	@Test
+	public void testFetchProductsForCategoryAndDescriptions() throws CategoryDoesNotExistException {
+		List<Product> testProdList = testProductDAO.fetchProductsForCategory(1);
+		assertEquals(2, testProdList.get(0).getDescriptions().size());
+		assertEquals("MIKRH",testProdList.get(0).getDescriptions().get(0));
+	}
+	
+	@Test
+	public void testExistsUpdateDescriptions() throws ProductDoesNotExistException {
+		this.testProd = this.testProductDAO.findById(1);
+		this.testProd.getDescriptions().add("mauri");
+		this.testProductDAO.update(testProd);
+		this.testProd = this.testProductDAO.findById(1);
+		assertEquals("mauri",this.testProd.getDescriptions().get(2));
+	}
+	
+	@Test
+	public void testSaveProductsWithoutDescriptions() throws ProductDoesNotExistException{
+		this.testProd = new Product();
+		this.testProd.setName("mpyra6");
+		this.testProd.setPrice(BigDecimal.valueOf(7));
+		this.testProductDAO.save(testProd);
+		this.testProd = this.testProductDAO.findById(6);
+		assertTrue(this.testProd.getDescriptions().isEmpty());
+		assertEquals("mpyra6",this.testProd.getName());
+	}
+	
+	@Test
+	public void testSaveProductsAndDescriptions() throws ProductDoesNotExistException{
+		this.testProd = new Product();
+		this.testProd.setName("mpyra7");
+		this.testProd.setPrice(BigDecimal.valueOf(5));
+		this.testProd.getDescriptions().add("save");
+		this.testProductDAO.save(testProd);
+		this.testProd = this.testProductDAO.findById(7);
+		assertEquals("save",this.testProd.getDescriptions().get(0));
+		assertEquals("mpyra7",this.testProd.getName());
+	}
+	
+	
 }

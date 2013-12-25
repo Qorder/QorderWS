@@ -8,6 +8,7 @@ import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -26,10 +27,10 @@ public class Product {
 	@Column(name="PRICE")
 	private BigDecimal price;
 	
-	 @ElementCollection
-	   @CollectionTable(name="ATTRIBUTE", joinColumns=@JoinColumn(name="PRODUCT_ID"))
+	 @ElementCollection (fetch=FetchType.EAGER)
+	   @CollectionTable(name="DESCRIPTION", joinColumns=@JoinColumn(name="PRODUCT_ID"))
 	   @Column(name="DESCRIPTION")
-	private List<String> detailList = new ArrayList<String>();
+	private List<String> descriptions = new ArrayList<String>();
 	
 	
 	public Product(String name, BigDecimal price) {
@@ -65,16 +66,16 @@ public class Product {
 		this.price = price;
 	}
 
-	public List<String> getDetailList() {
-		return detailList;
+	public List<String> getDescriptions() {
+		return descriptions;
 	}
 
-	public void setDetailList(List<String> detailList) {
-		this.detailList = detailList;
+	public void setDescriptions(List<String> description) {
+		descriptions = description;
 	}
 
-	public void addDetail(String detail) {
-		this.detailList.add(detail);
+	public void addDescription(String description) {
+		this.descriptions.add(description);
 	}
 	
 	
