@@ -34,7 +34,7 @@ public class Order {
 	@Column(name = "DATE_TIME")
 	private Date dateTime;
 
-	@OneToMany(targetEntity = ProductHolder.class, cascade=CascadeType.ALL)
+	@OneToMany(targetEntity = ProductHolder.class, cascade=CascadeType.ALL, orphanRemoval=true)
 	@JoinColumn(name = "ORDER_ID")
 	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<ProductHolder> order = new ArrayList<ProductHolder>();
