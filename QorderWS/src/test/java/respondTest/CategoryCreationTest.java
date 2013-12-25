@@ -69,15 +69,15 @@ public class CategoryCreationTest {
 		Product product1 = new Product();
 		product1.setName("Pita");
 		product1.setPrice(BigDecimal.valueOf(0.5));
-		product1.addDetail("From Cyprus");
-		product1.addDetail("From Lebanon");
+		product1.addDescription("From Cyprus");
+		product1.addDescription("From Lebanon");
 
 		// category brad product 2
 		Product product2 = new Product();
 		product2.setName("Bread");
 		product2.setPrice(BigDecimal.valueOf(1.0));
-		product2.addDetail("Tranditional");
-		product2.addDetail("Seven seeds");
+		product2.addDescription("Tranditional");
+		product2.addDescription("Seven seeds");
 		
 		Category category = Mockito.mock(Category.class);
 		Mockito.when(category.getName()).thenReturn("Bread");

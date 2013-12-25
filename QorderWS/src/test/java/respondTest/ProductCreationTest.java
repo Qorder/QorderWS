@@ -78,9 +78,9 @@ public class ProductCreationTest {
 		Product product = new Product();
 		product.setName("club sandwitch");
 		product.setPrice(BigDecimal.valueOf(4.5));
-		product.addDetail("classic");
-		product.addDetail("with chicken nuggets");
-		product.addDetail("with giros");
+		product.addDescription("classic");
+		product.addDescription("with chicken nuggets");
+		product.addDescription("with giros");
 		return product;
 	}
 
