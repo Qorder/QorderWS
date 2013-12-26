@@ -15,31 +15,32 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="PRODUCT")
+@Table(name = "PRODUCT")
 public class Product {
-	
+
 	@Id
-    @GeneratedValue
-    @Column(name="PRODUCT_ID")
+	@GeneratedValue
+	@Column(name = "PRODUCT_ID")
 	private long id;
-	@Column(name="NAME")
+	
+	@Column(name = "NAME")
 	private String name;
-	@Column(name="PRICE")
+	
+	@Column(name = "PRICE")
 	private BigDecimal price;
-	
-	 @ElementCollection (fetch=FetchType.EAGER)
-	   @CollectionTable(name="DESCRIPTION", joinColumns=@JoinColumn(name="PRODUCT_ID"))
-	   @Column(name="DESCRIPTION")
+
+	@ElementCollection(fetch = FetchType.EAGER)
+	@CollectionTable(name = "DESCRIPTION", joinColumns = @JoinColumn(name = "PRODUCT_ID"))
+	@Column(name = "DESCRIPTION")
 	private List<String> descriptions = new ArrayList<String>();
-	
-	
+
 	public Product(String name, BigDecimal price) {
 		this.name = name;
 		this.price = price;
 	}
-	
+
 	public Product() {
-		
+
 	}
 
 	public long getId() {
@@ -77,7 +78,5 @@ public class Product {
 	public void addDescription(String description) {
 		this.descriptions.add(description);
 	}
-	
-	
 
 }

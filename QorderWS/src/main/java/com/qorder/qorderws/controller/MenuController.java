@@ -55,4 +55,11 @@ public class MenuController {
 		return new ResponseEntity<String>("Entity does not exist", HttpStatus.NOT_FOUND);
 	}
 	
+	@ExceptionHandler(Exception.class)
+	public ResponseEntity<String> sendException(Exception ex) {
+		LOGGER.info("Exception was thrown, with cause " + ex.getCause() + "\nMessage: " + ex.getLocalizedMessage(), ex );
+		return new ResponseEntity<String>("Exception was raised", HttpStatus.CONFLICT);
+	}
+	
+	
 }
