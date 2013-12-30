@@ -1,55 +1,82 @@
 package com.qorder.qorderws.model.product;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
-public class Product implements IProduct{
-	
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "PRODUCT")
+public class Product {
+
+	@Id
+	@GeneratedValue
+	@Column(name = "PRODUCT_ID")
 	private long id;
-	private String name;
-	private BigDecimal price;
-	private List<String> attributes;
 	
-	@Override
+	@Column(name = "NAME")
+	private String name;
+	
+	@Column(name = "PRICE")
+	private BigDecimal price;
+
+	@ElementCollection(fetch = FetchType.EAGER)
+	@CollectionTable(name = "DESCRIPTION", joinColumns = @JoinColumn(name = "PRODUCT_ID"))
+	@Column(name = "DESCRIPTION")
+	private List<String> descriptions = new ArrayList<String>();
+
+	public Product(String name, BigDecimal price) {
+		this.name = name;
+		this.price = price;
+	}
+
+	public Product() {
+
+	}
+
 	public long getId() {
 		return id;
 	}
-	
-	@Override
+
 	public void setId(long id) {
 		this.id = id;
 	}
-	
-	@Override
+
 	public String getName() {
 		return name;
 	}
-	
-	@Override
+
 	public void setName(String name) {
 		this.name = name;
 	}
-	
-	@Override
+
 	public BigDecimal getPrice() {
 		return price;
 	}
-	
-	@Override
+
 	public void setPrice(BigDecimal price) {
 		this.price = price;
 	}
-	
-	@Override
-	public List<String> getAttributes() {
-		return attributes;
+
+	public List<String> getDescriptions() {
+		return descriptions;
 	}
-	
-	@Override
-	public void addAttribute(String attribute) {
-		this.attributes.add(attribute);
+
+	public void setDescriptions(List<String> description) {
+		descriptions = description;
 	}
-	
-	
+
+	public void addDescription(String description) {
+		this.descriptions.add(description);
+	}
 
 }

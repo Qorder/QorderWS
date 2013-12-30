@@ -1,58 +1,65 @@
 package com.qorder.qorderws.model.business;
 
-import com.qorder.qorderws.model.menu.IProductMenu;
+import java.util.ArrayList;
+import java.util.List;
 
-public class Business implements IBusiness {
-	
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import com.qorder.qorderws.model.category.Category;
+
+@Entity
+@Table(name = "BUSINESS")
+public class Business {
+
+	@Id
+	@GeneratedValue
+	@Column(name = "BUSINESS_ID")
 	private long id;
+
+	@Column(name = "NAME")
 	private String name;
-	private String address;
-	private IProductMenu menu;
 
-	public Business(long id) {
-		this.id = id;
-	}
+	@OneToMany(targetEntity = Category.class, cascade=CascadeType.ALL, fetch=FetchType.LAZY, orphanRemoval=true)
+	@JoinColumn(name = "BUSINESS_ID")
+	private List<Category> CategoryList = new ArrayList<Category>();
 
-	@Override
-	public long getId() {
-		return this.id;
+	public Business(String name) {
+		this.name = name;
 	}
 	
-	@Override
+	public Business() {
+		this.name="";
+	}
+
+	public long getId() {
+		return id;
+	}
+
 	public void setId(long id) {
 		this.id = id;
 	}
 
-
-	@Override
 	public String getName() {
-		return this.name;
+		return name;
 	}
 
-	@Override
 	public void setName(String name) {
-		this.name=name;
+		this.name = name;
 	}
 
-	@Override
-	public String getAddress() {
-		return this.address;
+	public List<Category> getCategoryList() {
+		return CategoryList;
 	}
 
-	@Override
-	public void setAddress(String address) {
-		this.address=address;
+	public void setCategoryList(List<Category> categoryList) {
+		CategoryList = categoryList;
 	}
-	
-	@Override
-	public void setMenu(IProductMenu menu) {
-		this.menu = menu;
-	}
-	
-	@Override
-	public IProductMenu getMenu() {
-		return menu;
-	}
-
-
 }

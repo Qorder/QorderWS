@@ -2,8 +2,9 @@ package com.qorder.qorderws.model.client;
 
 public interface IClient {
 	
-	public long getId();
-	public void setId(long id);
+	long getId();
+	
+	void setId(long id);
 	
 	void setName(String name);
 	
