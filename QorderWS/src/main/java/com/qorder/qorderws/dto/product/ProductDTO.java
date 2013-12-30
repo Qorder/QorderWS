@@ -1,4 +1,4 @@
-package com.qorder.qorderws.dto;
+package com.qorder.qorderws.dto.product;
 
 import java.math.BigDecimal;
 
@@ -39,6 +39,11 @@ public class ProductDTO {
 
 	public void setUri(String uri) {
 		this.uri = uri;
+	}
+	
+	@Override
+	public String toString() {
+		return name + " id " + id;
 	}
 	
 }

@@ -14,7 +14,7 @@
 
 	<context:property-placeholder
 		location="classpath:/hibernate/dataSource.properties" />
-	
+
 	<bean id="transactionManager"
 		class="org.springframework.orm.hibernate4.HibernateTransactionManager"
 		autowire="byName" />
@@ -36,33 +36,25 @@
 		<property name="password" value="${dataSource.password}" />
 	</bean>
 
-	
-	<!-- Service beans declerations here -->
-	
+
+	<!-- Service bean declerations here -->
+
 	<bean id="businessService" class="com.qorder.qorderws.service.BusinessService">
-		<property name="businessDAO" ref="businessDAOmock" />
+		<property name="businessDAO" ref="businessDAO" />
 	</bean>
-	
-	<!-- not in use now, use mockinstead   
+
 	<bean id="categoryService" class="com.qorder.qorderws.service.CategoryService">
 		<property name="categoryDAO" ref="categoryDAO" />
-	</bean> -->
-
-	<bean id="categoryService" class="com.qorder.qorderws.service.CategoryServiceMock">
-		<property name="businessDAO" ref="businessDAOmock" />
+		<property name="businessDAO" ref="businessDAO" />
 	</bean>
 
 	<bean id="menuService" class="com.qorder.qorderws.service.MenuService">
-		<property name="businessDAO" ref="businessDAOmock" />
+		<property name="businessDAO" ref="businessDAO" />
 	</bean>
 
-	<!-- not in use now, use mockinstead 
 	<bean id="productService" class="com.qorder.qorderws.service.ProductService">
 		<property name="productDAO" ref="productDAO" />
-	</bean> -->
-
-	<bean id="productService" class="com.qorder.qorderws.service.ProductServiceMock">
-		<property name="businessDAO" ref="businessDAOmock" />
+		<property name="categoryDAO" ref="categoryDAO" />
 	</bean>
 
 	<bean id="orderService" class="com.qorder.qorderws.service.OrderService">
@@ -70,8 +62,11 @@
 		<property name="orderDAO" ref="orderDAO" />
 	</bean>
 	
-	
-	<!-- DAO beans declerations here -->
+
+	<!-- DAO bean declerations here -->
+
+	<bean id="categoryDAO" class="com.qorder.qorderws.dao.CategoryDAO"
+		autowire="byName" />
 
 	<bean id="productDAO" class="com.qorder.qorderws.dao.ProductDAO"
 		autowire="byName" />
@@ -81,7 +76,8 @@
 
 	<bean id="businessDAO" class="com.qorder.qorderws.dao.BusinessDAO"
 		autowire="byName" />
-	
+
 	<bean id="businessDAOmock" class="com.qorder.qorderws.dao.BusinessDaoMock"
 		autowire="byName" />
+
 </beans>

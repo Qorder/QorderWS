@@ -3,7 +3,6 @@ package com.qorder.qorderws.dao;
 import java.util.List;
 
 import org.hibernate.HibernateException;
-import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,14 +23,15 @@ public class CategoryDAO implements ICategoryDAO {
 	}
 
 	@Override
+	@SuppressWarnings("unchecked")
 	public List<Category> fetchCategoriesForBusiness(long businessId) throws BusinessDoesNotExistException {
-		 Query q = sessionFactory.getCurrentSession()
-			.createQuery("SELECT CategoryList FROM Business as b WHERE b.id= :id");
-		 q.setParameter("id", businessId);
-		 List<Category> fetchedList = q.list();
+		List<Category> fetchedList = sessionFactory.getCurrentSession()
+			.createQuery("SELECT CategoryList FROM Business as b WHERE b.id= :id")
+			.setParameter("id", businessId).list();
 		 return fetchedList;
 	}
-
+ 
+	
 	@Override
 	public Category findById(long categoryId) throws CategoryDoesNotExistException {
 		Category category= null;

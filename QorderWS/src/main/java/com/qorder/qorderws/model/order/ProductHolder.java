@@ -8,6 +8,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import com.qorder.qorderws.model.product.Product;
 
 @Entity
@@ -20,15 +23,12 @@ public class ProductHolder {
 	private long id;
 	
 	@Column(name="COMMENTS")
-	private String comments;
+	private String notes;
 	
 	@ManyToOne(targetEntity=Product.class)
 	@JoinColumn(name="PRODUCT_ID")
+	@LazyCollection(LazyCollectionOption.FALSE)
 	private Product product;
-	
-	public ProductHolder(Product product) {
-		this.product = product;
-	}
 
 	public Product getProduct() {
 		return product;
@@ -39,12 +39,12 @@ public class ProductHolder {
 		
 	}
 
-	public String getComments() {
-		return comments;
+	public String getNotes() {
+		return notes;
 	}
 
-	public void setComments(String comments) {
-		this.comments = comments;
+	public void setNotes(String notes) {
+		this.notes = notes;
 		
 	}
 	

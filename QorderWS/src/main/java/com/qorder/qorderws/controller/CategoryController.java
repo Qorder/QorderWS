@@ -1,5 +1,7 @@
 package com.qorder.qorderws.controller;
 
+import java.io.IOException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,13 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.qorder.qorderws.dto.DetailedCategoryDTO;
-import com.qorder.qorderws.dto.CategoryDTO;
+import com.qorder.qorderws.dto.category.CategoryDTO;
+import com.qorder.qorderws.dto.category.DetailedCategoryDTO;
 import com.qorder.qorderws.exception.BusinessDoesNotExistException;
 import com.qorder.qorderws.exception.CategoryDoesNotExistException;
-import com.qorder.qorderws.mapper.CategoryInfoDTOtoCategoryMapper;
-import com.qorder.qorderws.mapper.CategoryToDtoMapper;
-import com.qorder.qorderws.model.category.Category;
 import com.qorder.qorderws.service.ICategoryService;
 
 @Controller
@@ -34,21 +33,26 @@ public class CategoryController {
 
 	@RequestMapping(value = "/business", params = "id", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
 	ResponseEntity<Void> crateCategory(@RequestParam Long id, @RequestBody CategoryDTO categoryDTO) throws BusinessDoesNotExistException {
-		LOGGER.info("Request for category creation");
-		categoryService.createCategory(id, new CategoryInfoDTOtoCategoryMapper().map(categoryDTO, new Category()));
+		LOGGER.info("Request for category creation with business id equals :" + id);
+		categoryService.createCategory(id, categoryDTO);
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "/category", params = "id", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	ResponseEntity<DetailedCategoryDTO> getCategory(@RequestParam Long id) throws CategoryDoesNotExistException {
 		LOGGER.info("Request for category with id equals "+id);
-		Category fetchedCategory = categoryService.fetchCategoryByID(id);
-		return new ResponseEntity<DetailedCategoryDTO>( new CategoryToDtoMapper().map(fetchedCategory, new DetailedCategoryDTO()) , HttpStatus.OK);
+		DetailedCategoryDTO detailedCategory = categoryService.fetchCategoryByID(id);
+		return new ResponseEntity<DetailedCategoryDTO>( detailedCategory, HttpStatus.OK);
 	}
 	
 	
-	@ExceptionHandler({ CategoryDoesNotExistException.class, BusinessDoesNotExistException.class })
+	@ExceptionHandler({ CategoryDoesNotExistException.class, BusinessDoesNotExistException.class})
 	ResponseEntity<String> sendNotFoundException(Exception ex) {
 		return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
+	}
+	
+	@ExceptionHandler({ IOException.class })
+	ResponseEntity<String> sendIOException(Exception ex) {
+		return new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 }
