@@ -11,7 +11,7 @@ public class OrderViewDTO {
 	
 	private String dateTime;
 	
-	private List<ProductHolderDTO> orderList = new ArrayList<ProductHolderDTO>();
+	private List<ProductHolderDTO> orderedProducts = new ArrayList<ProductHolderDTO>();
 	
 	public void setId(Long id) {
 		this.id = id;
@@ -37,16 +37,16 @@ public class OrderViewDTO {
 		this.dateTime = dateTime;
 	}
 
-	public List<ProductHolderDTO> getOrderList() {
-		return orderList;
+	public List<ProductHolderDTO> getOrderedProducts() {
+		return orderedProducts;
 	}
 
-	public void setOrderList(List<ProductHolderDTO> orderList) {
-		this.orderList = orderList;
+	public void setOrderedProducts(List<ProductHolderDTO> orderedProducts) {
+		this.orderedProducts = orderedProducts;
 	}
 
 	public void add(ProductHolderDTO productHolderDTO) {
-		this.orderList.add(productHolderDTO);
+		this.orderedProducts.add(productHolderDTO);
 	}
 
 }

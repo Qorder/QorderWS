@@ -1,7 +1,5 @@
 package com.qorder.qorderws.controller;
 
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.qorder.qorderws.dto.order.BusinessOrdersDTO;
 import com.qorder.qorderws.dto.order.OrderDTO;
-import com.qorder.qorderws.dto.order.OrderViewDTO;
+import com.qorder.qorderws.dto.order.PendingOrdersDTO;
 import com.qorder.qorderws.exception.BusinessDoesNotExistException;
 import com.qorder.qorderws.service.IOrderService;
 
@@ -38,10 +35,10 @@ public class OrderController {
 	}
 	
 	@RequestMapping(value = "/business", params = "id", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	ResponseEntity<List<OrderViewDTO>> getOrdersByBusinessId(@RequestParam Long id) throws BusinessDoesNotExistException {
-		BusinessOrdersDTO businessOrders = orderService.fetchOrdersFromBusinessID(id);
+	ResponseEntity<PendingOrdersDTO> getOrdersByBusinessId(@RequestParam Long id) throws BusinessDoesNotExistException {
+		PendingOrdersDTO pendingOrders = orderService.fetchOrdersFromBusinessID(id);
 		LOGGER.info("Request for business orders.\nFetchedList size is ");
-		return new ResponseEntity<List<OrderViewDTO>>(businessOrders.getOrdersList(), HttpStatus.OK);
+		return new ResponseEntity<PendingOrdersDTO>(pendingOrders, HttpStatus.OK);
 	}
 	
 	@ExceptionHandler(BusinessDoesNotExistException.class)
