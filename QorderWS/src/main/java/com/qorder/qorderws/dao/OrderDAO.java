@@ -9,7 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.qorder.qorderws.controller.BusinessController;
 import com.qorder.qorderws.exception.BusinessDoesNotExistException;
 import com.qorder.qorderws.exception.OrderDoesNotExistException;
 import com.qorder.qorderws.model.order.Order;
@@ -39,7 +38,6 @@ public class OrderDAO implements IOrderDAO {
 					"An exception was raised, details: "
 							+ ex.getLocalizedMessage(), ex);
 		}
-
 		return false;
 	}
 
@@ -60,6 +58,9 @@ public class OrderDAO implements IOrderDAO {
 			sessionFactory.getCurrentSession().delete(order);
 			return true;
 		} catch (final HibernateException ex) {
+			LOGGER.warn(
+					"Hibernate exception was raised while trying to delete order, info: ",
+					ex.getLocalizedMessage());
 		}
 
 		return false;
@@ -74,17 +75,15 @@ public class OrderDAO implements IOrderDAO {
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public List<Order> fetchOrderForBusiness(long businessId) throws BusinessDoesNotExistException {
-
+	public List<Order> fetchOrderForBusiness(long businessId)
+			throws BusinessDoesNotExistException {
 		List<Order> fetchedList = sessionFactory.getCurrentSession()
 				.createCriteria(Order.class)
 				.add(Restrictions.eq("business.id", businessId)).list();
-		
-		if (fetchedList.isEmpty()) 
-		{
+
+		if (fetchedList == null) {
 			throw new BusinessDoesNotExistException();
 		}
-		LOGGER.info("List size is " + fetchedList.size());
 		return fetchedList;
 	}
 

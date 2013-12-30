@@ -1,6 +1,5 @@
 package com.qorder.qorderws.dao;
 
-import java.io.IOException;
 import java.util.List;
 
 import com.qorder.qorderws.exception.BusinessDoesNotExistException;

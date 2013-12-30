@@ -1,7 +1,7 @@
 package com.qorder.qorderws.mapper;
 
-import com.qorder.qorderws.dto.order.OrderDTO;
 import com.qorder.qorderws.dto.order.BasketProductDTO;
+import com.qorder.qorderws.dto.order.OrderDTO;
 import com.qorder.qorderws.model.order.Order;
 import com.qorder.qorderws.model.order.ProductHolder;
 

@@ -21,7 +21,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.qorder.qorderws.exception.BusinessDoesNotExistException;
-import com.qorder.qorderws.exception.OrderDoesNotExistException;
 import com.qorder.qorderws.model.order.Order;
 
 @RunWith(SpringJUnit4ClassRunner.class)
