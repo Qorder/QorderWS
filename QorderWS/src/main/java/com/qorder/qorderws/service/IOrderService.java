@@ -1,7 +1,7 @@
 package com.qorder.qorderws.service;
 
-import com.qorder.qorderws.dto.order.PendingOrdersDTO;
 import com.qorder.qorderws.dto.order.OrderDTO;
+import com.qorder.qorderws.dto.order.PendingOrdersDTO;
 import com.qorder.qorderws.exception.BusinessDoesNotExistException;
 
 public interface IOrderService {

@@ -41,7 +41,7 @@ public class Order {
 	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<ProductHolder> orderList = new ArrayList<ProductHolder>();
 
-	@ManyToOne(targetEntity = Business.class, cascade = CascadeType.ALL)
+	@ManyToOne(targetEntity = Business.class)
 	@JoinColumn(name = "BUSINESS_ID")
 	private Business business;
 

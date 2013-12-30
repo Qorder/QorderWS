@@ -7,9 +7,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.qorder.qorderws.dao.IBusinessDAO;
 import com.qorder.qorderws.dao.IOrderDAO;
-import com.qorder.qorderws.dto.order.PendingOrdersDTO;
 import com.qorder.qorderws.dto.order.OrderDTO;
 import com.qorder.qorderws.dto.order.OrderViewDTO;
+import com.qorder.qorderws.dto.order.PendingOrdersDTO;
 import com.qorder.qorderws.exception.BusinessDoesNotExistException;
 import com.qorder.qorderws.mapper.OrderDTOtoOrderMapper;
 import com.qorder.qorderws.mapper.OrderToOrderViewDTOMapper;
@@ -57,8 +57,8 @@ public class OrderService implements IOrderService {
 		{
 			OrderViewDTO orderView = new OrderToOrderViewDTOMapper().map(order, new OrderViewDTO());
 			businessOrders.addOrderViewDTO(orderView);
+			orderDAO.delete(order);
 		}
 		return businessOrders;
 	}
-
 }

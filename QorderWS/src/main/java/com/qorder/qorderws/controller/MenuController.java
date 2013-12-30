@@ -22,7 +22,7 @@ import com.qorder.qorderws.service.IMenuService;
 public class MenuController {
 
 	private static final Logger LOGGER = LoggerFactory
-			.getLogger(BusinessController.class);
+			.getLogger(MenuController.class);
 	
 	@Autowired
 	private IMenuService menuService;

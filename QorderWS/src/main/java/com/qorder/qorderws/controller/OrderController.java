@@ -22,7 +22,7 @@ import com.qorder.qorderws.service.IOrderService;
 @RequestMapping(value = "/orders")
 public class OrderController {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(BusinessController.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(OrderController.class);
 
 	@Autowired
 	private IOrderService orderService;
@@ -37,7 +37,7 @@ public class OrderController {
 	@RequestMapping(value = "/business", params = "id", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	ResponseEntity<PendingOrdersDTO> getOrdersByBusinessId(@RequestParam Long id) throws BusinessDoesNotExistException {
 		PendingOrdersDTO pendingOrders = orderService.fetchOrdersFromBusinessID(id);
-		LOGGER.info("Request for business orders.\nFetchedList size is ");
+		LOGGER.info("Request for business orders.\nFetchedList size is " + pendingOrders.getOrders().size());
 		return new ResponseEntity<PendingOrdersDTO>(pendingOrders, HttpStatus.OK);
 	}
 	

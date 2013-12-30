@@ -26,7 +26,7 @@ import com.qorder.qorderws.service.ICategoryService;
 public class CategoryController {
 
 	private static final Logger LOGGER = LoggerFactory
-			.getLogger(BusinessController.class);
+			.getLogger(CategoryController.class);
 
 	@Autowired
 	private ICategoryService categoryService;
