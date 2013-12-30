@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.qorder.qorderws.dao.ICategoryDAO;
 import com.qorder.qorderws.dao.IProductDAO;
-import com.qorder.qorderws.dto.DetailedProductDTO;
+import com.qorder.qorderws.dto.product.DetailedProductDTO;
 import com.qorder.qorderws.exception.CategoryDoesNotExistException;
 import com.qorder.qorderws.exception.ProductDoesNotExistException;
 import com.qorder.qorderws.mapper.ProductToDetailedProductDTOMapper;

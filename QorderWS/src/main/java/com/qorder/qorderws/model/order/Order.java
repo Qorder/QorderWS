@@ -1,8 +1,10 @@
 package com.qorder.qorderws.model.order;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -32,33 +34,16 @@ public class Order {
 	private String tableNumber;
 
 	@Column(name = "DATE_TIME")
-	private Date dateTime;
+	private String dateTime = DateFormat.getDateTimeInstance(DateFormat.LONG,DateFormat.LONG, Locale.US).format(new Date());
 
-	@OneToMany(targetEntity = ProductHolder.class, cascade=CascadeType.ALL, orphanRemoval=true)
+	@OneToMany(targetEntity = ProductHolder.class, cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name = "ORDER_ID")
 	@LazyCollection(LazyCollectionOption.FALSE)
-	private List<ProductHolder> order = new ArrayList<ProductHolder>();
-	
-	@ManyToOne(targetEntity=Business.class,cascade=CascadeType.ALL )
-    @JoinColumn(name="BUSINESS_ID")
+	private List<ProductHolder> orderList = new ArrayList<ProductHolder>();
+
+	@ManyToOne(targetEntity = Business.class, cascade = CascadeType.ALL)
+	@JoinColumn(name = "BUSINESS_ID")
 	private Business business;
-
-
-	public Business getBusiness() {
-		return business;
-	}
-
-	public void setBusiness(Business business) {
-		this.business = business;
-	}
-
-	public void setDateTime(Date dateTime) {
-		this.dateTime = dateTime;
-	}
-
-	public void setOrder(List<ProductHolder> order) {
-		this.order = order;
-	}
 
 	public long getId() {
 		return id;
@@ -76,20 +61,32 @@ public class Order {
 		this.tableNumber = tableNumber;
 	}
 
-	public Date getDateTime() {
+	public String getDateTime() {
 		return dateTime;
 	}
 
-	public void setDateTime() {
-		this.dateTime = new Date();
+	public void setDateTime(String dateTime) {
+		this.dateTime = dateTime;
 	}
 
-	public List<ProductHolder> getOrder() {
-		return this.order;
+	public List<ProductHolder> getOrderList() {
+		return orderList;
 	}
 
-	public void addProductOrder(ProductHolder orderProd) {
-		this.order.add(orderProd);
+	public void setOrderList(List<ProductHolder> orderList) {
+		this.orderList = orderList;
+	}
+
+	public Business getBusiness() {
+		return business;
+	}
+
+	public void setBusiness(Business business) {
+		this.business = business;
+	}
+
+	public void add(ProductHolder productHolder) {
+		orderList.add(productHolder);
 	}
 
 }

@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.qorder.qorderws.exception.BusinessDoesNotExistException;
 import com.qorder.qorderws.exception.OrderDoesNotExistException;
 import com.qorder.qorderws.model.order.Order;
 
@@ -62,7 +63,7 @@ public class OrderDaoTest extends DBTestCase {
 	}
 	
 	@Test
-	public void testFetchOrderForBusiness() throws OrderDoesNotExistException{
+	public void testFetchOrderForBusiness() throws BusinessDoesNotExistException{
 		List<Order> orderList= new ArrayList<Order>();
 		orderList =	this.testOrderDAO.fetchOrderForBusiness(1);
 		assertEquals("25", orderList.get(0).getTableNumber());

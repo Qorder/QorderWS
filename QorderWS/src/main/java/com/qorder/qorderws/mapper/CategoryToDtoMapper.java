@@ -2,8 +2,8 @@ package com.qorder.qorderws.mapper;
 
 import java.util.Iterator;
 
-import com.qorder.qorderws.dto.DetailedCategoryDTO;
-import com.qorder.qorderws.dto.ProductDTO;
+import com.qorder.qorderws.dto.category.DetailedCategoryDTO;
+import com.qorder.qorderws.dto.product.ProductDTO;
 import com.qorder.qorderws.model.category.Category;
 import com.qorder.qorderws.model.product.Product;
 
@@ -15,7 +15,7 @@ public class CategoryToDtoMapper implements IMapper<Category, DetailedCategoryDT
 		Iterator<Product> productItr = source.getProductList().iterator();
 		while(productItr.hasNext())
 		{
-			target.addProductDTO(new ProductToDtoMapper().map(productItr.next(), new ProductDTO()));
+			target.addProductDTO(new ProductToProductDTOMapper().map(productItr.next(), new ProductDTO()));
 		}
 		return target;
 	}

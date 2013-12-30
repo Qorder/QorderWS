@@ -1,14 +1,14 @@
 package com.qorder.qorderws.service;
 
-import java.io.IOException;
-
 import org.springframework.transaction.annotation.Transactional;
 
 import com.qorder.qorderws.dao.IBusinessDAO;
 import com.qorder.qorderws.dao.ICategoryDAO;
-import com.qorder.qorderws.dto.DetailedCategoryDTO;
+import com.qorder.qorderws.dto.category.CategoryDTO;
+import com.qorder.qorderws.dto.category.DetailedCategoryDTO;
 import com.qorder.qorderws.exception.BusinessDoesNotExistException;
 import com.qorder.qorderws.exception.CategoryDoesNotExistException;
+import com.qorder.qorderws.mapper.CategoryInfoDTOtoCategoryMapper;
 import com.qorder.qorderws.mapper.CategoryToDtoMapper;
 import com.qorder.qorderws.model.business.Business;
 import com.qorder.qorderws.model.category.Category;
@@ -29,9 +29,12 @@ public class CategoryService implements ICategoryService {
 
 
 	@Override
-	public void createCategory(long businessId, Category category) throws BusinessDoesNotExistException {
+	public void createCategory(long businessId, CategoryDTO categoryDTO) throws BusinessDoesNotExistException {
 		//FIXME: categoryDAO.save(category);
 		Business business = businessDAO.findById(businessId);
+		
+		Category category = new CategoryInfoDTOtoCategoryMapper().map(categoryDTO, new Category());
+		
 		business.getCategoryList().add(category);
 		businessDAO.update(business);
 	}

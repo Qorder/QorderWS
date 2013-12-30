@@ -1,4 +1,4 @@
-package com.qorder.qorderws.dto;
+package com.qorder.qorderws.dto.product;
 
 import java.math.BigDecimal;
 
@@ -40,5 +40,5 @@ public class DetailedProductDTO {
 	public void setDetails(String details) {
 		this.details = details;
 	}
-
+	
 }

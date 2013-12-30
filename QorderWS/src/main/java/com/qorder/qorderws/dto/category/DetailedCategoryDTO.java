@@ -1,7 +1,9 @@
-package com.qorder.qorderws.dto;
+package com.qorder.qorderws.dto.category;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.qorder.qorderws.dto.product.ProductDTO;
 
 public class DetailedCategoryDTO {
 	

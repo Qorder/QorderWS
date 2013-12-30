@@ -4,9 +4,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
-import com.qorder.qorderws.dto.CategoryDTO;
-import com.qorder.qorderws.dto.DetailedCategoryDTO;
 import com.qorder.qorderws.dto.MenuDTO;
+import com.qorder.qorderws.dto.category.CategoryDTO;
+import com.qorder.qorderws.dto.category.DetailedCategoryDTO;
+import com.qorder.qorderws.dto.order.OrderDTO;
 import com.qorder.qorderws.mapper.CategoryToCategoryInfoMapper;
 import com.qorder.qorderws.model.business.Business;
 import com.qorder.qorderws.model.category.Category;
@@ -39,6 +40,10 @@ public class AppClient {
 	
 	public void putNewProduct(String url, Long categoryId, Product product) throws HttpClientErrorException {
 		restTemplate.put(url + categoryId, product);
+	}
+	
+	public void putNewOrder(String url, Long businessId, OrderDTO orderDTO) throws HttpClientErrorException {
+		restTemplate.put(url + businessId, orderDTO);
 	}
 	
 

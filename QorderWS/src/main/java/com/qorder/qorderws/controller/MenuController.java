@@ -27,14 +27,6 @@ public class MenuController {
 	@Autowired
 	private IMenuService menuService;
 	
-	public IMenuService getMenuService() {
-		return menuService;
-	}
-
-	public void setMenuService(IMenuService menuService) {
-		this.menuService = menuService;
-	}
-
 	/**
 	 * 
 	 * @param id
@@ -60,6 +52,4 @@ public class MenuController {
 		LOGGER.info("Exception was thrown, with cause " + ex.getCause() + "\nMessage: " + ex.getLocalizedMessage(), ex );
 		return new ResponseEntity<String>("Exception was raised", HttpStatus.CONFLICT);
 	}
-	
-	
 }

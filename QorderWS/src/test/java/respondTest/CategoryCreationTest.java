@@ -12,8 +12,8 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import com.qorder.qorderws.client.AppClient;
-import com.qorder.qorderws.dto.CategoryDTO;
 import com.qorder.qorderws.dto.MenuDTO;
+import com.qorder.qorderws.dto.category.CategoryDTO;
 import com.qorder.qorderws.model.category.Category;
 import com.qorder.qorderws.model.product.Product;
 

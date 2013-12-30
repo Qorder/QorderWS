@@ -11,8 +11,8 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.qorder.qorderws.client.AppClient;
-import com.qorder.qorderws.dto.CategoryDTO;
 import com.qorder.qorderws.dto.MenuDTO;
+import com.qorder.qorderws.dto.category.CategoryDTO;
 
 public class MenuTest {
 	

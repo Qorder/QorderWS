@@ -21,20 +21,10 @@ import com.qorder.qorderws.service.IBusinessService;
 @RequestMapping(value = "/businesses")
 public class BusinessController {
 
-	private static final Logger LOGGER = LoggerFactory
-			.getLogger(BusinessController.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(BusinessController.class);
 
 	@Autowired
 	private IBusinessService businessService;
-
-	
-	public IBusinessService getBusinessService() {
-		return businessService;
-	}
-
-	public void setBusinessService(IBusinessService businessService) {
-		this.businessService = businessService;
-	}
 	
 	@RequestMapping(value = "/owner", params = "id", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Void> createBusiness(@RequestParam Long id, @RequestBody Business business) {

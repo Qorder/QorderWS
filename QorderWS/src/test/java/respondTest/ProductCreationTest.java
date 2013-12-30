@@ -12,8 +12,8 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.qorder.qorderws.client.AppClient;
-import com.qorder.qorderws.dto.DetailedCategoryDTO;
-import com.qorder.qorderws.dto.ProductDTO;
+import com.qorder.qorderws.dto.category.DetailedCategoryDTO;
+import com.qorder.qorderws.dto.product.ProductDTO;
 import com.qorder.qorderws.model.product.Product;
 
 public class ProductCreationTest {

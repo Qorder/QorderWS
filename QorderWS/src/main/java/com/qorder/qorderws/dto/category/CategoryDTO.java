@@ -1,4 +1,4 @@
-package com.qorder.qorderws.dto;
+package com.qorder.qorderws.dto.category;
 
 public class CategoryDTO {
 	
