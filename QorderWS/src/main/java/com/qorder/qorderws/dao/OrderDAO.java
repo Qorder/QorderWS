@@ -59,8 +59,8 @@ public class OrderDAO implements IOrderDAO {
 			return true;
 		} catch (final HibernateException ex) {
 			LOGGER.warn(
-					"Hibernate exception was raised while trying to delete order, info: ",
-					ex.getLocalizedMessage());
+					"Hibernate exception was raised while trying to delete order, info: " +
+					ex.getLocalizedMessage(),ex);
 		}
 
 		return false;

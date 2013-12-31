@@ -26,7 +26,7 @@ import com.qorder.qorderws.service.IProductService;
 @RequestMapping(value = "/products")
 public class ProductController {
 	
-	private static final Logger LOGGER = LoggerFactory.getLogger(BusinessController.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(ProductController.class);
 	
 	@Autowired
 	private IProductService productService;
