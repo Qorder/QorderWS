@@ -1,5 +1,6 @@
 package com.qorder.qorderws.model.order;
 
+import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -44,6 +45,9 @@ public class Order {
 	@ManyToOne(targetEntity = Business.class)
 	@JoinColumn(name = "BUSINESS_ID")
 	private Business business;
+	
+	@Column(name = "TOTAL_PRICE")
+	private BigDecimal totalPrice = new BigDecimal(0);
 
 	public long getId() {
 		return id;
@@ -88,5 +92,19 @@ public class Order {
 	public void add(ProductHolder productHolder) {
 		orderList.add(productHolder);
 	}
+
+	public BigDecimal getTotalPrice() {
+		for(ProductHolder productHolder : orderList)
+		{
+			totalPrice = totalPrice.add(productHolder.getProduct().getPrice());
+		}
+		return totalPrice;
+	}
+
+	public void setTotalPrice(BigDecimal totalPrice) {
+		this.totalPrice = totalPrice;
+	}
+	
+	
 
 }
