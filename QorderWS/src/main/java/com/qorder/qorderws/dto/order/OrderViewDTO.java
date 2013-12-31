@@ -11,6 +11,8 @@ public class OrderViewDTO {
 	
 	private String dateTime;
 	
+	private String totalPrice;
+	
 	private List<ProductHolderDTO> orderedProducts = new ArrayList<ProductHolderDTO>();
 	
 	public void setId(Long id) {
@@ -48,5 +50,15 @@ public class OrderViewDTO {
 	public void add(ProductHolderDTO productHolderDTO) {
 		this.orderedProducts.add(productHolderDTO);
 	}
+
+	public String getTotalPrice() {
+		return totalPrice;
+	}
+
+	public void setTotalPrice(String totalPrice) {
+		this.totalPrice = totalPrice;
+	}
+	
+	
 
 }
