@@ -11,7 +11,7 @@ public class OrderDTOtoOrderMapper implements IMapper<OrderDTO, Order> {
 	public Order map(OrderDTO source, Order target) {
 		target.setTableNumber(source.getTableNumber());
 		for (BasketProductDTO productHolderDTO : source.getOrders()) {
-			ProductHolder productHolder = new ProductHolderDTOtoProductHolderMapper()
+			ProductHolder productHolder = new BasketProductDTOtoProductHolderMapper()
 					.map(productHolderDTO, new ProductHolder());
 			target.add(productHolder);
 		}

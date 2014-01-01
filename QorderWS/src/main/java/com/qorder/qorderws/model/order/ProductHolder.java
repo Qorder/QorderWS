@@ -22,6 +22,9 @@ public class ProductHolder {
 	@Column(name="PRODUCT_HOLDER_ID")
 	private long id;
 	
+	@Column(name="PRODUCT_QUANTITY")
+	private int quantity;
+	
 	@Column(name="COMMENTS")
 	private String notes;
 	
@@ -46,6 +49,14 @@ public class ProductHolder {
 	public void setNotes(String notes) {
 		this.notes = notes;
 		
+	}
+
+	public int getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
 	}
 
 	@Override

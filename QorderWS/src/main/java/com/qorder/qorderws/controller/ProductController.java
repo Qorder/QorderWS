@@ -46,11 +46,13 @@ public class ProductController {
 	
 	@ExceptionHandler({ CategoryDoesNotExistException.class, BusinessDoesNotExistException.class})
 	ResponseEntity<String> sendNotFoundException(Exception ex) {
+		LOGGER.warn("Exception was thrown, with cause " + ex.getCause() + "\nMessage: " + ex.getLocalizedMessage(), ex );
 		return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
 	}
 	
 	@ExceptionHandler({ IOException.class })
 	ResponseEntity<String> sendIOException(Exception ex) {
+		LOGGER.warn("Exception was thrown, with cause " + ex.getCause() + "\nMessage: " + ex.getLocalizedMessage(), ex );
 		return new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 }

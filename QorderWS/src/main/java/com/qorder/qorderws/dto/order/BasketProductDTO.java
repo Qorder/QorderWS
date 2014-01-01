@@ -5,6 +5,8 @@ public class BasketProductDTO {
 	
 	private long productId;
 	
+	private int quantity;
+	
 	private String notes;
 
 	public long getProductId() {
@@ -21,5 +23,13 @@ public class BasketProductDTO {
 
 	public void setNotes(String notes) {
 		this.notes = notes;
+	}
+
+	public int getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
 	}
 }
