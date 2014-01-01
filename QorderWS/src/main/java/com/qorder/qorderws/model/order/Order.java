@@ -48,6 +48,9 @@ public class Order {
 	
 	@Column(name = "TOTAL_PRICE")
 	private BigDecimal totalPrice = new BigDecimal(0);
+	
+	@Column(name = "ORDER_STATUS")
+	private EOrderStatus status = EOrderStatus.PENDING;
 
 	public long getId() {
 		return id;
@@ -104,7 +107,13 @@ public class Order {
 	public void setTotalPrice(BigDecimal totalPrice) {
 		this.totalPrice = totalPrice;
 	}
-	
-	
 
+	public EOrderStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(EOrderStatus orderStatus) {
+		this.status = orderStatus;
+	}
+	
 }

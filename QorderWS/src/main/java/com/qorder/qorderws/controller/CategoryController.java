@@ -35,7 +35,7 @@ public class CategoryController {
 	ResponseEntity<Void> crateCategory(@RequestParam Long id, @RequestBody CategoryDTO categoryDTO) throws BusinessDoesNotExistException {
 		LOGGER.info("Request for category creation with business id equals :" + id);
 		categoryService.createCategory(id, categoryDTO);
-		return new ResponseEntity<Void>(HttpStatus.OK);
+		return new ResponseEntity<Void>(HttpStatus.CREATED);
 	}
 	
 	@RequestMapping(value = "/category", params = "id", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -48,11 +48,13 @@ public class CategoryController {
 	
 	@ExceptionHandler({ CategoryDoesNotExistException.class, BusinessDoesNotExistException.class})
 	ResponseEntity<String> sendNotFoundException(Exception ex) {
+		LOGGER.warn("Exception was thrown, with cause " + ex.getCause() + "\nMessage: " + ex.getLocalizedMessage(), ex );
 		return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
 	}
 	
 	@ExceptionHandler({ IOException.class })
 	ResponseEntity<String> sendIOException(Exception ex) {
+		LOGGER.warn("Exception was thrown, with cause " + ex.getCause() + "\nMessage: " + ex.getLocalizedMessage(), ex );
 		return new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 }

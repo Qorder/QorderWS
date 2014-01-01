@@ -11,14 +11,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.qorder.qorderws.exception.BusinessDoesNotExistException;
 import com.qorder.qorderws.exception.OrderDoesNotExistException;
+import com.qorder.qorderws.model.order.EOrderStatus;
 import com.qorder.qorderws.model.order.Order;
 
 @Transactional
 public class OrderDAO implements IOrderDAO {
 
 	private SessionFactory sessionFactory;
-	private static final Logger LOGGER = LoggerFactory
-			.getLogger(OrderDAO.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(OrderDAO.class);
 
 	public SessionFactory getSessionFactory() {
 		return sessionFactory;
@@ -81,6 +81,21 @@ public class OrderDAO implements IOrderDAO {
 				.createCriteria(Order.class)
 				.add(Restrictions.eq("business.id", businessId)).list();
 
+		if (fetchedList == null) {
+			throw new BusinessDoesNotExistException();
+		}
+		return fetchedList;
+	}
+
+	@Override
+	//@SuppressWarnings("unchecked")
+	public List<Order> fetchOrdersByStatus(long businessId, EOrderStatus orderStatus) throws BusinessDoesNotExistException {
+		@SuppressWarnings("unchecked")
+		List<Order> fetchedList = sessionFactory.getCurrentSession()
+				.createCriteria(Order.class)
+				.add(Restrictions.eq("business.id", businessId))
+				.add(Restrictions.eq("status", orderStatus))
+				.list();
 		if (fetchedList == null) {
 			throw new BusinessDoesNotExistException();
 		}

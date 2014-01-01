@@ -7,12 +7,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.qorder.qorderws.dao.IBusinessDAO;
 import com.qorder.qorderws.dao.IOrderDAO;
+import com.qorder.qorderws.dto.order.BusinessOrdersDTO;
 import com.qorder.qorderws.dto.order.OrderDTO;
 import com.qorder.qorderws.dto.order.OrderViewDTO;
-import com.qorder.qorderws.dto.order.PendingOrdersDTO;
 import com.qorder.qorderws.exception.BusinessDoesNotExistException;
+import com.qorder.qorderws.exception.OrderDoesNotExistException;
 import com.qorder.qorderws.mapper.OrderDTOtoOrderMapper;
 import com.qorder.qorderws.mapper.OrderToOrderViewDTOMapper;
+import com.qorder.qorderws.model.order.EOrderStatus;
 import com.qorder.qorderws.model.order.Order;
 
 @Transactional
@@ -49,16 +51,37 @@ public class OrderService implements IOrderService {
 
 
 	@Override
-	public PendingOrdersDTO fetchOrdersFromBusinessID(long businessId) throws BusinessDoesNotExistException {
+	public BusinessOrdersDTO fetchOrdersByBusinessID(long businessId) throws BusinessDoesNotExistException {
 		List<Order> orderList = orderDAO.fetchOrderForBusiness(businessId);
 		
-		PendingOrdersDTO businessOrders = new PendingOrdersDTO();
+		BusinessOrdersDTO businessOrders = new BusinessOrdersDTO();
 		for(Order order : orderList)
 		{
 			OrderViewDTO orderView = new OrderToOrderViewDTOMapper().map(order, new OrderViewDTO());
 			businessOrders.addOrderViewDTO(orderView);
-			orderDAO.delete(order);
 		}
 		return businessOrders;
+	}
+
+
+	@Override
+	public BusinessOrdersDTO fetchOrdersByStatus(long businessId, EOrderStatus orderStatus) throws BusinessDoesNotExistException {
+		List<Order> orderList = orderDAO.fetchOrdersByStatus(businessId, orderStatus);
+		
+		BusinessOrdersDTO businessOrders = new BusinessOrdersDTO();
+		for(Order order : orderList)
+		{
+			OrderViewDTO orderView = new OrderToOrderViewDTOMapper().map(order, new OrderViewDTO());
+			businessOrders.addOrderViewDTO(orderView);
+		}
+		return businessOrders;
+	}
+
+
+	@Override
+	public void changeOrderStatus(Long orderId, EOrderStatus orderStatus) throws OrderDoesNotExistException {
+		Order order = orderDAO.findById(orderId);
+		order.setStatus(orderStatus);
+		orderDAO.save(order);
 	}
 }
