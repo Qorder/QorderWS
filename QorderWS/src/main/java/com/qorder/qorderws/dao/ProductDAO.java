@@ -1,9 +1,14 @@
 package com.qorder.qorderws.dao;
 
+import java.text.DateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.qorder.qorderws.exception.CategoryDoesNotExistException;
@@ -13,6 +18,8 @@ import com.qorder.qorderws.model.product.Product;
 public class ProductDAO implements IProductDAO {
 	
 	private SessionFactory sessionFactory;
+	private static final Logger LOGGER = LoggerFactory.getLogger(ProductDAO.class);
+	private String ExceptionTime;
 
 	public SessionFactory getSessionFactory() {
 		return sessionFactory;
@@ -25,9 +32,20 @@ public class ProductDAO implements IProductDAO {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Product> fetchProductsForCategory(long categoryId) throws CategoryDoesNotExistException {
-		List<Product> fetchedList= sessionFactory.getCurrentSession()
-				.createQuery("SELECT productList FROM Category as c WHERE c.id= :id").
-				setParameter("id", categoryId).list();
+		List<Product> fetchedList = null;
+		try{
+			fetchedList = sessionFactory.getCurrentSession()
+					.createQuery("SELECT productList FROM Category as c WHERE c.id= :id")
+					.setParameter("id", categoryId).list();
+		}catch (final HibernateException ex){
+			this.ExceptionTime = DateFormat.getDateTimeInstance(DateFormat.LONG,DateFormat.LONG, Locale.US).format(new Date());
+		       LOGGER.warn(
+		           "Hibernate exception was raised while trying to fetch categories for business, info: " +
+		           ex.getLocalizedMessage(),ex,this.ExceptionTime);	
+		}
+		if (fetchedList==null) {
+			throw new CategoryDoesNotExistException();
+		}
 			 return fetchedList;
 	}
 	
@@ -37,11 +55,15 @@ public class ProductDAO implements IProductDAO {
 		Product product=null;
 		try {
 			product = (Product) sessionFactory.getCurrentSession().get(Product.class, productId);
-			if (product==null) {
-				throw new ProductDoesNotExistException();	
-			}
 		}
-		catch(final HibernateException ex) {	
+		catch(final HibernateException ex) {
+			this.ExceptionTime = DateFormat.getDateTimeInstance(DateFormat.LONG,DateFormat.LONG, Locale.US).format(new Date());
+		       LOGGER.warn(
+		           "Hibernate exception was raised while trying to find product by id, info: " +
+		           ex.getLocalizedMessage(),ex,this.ExceptionTime);	
+		}
+		if (product==null) {
+			throw new ProductDoesNotExistException();	
 		}
 		return product;
 	}
@@ -52,6 +74,10 @@ public class ProductDAO implements IProductDAO {
 			sessionFactory.getCurrentSession().save(product);
 			return true;
 		} catch(final HibernateException ex){
+			this.ExceptionTime = DateFormat.getDateTimeInstance(DateFormat.LONG,DateFormat.LONG, Locale.US).format(new Date());
+		       LOGGER.warn(
+		           "Hibernate exception was raised while trying to save product, info: " +
+		           ex.getLocalizedMessage(),ex,this.ExceptionTime);	
 		}
 		return false;
 	}
@@ -63,6 +89,10 @@ public class ProductDAO implements IProductDAO {
 			sessionFactory.getCurrentSession().update(product);
 			return true;
 		} catch(final HibernateException ex){
+			this.ExceptionTime = DateFormat.getDateTimeInstance(DateFormat.LONG,DateFormat.LONG, Locale.US).format(new Date());
+		       LOGGER.warn(
+		           "Hibernate exception was raised while trying to update product, info: " +
+		           ex.getLocalizedMessage(),ex,this.ExceptionTime);	
 		}
 		return false;
 	}
@@ -74,7 +104,10 @@ public class ProductDAO implements IProductDAO {
 			sessionFactory.getCurrentSession().delete(product);
 			return true;
 		} catch(final HibernateException ex){
-			sessionFactory.getCurrentSession().getTransaction().rollback();
+			this.ExceptionTime = DateFormat.getDateTimeInstance(DateFormat.LONG,DateFormat.LONG, Locale.US).format(new Date());
+		       LOGGER.warn(
+		           "Hibernate exception was raised while trying to delete product, info: " +
+		           ex.getLocalizedMessage(),ex,this.ExceptionTime);	
 		}
 		return false;	
 	}
