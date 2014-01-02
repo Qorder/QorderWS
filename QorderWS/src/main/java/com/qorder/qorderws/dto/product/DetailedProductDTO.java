@@ -41,5 +41,15 @@ public class DetailedProductDTO {
 	public void setDetails(String details) {
 		this.details = details;
 	}
+
+	public String getImageRequestURI() {
+		return imageRequestURI + String.valueOf(id);
+	}
+
+	public void setImageRequestURI(String imageRequestURI) {
+		this.imageRequestURI = imageRequestURI;
+	}
+	
+	
 	
 }
