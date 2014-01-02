@@ -52,6 +52,10 @@ public class Order {
 	@Column(name = "ORDER_STATUS")
 	private EOrderStatus status = EOrderStatus.PENDING;
 
+	public Order() {
+		 
+		   }
+	
 	public long getId() {
 		return id;
 	}

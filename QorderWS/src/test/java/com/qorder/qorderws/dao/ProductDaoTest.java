@@ -1,6 +1,7 @@
 package com.qorder.qorderws.dao;
 
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -21,6 +22,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.qorder.qorderws.exception.CategoryDoesNotExistException;
 import com.qorder.qorderws.exception.ProductDoesNotExistException;
+import com.qorder.qorderws.model.category.Category;
 import com.qorder.qorderws.model.product.Product;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -30,8 +32,11 @@ public class ProductDaoTest extends DBTestCase {
 	@Autowired
 	private IProductDAO testProductDAO;
 	@Autowired
+	private ICategoryDAO testCategoryDAO;
+	@Autowired
 	private DataSource testDataSource;
 	private Product testProd;
+	private Category testCat;
 
 	public IProductDAO getProductDao() {
 		return testProductDAO;
@@ -43,8 +48,7 @@ public class ProductDaoTest extends DBTestCase {
 
 	@Override
 	protected IDataSet getDataSet() throws Exception {
-		return new FlatXmlDataSetBuilder().build(new FileInputStream(
-				"src/test/java/com/qorder/qorderws/dao/DemoDatabase.xml"));
+		return new FlatXmlDataSetBuilder().build(new FileInputStream("src/test/resources/Dbunit/DbunitProducts.xml"));
 	}
 
 	/*
@@ -59,6 +63,7 @@ public class ProductDaoTest extends DBTestCase {
 				testDataSource);
 		DatabaseOperation.CLEAN_INSERT.execute(connection, getDataSet());
 		this.testProd = new Product();
+		this.testCat = new Category();
 	}
 	
 	//TODO : Tests gia periptoseis pou den iparxei to product
@@ -78,7 +83,7 @@ public class ProductDaoTest extends DBTestCase {
 	@Test
 	public void testFetchProductsForCategory() throws CategoryDoesNotExistException {
 		List<Product> testProdList = testProductDAO.fetchProductsForCategory(1);
-		assertEquals(4, testProdList.size());
+		assertEquals(7, testProdList.size());
 		assertEquals("MPYRA4", testProdList.get(3).getName());
 	}
 	
@@ -122,7 +127,7 @@ public class ProductDaoTest extends DBTestCase {
 		this.testProd.setName("mpyra6");
 		this.testProd.setPrice(BigDecimal.valueOf(7));
 		this.testProductDAO.save(testProd);
-		this.testProd = this.testProductDAO.findById(6);
+		this.testProd = this.testProductDAO.findById(8);
 		assertTrue(this.testProd.getDescriptions().isEmpty());
 		assertEquals("mpyra6",this.testProd.getName());
 	}
@@ -134,10 +139,18 @@ public class ProductDaoTest extends DBTestCase {
 		this.testProd.setPrice(BigDecimal.valueOf(5));
 		this.testProd.getDescriptions().add("save");
 		this.testProductDAO.save(testProd);
-		this.testProd = this.testProductDAO.findById(7);
+		this.testProd = this.testProductDAO.findById(9);
 		assertEquals("save",this.testProd.getDescriptions().get(0));
 		assertEquals("mpyra7",this.testProd.getName());
 	}
+	
+	 @Test(expected=ProductDoesNotExistException.class)
+	 public void testDeleteOrphansAfterBusinessDeleted() throws CategoryDoesNotExistException, IOException, ProductDoesNotExistException {
+		 this.testCat=this.testCategoryDAO.findById(1);
+		 this.testCategoryDAO.delete(this.testCat);
+	     this.testProductDAO.findById(6);
+	     this.testProductDAO.findById(7);
+	   }
 	
 	
 }
