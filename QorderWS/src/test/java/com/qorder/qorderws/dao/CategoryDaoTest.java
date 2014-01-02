@@ -21,6 +21,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.qorder.qorderws.exception.BusinessDoesNotExistException;
 import com.qorder.qorderws.exception.CategoryDoesNotExistException;
+import com.qorder.qorderws.model.business.Business;
 import com.qorder.qorderws.model.category.Category;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -30,8 +31,11 @@ public class CategoryDaoTest extends DBTestCase {
 	@Autowired
 	private ICategoryDAO testCategoryDAO;
 	@Autowired
-	private DataSource testDataSource;
-	private Category testCat;
+	private IBusinessDAO testBusinessDAO;
+	   	@Autowired
+	    private DataSource testDataSource;
+	    private Category testCat;
+	    private Business testBus;
 	
 
 	public void setTestCategoryDAO(CategoryDAO testCategoryDAO) {
@@ -41,7 +45,7 @@ public class CategoryDaoTest extends DBTestCase {
 	@Override
 	protected IDataSet getDataSet() throws Exception {
 		return new FlatXmlDataSetBuilder()
-			.build(new FileInputStream("src/test/java/com/qorder/qorderws/dao/DemoDatabase.xml"));
+		.build(new FileInputStream("src/test/resources/Dbunit/DbunitCategories.xml"));
 	}
 
 	@Before
@@ -49,6 +53,7 @@ public class CategoryDaoTest extends DBTestCase {
 		IDatabaseConnection connection = new DatabaseDataSourceConnection(testDataSource);
 		DatabaseOperation.CLEAN_INSERT.execute(connection, getDataSet());
 		this.testCat = new Category();
+		this.testBus = new Business();
 	}
 	
 	//TODO : Tests gia periptoseis pou den iparxei to category 
@@ -88,6 +93,14 @@ public class CategoryDaoTest extends DBTestCase {
 		this.testCategoryDAO.delete(testCat);
 		this.testCategoryDAO.findById(8);
 	}
+	
+	@Test(expected=CategoryDoesNotExistException.class)
+	public void testDeleteOrphansAfterBusinessDeleted() throws CategoryDoesNotExistException, IOException, BusinessDoesNotExistException {
+	     this.testBus=this.testBusinessDAO.findById(4);
+	     this.testBusinessDAO.delete(this.testBus);
+	     this.testCategoryDAO.findById(9);
+	     this.testCategoryDAO.findById(10);
+	   }
 	
 	
 

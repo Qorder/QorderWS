@@ -1,19 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:tx="http://www.springframework.org/schema/tx"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans 
 	http://www.springframework.org/schema/beans/spring-beans.xsd 
 	http://www.springframework.org/schema/context
     http://www.springframework.org/schema/context/spring-context-3.1.xsd
 	http://www.springframework.org/schema/tx
-    http://www.springframework.org/schema/tx/spring-tx-3.1.xsd">
+    http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+    http://www.springframework.org/schema/util 
+    http://www.springframework.org/schema/util/spring-util.xsd">
 
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	<context:annotation-config />
 
 	<context:property-placeholder
 		location="classpath:/hibernate/dataSource.properties" />
+
+	<bean
+		class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+		<property name="messageConverters">
+			<list>
+				<bean id="byteArrayMessageConverter"
+					class="org.springframework.http.converter.ByteArrayHttpMessageConverter" />
+			</list>
+		</property>
+	</bean>
+
 
 	<bean id="transactionManager"
 		class="org.springframework.orm.hibernate4.HibernateTransactionManager"
@@ -61,7 +75,7 @@
 		<property name="businessDAO" ref="businessDAO" />
 		<property name="orderDAO" ref="orderDAO" />
 	</bean>
-	
+
 
 	<!-- DAO bean declerations here -->
 

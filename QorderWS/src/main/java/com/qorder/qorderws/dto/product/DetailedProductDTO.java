@@ -8,6 +8,7 @@ public class DetailedProductDTO {
 	private String name;
 	private BigDecimal price;
 	private String details; //seperator - 
+	private String imageRequestURI = "http://snf-185147.vm.okeanos.grnet.gr:8080/qorderws/images/product?id=";
 	
 	public long getId() {
 		return id;
@@ -40,5 +41,15 @@ public class DetailedProductDTO {
 	public void setDetails(String details) {
 		this.details = details;
 	}
+
+	public String getImageRequestURI() {
+		return imageRequestURI + String.valueOf(id);
+	}
+
+	public void setImageRequestURI(String imageRequestURI) {
+		this.imageRequestURI = imageRequestURI;
+	}
+	
+	
 	
 }
