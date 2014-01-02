@@ -3,7 +3,7 @@ package com.qorder.qorderws.dto.order;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PendingOrdersDTO {
+public class BusinessOrdersDTO {
 
 	private List<OrderViewDTO> orders = new ArrayList<OrderViewDTO>();
 	

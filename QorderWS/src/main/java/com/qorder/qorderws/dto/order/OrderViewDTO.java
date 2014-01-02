@@ -13,6 +13,8 @@ public class OrderViewDTO {
 	
 	private String totalPrice;
 	
+	private String status;
+	
 	private List<ProductHolderDTO> orderedProducts = new ArrayList<ProductHolderDTO>();
 	
 	public void setId(Long id) {
@@ -58,7 +60,13 @@ public class OrderViewDTO {
 	public void setTotalPrice(String totalPrice) {
 		this.totalPrice = totalPrice;
 	}
-	
-	
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String orderStatus) {
+		this.status = orderStatus;
+	}
 
 }

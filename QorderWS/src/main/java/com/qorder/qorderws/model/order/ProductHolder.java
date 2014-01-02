@@ -1,5 +1,7 @@
 package com.qorder.qorderws.model.order;
 
+import java.math.BigDecimal;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -22,6 +24,12 @@ public class ProductHolder {
 	@Column(name="PRODUCT_HOLDER_ID")
 	private long id;
 	
+	@Column(name="PRODUCT_QUANTITY")
+	private int quantity;
+	
+	@Column(name="SELECTED_ATTRIBUTES")
+	private String selectedAttributes;
+	
 	@Column(name="COMMENTS")
 	private String notes;
 	
@@ -30,13 +38,20 @@ public class ProductHolder {
 	@LazyCollection(LazyCollectionOption.FALSE)
 	private Product product;
 
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
 	public Product getProduct() {
 		return product;
 	}
 
 	public void setProduct(Product product) {
 		this.product = product;
-		
 	}
 
 	public String getNotes() {
@@ -46,6 +61,26 @@ public class ProductHolder {
 	public void setNotes(String notes) {
 		this.notes = notes;
 		
+	}
+
+	public int getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
+
+	public String getSelectedAttributes() {
+		return selectedAttributes;
+	}
+
+	public void setSelectedAttributes(String selectedAttributes) {
+		this.selectedAttributes = selectedAttributes;
+	}
+	
+	public BigDecimal getHoldingProductsPrice() {
+		return product.getPrice().multiply(BigDecimal.valueOf(quantity));
 	}
 
 	@Override

@@ -35,7 +35,7 @@ public class BusinessController {
 	
 	@ExceptionHandler(BusinessDoesNotExistException.class)
 	ResponseEntity<String> sendNotFoundException(Exception ex) {
-		LOGGER.info("Exception was thrown, with cause " + ex.getCause() + "\nMessage: " + ex.getLocalizedMessage(), ex );
+		LOGGER.warn("Exception was thrown, with cause " + ex.getCause() + "\nMessage: " + ex.getLocalizedMessage(), ex );
 		return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
 	}
 }
