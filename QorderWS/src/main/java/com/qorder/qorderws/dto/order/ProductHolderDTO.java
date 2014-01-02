@@ -9,6 +9,8 @@ public class ProductHolderDTO {
 	
 	private int quantity;
 	
+	private String attributes;
+	
 	private String notes;
 
 	public ProductDTO getProductDTO() {
@@ -33,6 +35,14 @@ public class ProductHolderDTO {
 
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
+	}
+
+	public String getAttributes() {
+		return attributes;
+	}
+
+	public void setAttributes(String attributes) {
+		this.attributes = attributes;
 	}
 
 }
