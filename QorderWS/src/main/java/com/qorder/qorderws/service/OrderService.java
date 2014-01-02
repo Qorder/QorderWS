@@ -3,10 +3,12 @@ package com.qorder.qorderws.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.qorder.qorderws.dao.IBusinessDAO;
 import com.qorder.qorderws.dao.IOrderDAO;
+import com.qorder.qorderws.dao.IProductDAO;
 import com.qorder.qorderws.dto.order.BusinessOrdersDTO;
 import com.qorder.qorderws.dto.order.OrderDTO;
 import com.qorder.qorderws.dto.order.OrderViewDTO;
@@ -22,6 +24,9 @@ public class OrderService implements IOrderService {
 	
 	private IBusinessDAO businessDAO;
 	private IOrderDAO orderDAO;
+	
+	@Autowired
+	private IProductDAO productDAO;
 	
 	public IBusinessDAO getBusinessDAO() {
 		return businessDAO;
@@ -44,7 +49,7 @@ public class OrderService implements IOrderService {
 
 	@Override
 	public void submitOrder(long businessId, OrderDTO orderDTO) throws BusinessDoesNotExistException {
-		Order order = new OrderDTOtoOrderMapper().map(orderDTO, new Order());
+		Order order = new  OrderDTOtoOrderMapper().map(orderDTO, new Order());
 		order.setBusiness(businessDAO.findById(businessId));
 		orderDAO.save(order);
 	}

@@ -8,10 +8,13 @@ public class ProductHolderToProductHolderDTOMapper implements IMapper<ProductHol
 
 	@Override
 	public ProductHolderDTO map(ProductHolder source, ProductHolderDTO target) {
-		target.setNotes(source.getNotes());
 		ProductDTO productDTO = new ProductToProductDTOMapper().map(source.getProduct(), new ProductDTO());
 		target.setProductDTO(productDTO);
+		
 		target.setQuantity(source.getQuantity());
+		target.setAttributes(source.getSelectedAttributes());
+		target.setNotes(source.getNotes());
+		
 		return target;
 	}
 	

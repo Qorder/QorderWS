@@ -27,7 +27,7 @@ public class Product {
 	private String name;
 
 	@Column(name = "PRICE")
-	private BigDecimal price;
+	private BigDecimal price = new BigDecimal(0);
 
 	@ElementCollection(fetch = FetchType.EAGER)
 	@CollectionTable(name = "DESCRIPTION", joinColumns = @JoinColumn(name = "PRODUCT_ID"))
