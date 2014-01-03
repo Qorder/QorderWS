@@ -112,7 +112,7 @@ public class Order {
 	public void setTotalPrice(BigDecimal totalPrice) {
 		this.totalPrice = totalPrice;
 	}
-
+	
 	public EOrderStatus getStatus() {
 		return status;
 	}

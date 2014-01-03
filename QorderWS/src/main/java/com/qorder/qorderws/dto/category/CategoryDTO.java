@@ -9,7 +9,7 @@ public class CategoryDTO {
 	
 	private Long id;
 	private String name;
-	private String uri = ReferenceProvider.getURIFor("category");
+	private final String uri = ReferenceProvider.getURIfor("category");
 	
 	public String getName() {
 		return name;
@@ -26,10 +26,6 @@ public class CategoryDTO {
 	
 	public String getUri() {
 		return uri + id;
-	}
-	
-	public void setUri(String uri) {
-		this.uri = uri;
 	}
 	
 	public void setId(Long id) {

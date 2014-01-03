@@ -13,7 +13,7 @@ public class ReferenceProvider {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(ReferenceProvider.class);
 	
-	public static String getURIFor(String entity) {
+	public static String getURIfor(String entity) {
 		String uri = null;
 		try 
 		{

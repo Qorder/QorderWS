@@ -9,7 +9,7 @@ public class ProductDTO {
 	private Long id;
 	private String name;
 	private BigDecimal price;
-	private String uri = ReferenceProvider.getURIFor("product");
+	private final String uri = ReferenceProvider.getURIfor("product");
 	
 	public Long getId() {
 		return id;
@@ -37,10 +37,6 @@ public class ProductDTO {
 
 	public String getUri() {
 		return uri + id;
-	}
-
-	public void setUri(String uri) {
-		this.uri = uri;
 	}
 	
 	@Override
