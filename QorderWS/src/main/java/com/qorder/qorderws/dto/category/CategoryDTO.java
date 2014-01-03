@@ -1,10 +1,15 @@
 package com.qorder.qorderws.dto.category;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
+import com.qorder.qorderws.utils.ReferenceProvider;
+
+@JsonIgnoreProperties("context")
 public class CategoryDTO {
 	
-	private Long id = null;
+	private Long id;
 	private String name;
-	private String uri = "http://snf-185147.vm.okeanos.grnet.gr:8080/qorderws/categories/category?id=";
+	private final String uri = ReferenceProvider.getURIfor("category");
 	
 	public String getName() {
 		return name;
@@ -21,10 +26,6 @@ public class CategoryDTO {
 	
 	public String getUri() {
 		return uri + id;
-	}
-	
-	public void setUri(String uri) {
-		this.uri = uri;
 	}
 	
 	public void setId(Long id) {

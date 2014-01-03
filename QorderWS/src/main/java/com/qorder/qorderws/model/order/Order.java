@@ -101,13 +101,18 @@ public class Order {
 	}
 
 	public BigDecimal getTotalPrice() {
+	    totalPrice = new BigDecimal(0);
+		for(ProductHolder productHolder : orderList)
+		{
+			totalPrice = totalPrice.add(productHolder.getHoldingProductsPrice());
+		}
 		return totalPrice;
 	}
 
 	public void setTotalPrice(BigDecimal totalPrice) {
 		this.totalPrice = totalPrice;
 	}
-
+	
 	public EOrderStatus getStatus() {
 		return status;
 	}

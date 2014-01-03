@@ -12,8 +12,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.qorder.qorderws.client.AppClient;
-import com.qorder.qorderws.dto.order.BasketProductDTO;
 import com.qorder.qorderws.dto.order.OrderDTO;
+import com.qorder.qorderws.dto.product.BasketProductDTO;
 
 public class OrderSubmitTest {
 
