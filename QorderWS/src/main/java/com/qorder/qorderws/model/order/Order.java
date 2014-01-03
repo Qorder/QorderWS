@@ -101,6 +101,11 @@ public class Order {
 	}
 
 	public BigDecimal getTotalPrice() {
+	    totalPrice = new BigDecimal(0);
+		for(ProductHolder productHolder : orderList)
+		{
+			totalPrice = totalPrice.add(productHolder.getHoldingProductsPrice());
+		}
 		return totalPrice;
 	}
 
