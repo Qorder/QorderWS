@@ -11,15 +11,8 @@ import com.qorder.qorderws.model.business.Business;
 public class BusinessService implements IBusinessService {
 
 	private IBusinessDAO businessDAO;
-
-	public IBusinessDAO getBusinessDAO() {
-		return businessDAO;
-	}
-
-	public void setBusinessDAO(IBusinessDAO businessDAO) {
-		this.businessDAO = businessDAO;
-	}
 	
+	@Transactional(readOnly = true)
 	@Override
 	public Business fetchBusinessById(long businessId) throws BusinessDoesNotExistException {
 		return businessDAO.findById(businessId);
@@ -28,6 +21,15 @@ public class BusinessService implements IBusinessService {
 	@Override
 	public void createBusiness(Business business) {
 		businessDAO.save(business);
+	}
+	
+
+	public IBusinessDAO getBusinessDAO() {
+		return businessDAO;
+	}
+
+	public void setBusinessDAO(IBusinessDAO businessDAO) {
+		this.businessDAO = businessDAO;
 	}
 
 }

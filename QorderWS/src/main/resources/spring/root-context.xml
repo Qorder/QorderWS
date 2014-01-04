@@ -16,18 +16,7 @@
 	<context:annotation-config />
 
 	<context:property-placeholder
-		location="classpath:/hibernate/dataSource.properties" />
-
-	<bean
-		class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
-		<property name="messageConverters">
-			<list>
-				<bean id="byteArrayMessageConverter"
-					class="org.springframework.http.converter.ByteArrayHttpMessageConverter" />
-			</list>
-		</property>
-	</bean>
-
+		location="WEB-INF/resources/hibernate/dataSource.properties" />
 
 	<bean id="transactionManager"
 		class="org.springframework.orm.hibernate4.HibernateTransactionManager"

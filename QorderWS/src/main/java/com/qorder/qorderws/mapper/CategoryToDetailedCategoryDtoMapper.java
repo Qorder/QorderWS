@@ -7,7 +7,7 @@ import com.qorder.qorderws.dto.product.ProductDTO;
 import com.qorder.qorderws.model.category.Category;
 import com.qorder.qorderws.model.product.Product;
 
-public class CategoryToDtoMapper implements IMapper<Category, DetailedCategoryDTO> {
+public class CategoryToDetailedCategoryDtoMapper implements IMapper<Category, DetailedCategoryDTO> {
 
 	@Override
 	public DetailedCategoryDTO map(Category source, DetailedCategoryDTO target) {

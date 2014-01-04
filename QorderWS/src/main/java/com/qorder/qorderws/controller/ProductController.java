@@ -19,7 +19,6 @@ import com.qorder.qorderws.dto.product.DetailedProductDTO;
 import com.qorder.qorderws.exception.BusinessDoesNotExistException;
 import com.qorder.qorderws.exception.CategoryDoesNotExistException;
 import com.qorder.qorderws.exception.ProductDoesNotExistException;
-import com.qorder.qorderws.model.product.Product;
 import com.qorder.qorderws.service.IProductService;
 
 @Controller
@@ -38,10 +37,10 @@ public class ProductController {
 	}
 	
 	@RequestMapping(value = "/category", params = "id", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
-	ResponseEntity<Void> crateCategory(@RequestParam Long id, @RequestBody Product product) throws BusinessDoesNotExistException, CategoryDoesNotExistException, IOException {
-		LOGGER.info("Request for category creation with business id equals :" + id);
-		productService.createProduct(id, product);
-		return new ResponseEntity<Void>(HttpStatus.CREATED);
+	ResponseEntity<Void> storeProducts(@RequestParam Long id, @RequestBody DetailedProductDTO[] productsDTO) throws BusinessDoesNotExistException, CategoryDoesNotExistException, IOException {
+		LOGGER.info("Request to store products save with business id equals :" + id);
+		productService.storeProducts(id, productsDTO );
+		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 	
 	@ExceptionHandler({ CategoryDoesNotExistException.class, BusinessDoesNotExistException.class})
