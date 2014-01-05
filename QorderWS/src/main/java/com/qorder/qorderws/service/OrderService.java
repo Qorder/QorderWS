@@ -24,10 +24,10 @@ public class OrderService implements IOrderService {
 	private IBusinessDAO businessDAO;
 	
 	@Override
-	public void submitOrder(long businessId, OrderDTO orderDTO) throws BusinessDoesNotExistException {
+	public Order submitOrder(long businessId, OrderDTO orderDTO) throws BusinessDoesNotExistException {
 		Order order = new  OrderDTOtoOrderMapper().map(orderDTO, new Order());
 		order.setBusiness(businessDAO.findById(businessId));
-		orderDAO.save(order);
+		return orderDAO.save(order);
 	}
 
 	@Transactional(readOnly = true)
@@ -65,6 +65,12 @@ public class OrderService implements IOrderService {
 		orderDAO.save(order);
 	}
 	
+	@Override
+	public OrderViewDTO fetchOrderById(Long orderId) throws OrderDoesNotExistException {
+		Order order = orderDAO.findById(orderId);
+		return new OrderToOrderViewDTOMapper().map(order, new OrderViewDTO());
+	}
+
 	
 	public IBusinessDAO getBusinessDAO() {
 		return businessDAO;
@@ -84,5 +90,5 @@ public class OrderService implements IOrderService {
 	public void setOrderDAO(IOrderDAO orderDAO) {
 		this.orderDAO = orderDAO;
 	}
-
+	
 }

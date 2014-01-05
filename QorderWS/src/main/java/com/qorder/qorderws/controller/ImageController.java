@@ -23,13 +23,13 @@ import com.google.common.io.ByteStreams;
 @RequestMapping(value = "/images")
 public class ImageController {
 	
-	private static final Logger LOGGER = LoggerFactory.getLogger(ImageController.class);
-	
 	@Autowired
     private ServletContext context;
 	
+	private static final Logger LOGGER = LoggerFactory.getLogger(ImageController.class);
+	
 	@RequestMapping(value = "/product", params = "id", method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE )
-	public ResponseEntity<byte[]> getProductImageId(@RequestParam Long id) throws IOException, NullPointerException {
+	public ResponseEntity<byte[]> getProductImage(@RequestParam Long id) throws IOException, NullPointerException {
 		LOGGER.info("Request for menu with id parameter equal " + id.toString(), id);
 		InputStream imageStream = context.getResourceAsStream("WEB-INF/resources/images/products/" + id.toString() + ".JPG");
 		byte[] imageByteArray = ByteStreams.toByteArray(imageStream);

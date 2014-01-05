@@ -16,7 +16,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 import com.qorder.qorderws.model.product.Product;
 
 @Entity
-@Table(name="PRODUCT_HOLDER")
+@Table(name="PRODUCT_HOLDERS")
 public class ProductHolder {
 	
 	@Id

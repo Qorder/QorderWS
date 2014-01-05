@@ -17,7 +17,7 @@ public class ReferenceProvider {
 		String uri = null;
 		try 
 		{
-			Resource resource = new ClassPathResource("references.properties");
+			Resource resource =  new ClassPathResource("references.properties");
 			Properties props = PropertiesLoaderUtils.loadProperties(resource);
 			
 			uri = props.getProperty(entity);

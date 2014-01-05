@@ -16,7 +16,7 @@ import javax.persistence.Table;
 import com.qorder.qorderws.model.product.Product;
 
 @Entity
-@Table(name = "PRODUCT_CATEGORY")
+@Table(name = "PRODUCT_CATEGORIES")
 public class Category {
 
 	@Id
