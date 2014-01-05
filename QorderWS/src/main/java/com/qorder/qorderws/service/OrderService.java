@@ -24,10 +24,11 @@ public class OrderService implements IOrderService {
 	private IBusinessDAO businessDAO;
 	
 	@Override
-	public Order submitOrder(long businessId, OrderDTO orderDTO) throws BusinessDoesNotExistException {
+	public OrderViewDTO submitOrder(long businessId, OrderDTO orderDTO) throws BusinessDoesNotExistException {
 		Order order = new  OrderDTOtoOrderMapper().map(orderDTO, new Order());
 		order.setBusiness(businessDAO.findById(businessId));
-		return orderDAO.save(order);
+		orderDAO.save(order);
+		return new OrderToOrderViewDTOMapper().map(order, new OrderViewDTO());
 	}
 
 	@Transactional(readOnly = true)

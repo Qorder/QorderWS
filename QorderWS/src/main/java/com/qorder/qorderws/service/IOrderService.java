@@ -6,11 +6,10 @@ import com.qorder.qorderws.dto.order.OrderViewDTO;
 import com.qorder.qorderws.exception.BusinessDoesNotExistException;
 import com.qorder.qorderws.exception.OrderDoesNotExistException;
 import com.qorder.qorderws.model.order.EOrderStatus;
-import com.qorder.qorderws.model.order.Order;
 
 public interface IOrderService {
     
-	Order submitOrder(long businessId, OrderDTO order) throws BusinessDoesNotExistException;
+	OrderViewDTO submitOrder(long businessId, OrderDTO order) throws BusinessDoesNotExistException;
     
     BusinessOrdersDTO fetchOrdersByBusinessID(long businessId) throws BusinessDoesNotExistException;
 

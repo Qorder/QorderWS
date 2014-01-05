@@ -20,7 +20,6 @@ import com.qorder.qorderws.dto.order.OrderViewDTO;
 import com.qorder.qorderws.exception.BusinessDoesNotExistException;
 import com.qorder.qorderws.exception.OrderDoesNotExistException;
 import com.qorder.qorderws.model.order.EOrderStatus;
-import com.qorder.qorderws.model.order.Order;
 import com.qorder.qorderws.service.IOrderService;
 
 @Controller
@@ -32,11 +31,11 @@ public class OrderController {
 	@Autowired
 	private IOrderService orderService;
 
-	@RequestMapping(value = "/business", params = "id", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
-	ResponseEntity<Long> createOrder(@RequestParam Long id, @RequestBody OrderDTO orderDTO) throws BusinessDoesNotExistException {
+	@RequestMapping(value = "/business", params = "id", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	ResponseEntity<OrderViewDTO> createOrder(@RequestParam Long id, @RequestBody OrderDTO orderDTO) throws BusinessDoesNotExistException {
 		LOGGER.info("Request for order submit");
-		Order order = orderService.submitOrder(id, orderDTO);
-		return new ResponseEntity<Long>(order.getId(),HttpStatus.CREATED);
+		OrderViewDTO orderView = orderService.submitOrder(id, orderDTO);
+		return new ResponseEntity<OrderViewDTO>(orderView,HttpStatus.CREATED);
 	}
 	
 	@RequestMapping(value = "/business", params = "id", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
