@@ -16,7 +16,7 @@ import javax.persistence.Table;
 import com.qorder.qorderws.model.category.Category;
 
 @Entity
-@Table(name = "BUSINESS")
+@Table(name = "BUSINESSES")
 public class Business {
 
 	@Id

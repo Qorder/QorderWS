@@ -9,7 +9,7 @@ import com.qorder.qorderws.model.order.Order;
 
 public interface IOrderDAO {
 	
-	boolean save(Order order);
+	Order save(Order order);
 
 	boolean update(Order order) throws OrderDoesNotExistException;
 

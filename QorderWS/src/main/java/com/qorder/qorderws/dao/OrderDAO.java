@@ -33,17 +33,19 @@ public class OrderDAO implements IOrderDAO {
 	}
 
 	@Override
-	public boolean save(Order order) {
-		try {
+	public Order save(Order order) {
+		try 
+		{
 			sessionFactory.getCurrentSession().save(order);
-			return true;
-		} catch (final HibernateException ex) {
+		} 
+		catch (final HibernateException ex) 
+		{
 			this.ExceptionTime = DateFormat.getDateTimeInstance(DateFormat.LONG,DateFormat.LONG, Locale.US).format(new Date());
 		       LOGGER.warn(
 		           "Hibernate exception was raised while trying to save order, info: " +
 		           ex.getLocalizedMessage(),ex,this.ExceptionTime);
 		}
-		return false;
+		return order;
 	}
 
 	@Override
