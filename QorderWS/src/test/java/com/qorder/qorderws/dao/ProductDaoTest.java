@@ -108,17 +108,17 @@ public class ProductDaoTest extends DBTestCase {
 	@Test
 	public void testFetchProductsForCategoryAndDescriptions() throws CategoryDoesNotExistException {
 		List<Product> testProdList = testProductDAO.fetchProductsForCategory(1);
-		assertEquals(2, testProdList.get(0).getDescriptions().size());
-		assertEquals("MIKRH",testProdList.get(0).getDescriptions().get(0));
+		assertEquals(2, testProdList.get(0).getDetails().size());
+		assertEquals("MIKRH",testProdList.get(0).getDetails().get(0));
 	}
 	
 	@Test
 	public void testExistsUpdateDescriptions() throws ProductDoesNotExistException {
 		this.testProd = this.testProductDAO.findById(1);
-		this.testProd.getDescriptions().add("mauri");
+		this.testProd.getDetails().add("mauri");
 		this.testProductDAO.update(testProd);
 		this.testProd = this.testProductDAO.findById(1);
-		assertEquals("mauri",this.testProd.getDescriptions().get(2));
+		assertEquals("mauri",this.testProd.getDetails().get(2));
 	}
 	
 	@Test
@@ -128,7 +128,7 @@ public class ProductDaoTest extends DBTestCase {
 		this.testProd.setPrice(BigDecimal.valueOf(7));
 		this.testProductDAO.save(testProd);
 		this.testProd = this.testProductDAO.findById(8);
-		assertTrue(this.testProd.getDescriptions().isEmpty());
+		assertTrue(this.testProd.getDetails().isEmpty());
 		assertEquals("mpyra6",this.testProd.getName());
 	}
 	
@@ -137,10 +137,10 @@ public class ProductDaoTest extends DBTestCase {
 		this.testProd = new Product();
 		this.testProd.setName("mpyra7");
 		this.testProd.setPrice(BigDecimal.valueOf(5));
-		this.testProd.getDescriptions().add("save");
+		this.testProd.getDetails().add("save");
 		this.testProductDAO.save(testProd);
 		this.testProd = this.testProductDAO.findById(9);
-		assertEquals("save",this.testProd.getDescriptions().get(0));
+		assertEquals("save",this.testProd.getDetails().get(0));
 		assertEquals("mpyra7",this.testProd.getName());
 	}
 	

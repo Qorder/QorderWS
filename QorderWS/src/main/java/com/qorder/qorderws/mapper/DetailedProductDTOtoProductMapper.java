@@ -13,8 +13,8 @@ public class DetailedProductDTOtoProductMapper implements IMapper<DetailedProduc
 		target.setName(source.getName());
 		if(source.getDetails() != null)
 		{
-			List<String> descriptions = Arrays.asList(source.getDetails().split("-"));
-			target.setDescriptions(descriptions);
+			List<String> details = Arrays.asList(source.getDetails().split("-"));
+			target.setDetails(details);
 		}
 		target.setPrice(source.getPrice());
 		return target;
