@@ -15,7 +15,7 @@ public final class BusinessToMenuDTOMapper implements IMapper<Business, MenuDTO>
 	public MenuDTO map(Business source, MenuDTO target) {
 		target.setBusinessName(source.getName());
 		
-		Iterator<Category> categoryItr = source.getCategoryList().iterator();
+		Iterator<Category> categoryItr = source.getMenu().getCategoryList().iterator();
 		while(categoryItr.hasNext())
 		{
 			CategoryDTO categoryInfo = new CategoryToCategoryDTOMapper().map( categoryItr.next(), new CategoryDTO() );

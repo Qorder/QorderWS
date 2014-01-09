@@ -13,6 +13,7 @@ import org.junit.Test;
 import com.qorder.qorderws.client.AppClient;
 import com.qorder.qorderws.model.business.Business;
 import com.qorder.qorderws.model.category.Category;
+import com.qorder.qorderws.model.menu.Menu;
 import com.qorder.qorderws.model.product.Product;
 
 public class BusinessCreationTest {
@@ -44,8 +45,10 @@ public class BusinessCreationTest {
 	}
 	
 	private Business createMockBussineses() {
-		Business business = new Business("To Meraki");
-
+		Business business = new Business();
+		business.setName("To Meraki");
+		business.setMenu(new Menu());
+		
 		// category 1
 		Category category1 = new Category();
 		category1.setName("Food");
@@ -133,7 +136,7 @@ public class BusinessCreationTest {
 		categoryList.add(category2);
 		categoryList.add(category3);
 		
-		business.setCategoryList(categoryList);
+		business.getMenu().setCategoryList(categoryList);
 		return business;
 	}
 

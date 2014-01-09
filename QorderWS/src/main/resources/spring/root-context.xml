@@ -80,7 +80,7 @@
 	<bean id="businessDAO" class="com.qorder.qorderws.dao.BusinessDAO"
 		autowire="byName" />
 
-	<bean id="businessDAOmock" class="com.qorder.qorderws.dao.BusinessDaoMock"
-		autowire="byName" />
+<!-- 	<bean id="businessDAOmock" class="com.qorder.qorderws.dao.BusinessDaoMock"
+		autowire="byName" />  -->
 
 </beans>

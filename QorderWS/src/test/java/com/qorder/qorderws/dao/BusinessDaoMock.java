@@ -19,7 +19,8 @@ public class BusinessDaoMock implements IBusinessDAO {
 
 	// http://snf-185147.vm.okeanos.grnet.gr:8080/qorderws/menus/business?id=;
 	private void createMockBussineses() {
-		Business business = new Business("To Meraki");
+		Business business = new Business();
+		business.setName("To Meraki");
 		business.setId(0);
 
 		// category 1
@@ -117,7 +118,7 @@ public class BusinessDaoMock implements IBusinessDAO {
 		categoryList.add(category2);
 		categoryList.add(category3);
 		
-		business.setCategoryList(categoryList);
+		business.getMenu().setCategoryList(categoryList);
 		businessList.add(business);
 	}
 

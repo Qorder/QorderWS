@@ -1,7 +1,7 @@
 package com.qorder.qorderws.model.business;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -10,10 +10,12 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import com.qorder.qorderws.model.category.Category;
+import com.qorder.qorderws.model.menu.Menu;
 
 @Entity
 @Table(name = "BUSINESSES")
@@ -27,17 +29,13 @@ public class Business {
 	@Column(name = "NAME")
 	private String name;
 
-	@OneToMany(targetEntity = Category.class, cascade=CascadeType.ALL, fetch=FetchType.LAZY, orphanRemoval=true)
-	@JoinColumn(name = "BUSINESS_ID")
-	private List<Category> CategoryList = new ArrayList<Category>();
+	@OneToOne
+	@MapsId
+	private Menu menu;
 
-	public Business(String name) {
-		this.name = name;
-	}
-	
-	public Business() {
-		this.name="";
-	}
+	@OneToMany(targetEntity = Business.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+	@JoinColumn(name = "BUSINESS_ID")
+	private Set<Business> childBusinesses = new HashSet<Business>();
 
 	public long getId() {
 		return id;
@@ -55,11 +53,28 @@ public class Business {
 		this.name = name;
 	}
 
-	public List<Category> getCategoryList() {
-		return CategoryList;
+	public Menu getMenu() {
+		return menu;
 	}
 
-	public void setCategoryList(List<Category> categoryList) {
-		CategoryList = categoryList;
+	public void setMenu(Menu menu) {
+		this.menu = menu;
 	}
+
+	public Set<Business> getChildBusinesses() {
+		return childBusinesses;
+	}
+
+	public void setChildBusinesses(Set<Business> childBusinesses) {
+		this.childBusinesses = childBusinesses;
+	}
+
+	public boolean addBusiness(Business business) {
+		if (childBusinesses.add(business)) {
+			business.setMenu(menu);
+			return true;
+		}
+		return false;
+	}
+
 }

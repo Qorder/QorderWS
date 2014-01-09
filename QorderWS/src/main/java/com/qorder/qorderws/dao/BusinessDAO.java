@@ -17,7 +17,8 @@ import com.qorder.qorderws.model.business.Business;
 public class BusinessDAO implements IBusinessDAO {
 
 	private SessionFactory sessionFactory;
-	private static final Logger LOGGER = LoggerFactory.getLogger(BusinessDAO.class);
+	private static final Logger LOGGER = LoggerFactory
+			.getLogger(BusinessDAO.class);
 	private String ExceptionTime;
 
 	public SessionFactory getSessionFactory() {
@@ -30,16 +31,16 @@ public class BusinessDAO implements IBusinessDAO {
 
 	@Override
 	public boolean save(Business business) {
-		try
-		{
+		try {
 			sessionFactory.getCurrentSession().save(business);
 			return true;
-		}
-		catch (final HibernateException ex){
-			this.ExceptionTime = DateFormat.getDateTimeInstance(DateFormat.LONG,DateFormat.LONG, Locale.US).format(new Date());
-		       LOGGER.warn(
-		           "Hibernate exception was raised while trying to save business, info: " +
-		           ex.getLocalizedMessage(),ex,this.ExceptionTime);	
+		} catch (final HibernateException ex) {
+			this.ExceptionTime = DateFormat.getDateTimeInstance(
+					DateFormat.LONG, DateFormat.LONG, Locale.US).format(
+					new Date());
+			LOGGER.warn(
+					"Hibernate exception was raised while trying to save business, info: "
+							+ ex.getLocalizedMessage(), ex, this.ExceptionTime);
 		}
 		return false;
 	}
@@ -53,10 +54,12 @@ public class BusinessDAO implements IBusinessDAO {
 			sessionFactory.getCurrentSession().update(business);
 			return true;
 		} catch (final HibernateException ex) {
-			this.ExceptionTime = DateFormat.getDateTimeInstance(DateFormat.LONG,DateFormat.LONG, Locale.US).format(new Date());
-		       LOGGER.warn(
-		           "Hibernate exception was raised while trying to update business, info: " +
-		           ex.getLocalizedMessage(),ex,this.ExceptionTime);
+			this.ExceptionTime = DateFormat.getDateTimeInstance(
+					DateFormat.LONG, DateFormat.LONG, Locale.US).format(
+					new Date());
+			LOGGER.warn(
+					"Hibernate exception was raised while trying to update business, info: "
+							+ ex.getLocalizedMessage(), ex, this.ExceptionTime);
 		}
 		return false;
 	}
@@ -67,17 +70,20 @@ public class BusinessDAO implements IBusinessDAO {
 	 * @Return boolean
 	 */
 	@Override
-	public boolean delete(Business business) throws BusinessDoesNotExistException {
+	public boolean delete(Business business)
+			throws BusinessDoesNotExistException {
 		// TODO : kalese tin find gia na deis an iparxei prin pas na to
 		// diagrapseis: h vres hiber. opti tropo.
 		try {
 			sessionFactory.getCurrentSession().delete(business);
 			return true;
 		} catch (final HibernateException ex) {
-			this.ExceptionTime = DateFormat.getDateTimeInstance(DateFormat.LONG,DateFormat.LONG, Locale.US).format(new Date());
-		       LOGGER.warn(
-		           "Hibernate exception was raised while trying to delete business, info: " +
-		           ex.getLocalizedMessage(),ex,this.ExceptionTime);
+			this.ExceptionTime = DateFormat.getDateTimeInstance(
+					DateFormat.LONG, DateFormat.LONG, Locale.US).format(
+					new Date());
+			LOGGER.warn(
+					"Hibernate exception was raised while trying to delete business, info: "
+							+ ex.getLocalizedMessage(), ex, this.ExceptionTime);
 		}
 		return false;
 	}
@@ -92,16 +98,17 @@ public class BusinessDAO implements IBusinessDAO {
 			throws BusinessDoesNotExistException {
 		Business business = null;
 		try {
-			business = (Business) sessionFactory.getCurrentSession().get(
-					Business.class, businessId);
+			business = (Business) sessionFactory.getCurrentSession().get(Business.class, businessId);
 			if (business == null) {
 				throw new BusinessDoesNotExistException();
 			}
 		} catch (final HibernateException ex) {
-			this.ExceptionTime = DateFormat.getDateTimeInstance(DateFormat.LONG,DateFormat.LONG, Locale.US).format(new Date());
-		       LOGGER.warn(
-		           "Hibernate exception was raised while trying to find business by id, info: " +
-		           ex.getLocalizedMessage(),ex,this.ExceptionTime);
+			this.ExceptionTime = DateFormat.getDateTimeInstance(
+					DateFormat.LONG, DateFormat.LONG, Locale.US).format(
+					new Date());
+			LOGGER.warn(
+					"Hibernate exception was raised while trying to find business by id, info: "
+							+ ex.getLocalizedMessage(), ex, this.ExceptionTime);
 		}
 		return business;
 	}

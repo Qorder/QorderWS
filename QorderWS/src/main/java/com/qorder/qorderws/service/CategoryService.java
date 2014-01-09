@@ -29,11 +29,11 @@ public class CategoryService implements ICategoryService {
 	@Override
 	public void createCategory(long businessId, CategoryDTO categoryDTO) throws BusinessDoesNotExistException {
 		//FIXME: categoryDAO.save(category);
-		Business business = businessDAO.findById(businessId);
+		Business business = (Business) businessDAO.findById(businessId);
 		
 		Category category = new CategoryDTOtoCategoryMapper().map(categoryDTO, new Category());
 		
-		business.getCategoryList().add(category);
+		business.getMenu().getCategoryList().add(category);
 		businessDAO.update(business);
 	}
 

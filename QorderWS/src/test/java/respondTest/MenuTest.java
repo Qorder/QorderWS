@@ -35,11 +35,6 @@ public class MenuTest {
 	@After
 	public void tearDown() throws Exception {
 	}
-
-	@Test
-	public final void test() {
-		
-	}
 	
 	@Test
 	public final void testSuccessfulGetMenuById() {

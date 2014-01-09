@@ -17,7 +17,7 @@ public class MenuService implements IMenuService {
 	@Transactional(readOnly = true)
 	@Override
 	public MenuDTO fetchMenuByBusinessId(long businessId) throws BusinessDoesNotExistException {
-		Business business = businessDAO.findById(businessId);
+		Business business = (Business) businessDAO.findById(businessId);
 		return new BusinessToMenuDTOMapper().map(business, new MenuDTO());
 	}
 	
