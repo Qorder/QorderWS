@@ -22,6 +22,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.qorder.qorderws.exception.BusinessDoesNotExistException;
 import com.qorder.qorderws.exception.OrderDoesNotExistException;
+import com.qorder.qorderws.model.order.EOrderStatus;
 import com.qorder.qorderws.model.order.Order;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -58,11 +59,6 @@ public class OrderDaoTest extends DBTestCase {
 		this.order = new Order();
 	}
 
-	@After
-	public void tearDown() throws Exception {
-		IDatabaseConnection connection = new DatabaseDataSourceConnection(testDataSource);
-		DatabaseOperation.DELETE.execute(connection, getDataSet());
-	}
 	
 	@Test
 	public void testFetchOrderForBusiness() throws BusinessDoesNotExistException{
@@ -70,15 +66,15 @@ public class OrderDaoTest extends DBTestCase {
 		orderList =	this.testOrderDAO.fetchOrderForBusiness(1);
 		assertEquals("25", orderList.get(0).getTableNumber());
 		assertEquals(2, orderList.size());
-		
 	}
 	
 	@Test
 	public void testSave() throws BusinessDoesNotExistException, OrderDoesNotExistException {
-		     this.order.setTableNumber("50");
-		     this.testOrderDAO.save(this.order);
-		     assertEquals("50", this.testOrderDAO.findById(3).getTableNumber());
-		    }
+		this.order.setTableNumber("50");
+		this.testOrderDAO.save(this.order);
+		//Warning : change the ID each time you add an order in the DbunitOrders.xml file.
+		assertEquals("50", this.testOrderDAO.findById(6).getTableNumber());
+		}
 	
 	@Test
 	public void testFindById() throws OrderDoesNotExistException {
@@ -86,8 +82,32 @@ public class OrderDaoTest extends DBTestCase {
 		}
 	
 	@Test(expected=OrderDoesNotExistException.class)
-	   	public void testFindByIdDoesntExist() throws OrderDoesNotExistException {
+	public void testFindByIdDoesntExist() throws OrderDoesNotExistException {
 	    this.testOrderDAO.findById(3000);
 	    }
+	
+	@Test
+	public void testFetchPendingOrdersForBusiness() throws BusinessDoesNotExistException {
+		List<Order> orderList= new ArrayList<Order>();		
+		orderList = this.testOrderDAO.fetchOrdersByStatus(2, EOrderStatus.PENDING);
+		assertEquals(2, orderList.size());
+		assertEquals("15", orderList.get(0).getTableNumber());
+	}
+	
+	@Test
+	public void testFetchAcceptedOrdersForBusiness() throws BusinessDoesNotExistException {
+		List<Order> orderList= new ArrayList<Order>();		
+		orderList = this.testOrderDAO.fetchOrdersByStatus(1, EOrderStatus.ACCEPTED);
+		assertEquals(2, orderList.size());
+		assertEquals("25", orderList.get(0).getTableNumber());
+	}
+
+	@Test
+	public void testFetchServicedOrdersForBusiness() throws BusinessDoesNotExistException {
+		List<Order> orderList= new ArrayList<Order>();		
+		orderList = this.testOrderDAO.fetchOrdersByStatus(2, EOrderStatus.SERVICED);
+		assertEquals(1, orderList.size());
+		assertEquals("17", orderList.get(0).getTableNumber());
+	}
 	
 }

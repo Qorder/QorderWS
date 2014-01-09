@@ -1,11 +1,8 @@
 package com.qorder.qorderws.controller;
 
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import javax.imageio.ImageIO;
 import javax.servlet.ServletContext;
 
 import org.slf4j.Logger;
@@ -20,25 +17,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.google.common.io.ByteStreams;
+
 @Controller
 @RequestMapping(value = "/images")
 public class ImageController {
 	
-	private static final Logger LOGGER = LoggerFactory.getLogger(ImageController.class);
-	
 	@Autowired
     private ServletContext context;
 	
+	private static final Logger LOGGER = LoggerFactory.getLogger(ImageController.class);
+	
 	@RequestMapping(value = "/product", params = "id", method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE )
-	public ResponseEntity<byte[]> getProductImageId(@RequestParam Long id) throws IOException, NullPointerException {
+	public ResponseEntity<byte[]> getProductImage(@RequestParam Long id) throws IOException, NullPointerException {
 		LOGGER.info("Request for menu with id parameter equal " + id.toString(), id);
-		InputStream imageStream = context.getResourceAsStream("WEB-INF/images/products/" + id.toString() + ".JPG");
-		BufferedImage bufferedImage = ImageIO.read(imageStream);
+		InputStream imageStream = context.getResourceAsStream("WEB-INF/resources/images/products/" + id.toString() + ".JPG");
+		byte[] imageByteArray = ByteStreams.toByteArray(imageStream);
 		
-		ByteArrayOutputStream byteArOutputStream = new ByteArrayOutputStream();
-		ImageIO.write(bufferedImage, "jpg", byteArOutputStream);
-		
-		byte[] imageByteArray = byteArOutputStream.toByteArray();
 		return new ResponseEntity<byte[]>(imageByteArray, HttpStatus.OK);
 	}
 	

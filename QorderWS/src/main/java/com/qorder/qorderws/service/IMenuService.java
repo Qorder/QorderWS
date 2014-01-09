@@ -5,6 +5,6 @@ import com.qorder.qorderws.exception.BusinessDoesNotExistException;
 
 public interface IMenuService {
 	
-	MenuDTO getMenuByBusinessId (long businessId) throws BusinessDoesNotExistException;
+	MenuDTO fetchMenuByBusinessId (long businessId) throws BusinessDoesNotExistException;
 
 }

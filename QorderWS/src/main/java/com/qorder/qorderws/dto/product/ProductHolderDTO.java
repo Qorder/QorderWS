@@ -1,6 +1,5 @@
-package com.qorder.qorderws.dto.order;
+package com.qorder.qorderws.dto.product;
 
-import com.qorder.qorderws.dto.product.ProductDTO;
 
 
 public class ProductHolderDTO {

@@ -1,4 +1,4 @@
-package com.qorder.qorderws.dto.order;
+package com.qorder.qorderws.dto.product;
 
 import java.math.BigDecimal;
 

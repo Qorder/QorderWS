@@ -3,6 +3,8 @@ package com.qorder.qorderws.dto.order;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.qorder.qorderws.dto.product.ProductHolderDTO;
+
 public class OrderViewDTO {
 	
 	private Long id;

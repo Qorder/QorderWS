@@ -3,13 +3,13 @@ package com.qorder.qorderws.mapper;
 import com.qorder.qorderws.dto.category.CategoryDTO;
 import com.qorder.qorderws.model.category.Category;
 
-public class CategoryInfoDTOtoCategoryMapper implements IMapper<CategoryDTO, Category> {
+public class CategoryToCategoryDTOMapper implements IMapper<Category, CategoryDTO> {
 
 	@Override
-	public Category map(CategoryDTO source, Category target) {
+	public CategoryDTO map(Category source, CategoryDTO target) {
 		target.setId(source.getId());
 		target.setName(source.getName());
-		
+
 		return target;
 	}
 

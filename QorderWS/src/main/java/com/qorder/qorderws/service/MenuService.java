@@ -13,19 +13,21 @@ import com.qorder.qorderws.model.business.Business;
 public class MenuService implements IMenuService {
 
 	private IBusinessDAO businessDAO;
-
+	
+	@Transactional(readOnly = true)
+	@Override
+	public MenuDTO fetchMenuByBusinessId(long businessId) throws BusinessDoesNotExistException {
+		Business business = businessDAO.findById(businessId);
+		return new BusinessToMenuDTOMapper().map(business, new MenuDTO());
+	}
+	
+	
 	public IBusinessDAO getBusinessDAO() {
 		return businessDAO;
 	}
 
 	public void setBusinessDAO(IBusinessDAO businessDAO) {
 		this.businessDAO = businessDAO;
-	}
-	
-	@Override
-	public MenuDTO getMenuByBusinessId(long businessId) throws BusinessDoesNotExistException {
-		Business business = businessDAO.findById(businessId);
-		return new BusinessToMenuDTOMapper().map(business, new MenuDTO());
 	}
 
 }

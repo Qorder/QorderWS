@@ -9,8 +9,6 @@ public interface ICategoryService {
 	
 	void createCategory(long businessId, CategoryDTO categoryDTO) throws BusinessDoesNotExistException;
 	
-	//TODO: throws CategoryNotFoundException
-	
 	DetailedCategoryDTO fetchCategoryByID(long categoryId) throws CategoryDoesNotExistException;
-
+	
 }

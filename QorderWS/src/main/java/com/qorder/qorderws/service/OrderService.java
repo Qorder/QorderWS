@@ -3,12 +3,10 @@ package com.qorder.qorderws.service;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.qorder.qorderws.dao.IBusinessDAO;
 import com.qorder.qorderws.dao.IOrderDAO;
-import com.qorder.qorderws.dao.IProductDAO;
 import com.qorder.qorderws.dto.order.BusinessOrdersDTO;
 import com.qorder.qorderws.dto.order.OrderDTO;
 import com.qorder.qorderws.dto.order.OrderViewDTO;
@@ -22,11 +20,58 @@ import com.qorder.qorderws.model.order.Order;
 @Transactional
 public class OrderService implements IOrderService {
 	
-	private IBusinessDAO businessDAO;
 	private IOrderDAO orderDAO;
+	private IBusinessDAO businessDAO;
 	
-	@Autowired
-	private IProductDAO productDAO;
+	@Override
+	public OrderViewDTO submitOrder(long businessId, OrderDTO orderDTO) throws BusinessDoesNotExistException {
+		Order order = new  OrderDTOtoOrderMapper().map(orderDTO, new Order());
+		order.setBusiness(businessDAO.findById(businessId));
+		orderDAO.save(order);
+		return new OrderToOrderViewDTOMapper().map(order, new OrderViewDTO());
+	}
+
+	@Transactional(readOnly = true)
+	@Override
+	public BusinessOrdersDTO fetchOrdersByBusinessID(long businessId) throws BusinessDoesNotExistException {
+		List<Order> orderList = orderDAO.fetchOrderForBusiness(businessId);
+		
+		BusinessOrdersDTO businessOrders = new BusinessOrdersDTO();
+		for(Order order : orderList)
+		{
+			OrderViewDTO orderView = new OrderToOrderViewDTOMapper().map(order, new OrderViewDTO());
+			businessOrders.addOrderViewDTO(orderView);
+		}
+		return businessOrders;
+	}
+
+	@Transactional(readOnly = true)
+	@Override
+	public BusinessOrdersDTO fetchOrdersByStatus(long businessId, EOrderStatus orderStatus) throws BusinessDoesNotExistException {
+		List<Order> orderList = orderDAO.fetchOrdersByStatus(businessId, orderStatus);
+		
+		BusinessOrdersDTO businessOrders = new BusinessOrdersDTO();
+		for(Order order : orderList)
+		{
+			OrderViewDTO orderView = new OrderToOrderViewDTOMapper().map(order, new OrderViewDTO());
+			businessOrders.addOrderViewDTO(orderView);
+		}
+		return businessOrders;
+	}
+
+	@Override
+	public void changeOrderStatus(Long orderId, EOrderStatus orderStatus) throws OrderDoesNotExistException {
+		Order order = orderDAO.findById(orderId);
+		order.setStatus(orderStatus);
+		orderDAO.save(order);
+	}
+	
+	@Override
+	public OrderViewDTO fetchOrderById(Long orderId) throws OrderDoesNotExistException {
+		Order order = orderDAO.findById(orderId);
+		return new OrderToOrderViewDTOMapper().map(order, new OrderViewDTO());
+	}
+
 	
 	public IBusinessDAO getBusinessDAO() {
 		return businessDAO;
@@ -46,47 +91,5 @@ public class OrderService implements IOrderService {
 	public void setOrderDAO(IOrderDAO orderDAO) {
 		this.orderDAO = orderDAO;
 	}
-
-	@Override
-	public void submitOrder(long businessId, OrderDTO orderDTO) throws BusinessDoesNotExistException {
-		Order order = new  OrderDTOtoOrderMapper().map(orderDTO, new Order());
-		order.setBusiness(businessDAO.findById(businessId));
-		orderDAO.save(order);
-	}
-
-
-	@Override
-	public BusinessOrdersDTO fetchOrdersByBusinessID(long businessId) throws BusinessDoesNotExistException {
-		List<Order> orderList = orderDAO.fetchOrderForBusiness(businessId);
-		
-		BusinessOrdersDTO businessOrders = new BusinessOrdersDTO();
-		for(Order order : orderList)
-		{
-			OrderViewDTO orderView = new OrderToOrderViewDTOMapper().map(order, new OrderViewDTO());
-			businessOrders.addOrderViewDTO(orderView);
-		}
-		return businessOrders;
-	}
-
-
-	@Override
-	public BusinessOrdersDTO fetchOrdersByStatus(long businessId, EOrderStatus orderStatus) throws BusinessDoesNotExistException {
-		List<Order> orderList = orderDAO.fetchOrdersByStatus(businessId, orderStatus);
-		
-		BusinessOrdersDTO businessOrders = new BusinessOrdersDTO();
-		for(Order order : orderList)
-		{
-			OrderViewDTO orderView = new OrderToOrderViewDTOMapper().map(order, new OrderViewDTO());
-			businessOrders.addOrderViewDTO(orderView);
-		}
-		return businessOrders;
-	}
-
-
-	@Override
-	public void changeOrderStatus(Long orderId, EOrderStatus orderStatus) throws OrderDoesNotExistException {
-		Order order = orderDAO.findById(orderId);
-		order.setStatus(orderStatus);
-		orderDAO.save(order);
-	}
+	
 }

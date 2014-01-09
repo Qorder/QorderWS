@@ -18,6 +18,8 @@
 		<org.mockito-version>1.9.5</org.mockito-version>
 		<org.hsqldb-version>2.3.1</org.hsqldb-version>
 		<org.dbunit-version>2.4.9</org.dbunit-version>
+		<com.github.springtestdbunit>1.0.1</com.github.springtestdbunit>
+		<com.google.guava-version>15.0</com.google.guava-version>
 	</properties>
 	<dependencies>
 
@@ -53,9 +55,28 @@
 		<dependency>
 			<groupId>com.github.springtestdbunit</groupId>
 			<artifactId>spring-test-dbunit</artifactId>
-			<version>1.0.1</version>
+			<version>${com.github.springtestdbunit}</version>
 		</dependency>
-            
+		
+		<!-- Spring Security -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-core</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
+ 
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
+ 
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
+
 
 		<!-- Hibernate -->
 		<dependency>
@@ -161,20 +182,20 @@
 			<version>4.7</version>
 			<scope>test</scope>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.hsqldb</groupId>
 			<artifactId>hsqldb</artifactId>
 			<version>${org.hsqldb-version}</version>
 		</dependency>
-            
+
 		<dependency>
 			<groupId>org.dbunit</groupId>
 			<artifactId>dbunit</artifactId>
 			<version>${org.dbunit-version}</version>
 		</dependency>
-            
-            
+
+
 
 		<!-- Json parser -->
 		<dependency>
@@ -189,6 +210,13 @@
 			<artifactId>mockito-all</artifactId>
 			<version>${org.mockito-version}</version>
 			<scope>test</scope>
+		</dependency>
+
+		<!-- Google Guava -->
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>${com.google.guava-version}</version>
 		</dependency>
 
 	</dependencies>

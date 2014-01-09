@@ -37,7 +37,7 @@ public class MenuController {
 	@RequestMapping(value = "/business", params = "id", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<MenuDTO> getMenuById(@RequestParam Long id) throws BusinessDoesNotExistException {
 		LOGGER.info("Request for menu with id parameter equal " + id.toString(), id);
-		MenuDTO menuDto = menuService.getMenuByBusinessId(id);
+		MenuDTO menuDto = menuService.fetchMenuByBusinessId(id);
 		return new ResponseEntity<MenuDTO>(menuDto, HttpStatus.OK);
 	}
 	

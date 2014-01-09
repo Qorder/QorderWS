@@ -15,7 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "PRODUCT")
+@Table(name = "PRODUCTS")
 public class Product {
 
 	@Id
@@ -30,7 +30,7 @@ public class Product {
 	private BigDecimal price = new BigDecimal(0);
 
 	@ElementCollection(fetch = FetchType.EAGER)
-	@CollectionTable(name = "DESCRIPTION", joinColumns = @JoinColumn(name = "PRODUCT_ID"))
+	@CollectionTable(name = "DESCRIPTIONS", joinColumns = @JoinColumn(name = "PRODUCT_ID"))
 	@Column(name = "DESCRIPTION")
 	private List<String> descriptions = new ArrayList<String>();
 
