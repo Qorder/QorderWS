@@ -56,16 +56,18 @@ public class BusinessCreationTest {
 		Product product1 = new Product();
 		product1.setName("Souvlaki");
 		product1.setPrice(BigDecimal.valueOf(1.4));
-		product1.addDescription("Chicken");
-		product1.addDescription("pork");
+		product1.addDetail("Chicken");
+		product1.addDetail("pork");
+		product1.setDescription("Description for souvlaki goes here");
 
 		// category 1 product 2
 		Product product2 = new Product();
 		product2.setName("Giros");
 		product2.setPrice(BigDecimal.valueOf(2.0));
-		product2.addDescription("Chicken");
-		product2.addDescription("pork");
-
+		product2.addDetail("Chicken");
+		product2.addDetail("pork");
+		product2.setDescription("Description for guros goes here");
+		
 		foodProductList.add(product1);
 		foodProductList.add(product2);
 		category1.setProductList(foodProductList);
@@ -81,18 +83,18 @@ public class BusinessCreationTest {
 		Product product3 = new Product();
 		product3.setName("Juice");
 		product3.setPrice(BigDecimal.valueOf(2.0));
-		product3.addDescription("Motion");
-		product3.addDescription("3 fruits");
-		product3.addDescription("7 vitamins");
+		product3.addDetail("Motion");
+		product3.addDetail("3 fruits");
+		product3.addDetail("7 vitamins");
 
 		// category 2 product 4
 		Product product4 = new Product();
 		//product4.setId(3);
 		product4.setName("Tea");
 		product4.setPrice(BigDecimal.valueOf(2.0));
-		product4.addDescription("Sweet");
-		product4.addDescription("semisweet");
-		product4.addDescription("no sugar");
+		product4.addDetail("Sweet");
+		product4.addDetail("semisweet");
+		product4.addDetail("no sugar");
 
 		drinkProductList.add(product3);
 		drinkProductList.add(product4);
@@ -109,18 +111,18 @@ public class BusinessCreationTest {
 		Product product5 = new Product();
 		product5.setName("Frappe");
 		product5.setPrice(BigDecimal.valueOf(1.5));
-		product5.addDescription("Sweet");
-		product5.addDescription("Semisweet");
-		product5.addDescription("no sugar");
-		product5.addDescription("Milk");
+		product5.addDetail("Sweet");
+		product5.addDetail("Semisweet");
+		product5.addDetail("no sugar");
+		product5.addDetail("Milk");
 		
 		// category 3 product 6
 		Product product6 = new Product();
 		product6.setName("Cappuccino");
 		product6.setPrice(BigDecimal.valueOf(2.5));
-		product6.addDescription("Sweet");
-		product6.addDescription("semisweet");
-		product6.addDescription("no sugar");
+		product6.addDetail("Sweet");
+		product6.addDetail("semisweet");
+		product6.addDetail("no sugar");
 
 		coffeeProductList.add(product5);
 		coffeeProductList.add(product6);

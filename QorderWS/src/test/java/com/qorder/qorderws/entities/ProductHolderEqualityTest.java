@@ -37,7 +37,7 @@ public class ProductHolderEqualityTest {
 		productHolder2.setNotes("Customer notes");
 		
 		Product product = new Product();
-		product.addDescription("Product description");
+		product.addDetail("Product detail");
 		product.setName("MyProduct");
 		product.setPrice(BigDecimal.valueOf(1.99));
 		
@@ -56,7 +56,7 @@ public class ProductHolderEqualityTest {
 		productHolder2.setNotes("Other customer notes");
 		
 		Product product = new Product();
-		product.addDescription("Product description");
+		product.addDetail("Product detail");
 		product.setName("MyProduct");
 		product.setPrice(BigDecimal.valueOf(1.99));
 		
@@ -76,12 +76,12 @@ public class ProductHolderEqualityTest {
 		
 		Product product1 = new Product();
 		product1.setName("MyProduct 1");
-		product1.addDescription("Product description");
+		product1.addDetail("Product detail");
 		product1.setPrice(BigDecimal.valueOf(1.99));
 		
 		Product product2 = new Product();
 		product2.setName("MyProduct 2");
-		product2.addDescription("Product description");
+		product2.addDetail("Product detail");
 		product2.setPrice(BigDecimal.valueOf(2.99));
 		
 		productHolder1.setProduct(product1);
@@ -99,7 +99,7 @@ public class ProductHolderEqualityTest {
 		productHolder2.setNotes("Customer notes");
 		
 		Product product = new Product();
-		product.addDescription("Product description");
+		product.addDetail("Product detail");
 		product.setName("MyProduct");
 		product.setPrice(BigDecimal.valueOf(1.99));
 		
@@ -119,7 +119,7 @@ public class ProductHolderEqualityTest {
 		
 		Product product1 = new Product();
 		product1.setName("MyProduct 1");
-		product1.addDescription("Product description");
+		product1.addDetail("Product detail");
 		product1.setPrice(BigDecimal.valueOf(1.99));
 		
 		Product product2 = null;

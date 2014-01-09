@@ -25,14 +25,17 @@ public class Product {
 
 	@Column(name = "NAME")
 	private String name;
+	
+	@Column(name = "DESCRIPTION")
+	private String description;
 
 	@Column(name = "PRICE")
 	private BigDecimal price = new BigDecimal(0);
 
 	@ElementCollection(fetch = FetchType.EAGER)
-	@CollectionTable(name = "DESCRIPTIONS", joinColumns = @JoinColumn(name = "PRODUCT_ID"))
-	@Column(name = "DESCRIPTION")
-	private List<String> descriptions = new ArrayList<String>();
+	@CollectionTable(name = "PRODUCT_DETAILS", joinColumns = @JoinColumn(name = "PRODUCT_ID"))
+	@Column(name = "DETAILS")
+	private List<String> details = new ArrayList<String>();
 
 	public Product(String name, BigDecimal price) {
 		this.name = name;
@@ -67,16 +70,24 @@ public class Product {
 		this.price = price;
 	}
 
-	public List<String> getDescriptions() {
-		return descriptions;
+	public List<String> getDetails() {
+		return details;
 	}
 
-	public void setDescriptions(List<String> description) {
-		descriptions = description;
+	public void setDetails(List<String> details) {
+		this.details = details;
+	}
+	
+	public boolean addDetail(String detail) {
+		return details.add(detail);
 	}
 
-	public void addDescription(String description) {
-		this.descriptions.add(description);
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	@Override
@@ -84,7 +95,7 @@ public class Product {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result
-				+ ((descriptions == null) ? 0 : descriptions.hashCode());
+				+ ((details == null) ? 0 : details.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((price == null) ? 0 : price.hashCode());
 		return result;
@@ -99,10 +110,10 @@ public class Product {
 		if (getClass() != obj.getClass())
 			return false;
 		Product other = (Product) obj;
-		if (descriptions == null) {
-			if (other.descriptions != null)
+		if (details == null) {
+			if (other.details != null)
 				return false;
-		} else if (!descriptions.equals(other.descriptions))
+		} else if (!details.equals(other.details))
 			return false;
 		if (name == null) {
 			if (other.name != null)

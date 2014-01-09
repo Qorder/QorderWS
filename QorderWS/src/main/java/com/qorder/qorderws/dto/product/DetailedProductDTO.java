@@ -10,6 +10,7 @@ public class DetailedProductDTO {
 	private String name;
 	private BigDecimal price;
 	private String details; //seperator - 
+	private String description;
 	private final String imageRequestURI = ReferenceProvider.getURIfor("image");
 	
 	public long getId() {
@@ -47,4 +48,13 @@ public class DetailedProductDTO {
 	public String getImageRequestURI() {
 		return imageRequestURI + String.valueOf(id);
 	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	
 }
