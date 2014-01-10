@@ -25,7 +25,7 @@ public class Menu {
 	private long id;
 	
 	@OneToMany(targetEntity = Category.class, cascade=CascadeType.ALL, fetch=FetchType.LAZY, orphanRemoval=true)
-	@JoinColumn(name = "MENU_ID")
+	@JoinColumn(name ="MENU_ID")
 	private List<Category> CategoryList = new ArrayList<Category>();
 	
 	public List<Category> getCategoryList() {

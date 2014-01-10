@@ -31,6 +31,7 @@ public class Business {
 
 	@OneToOne
 	@MapsId
+	@Column(name="MENU_ID")
 	private Menu menu;
 
 	@OneToMany(targetEntity = Business.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
