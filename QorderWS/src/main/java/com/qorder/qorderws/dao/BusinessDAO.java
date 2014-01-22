@@ -72,8 +72,6 @@ public class BusinessDAO implements IBusinessDAO {
 	@Override
 	public boolean delete(Business business)
 			throws BusinessDoesNotExistException {
-		// TODO : kalese tin find gia na deis an iparxei prin pas na to
-		// diagrapseis: h vres hiber. opti tropo.
 		try {
 			sessionFactory.getCurrentSession().delete(business);
 			return true;
@@ -98,7 +96,8 @@ public class BusinessDAO implements IBusinessDAO {
 			throws BusinessDoesNotExistException {
 		Business business = null;
 		try {
-			business = (Business) sessionFactory.getCurrentSession().get(Business.class, businessId);
+			business = (Business) sessionFactory.getCurrentSession().get(
+					Business.class, businessId);
 			if (business == null) {
 				throw new BusinessDoesNotExistException();
 			}

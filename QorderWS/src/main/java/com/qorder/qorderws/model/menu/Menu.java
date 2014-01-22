@@ -22,18 +22,25 @@ public class Menu {
 	@Id
 	@GeneratedValue
 	@Column(name = "MENU_ID")
-	private long id;
+	private Long id;
 	
 	@OneToMany(targetEntity = Category.class, cascade=CascadeType.ALL, fetch=FetchType.LAZY, orphanRemoval=true)
-	@JoinColumn(name ="MENU_ID")
-	private List<Category> CategoryList = new ArrayList<Category>();
-	
+	@JoinColumn(name ="FK_MENU_ID")
+	private List<Category> categoryList = new ArrayList<Category>();
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
 	public List<Category> getCategoryList() {
-		return CategoryList;
+		return categoryList;
 	}
 
 	public void setCategoryList(List<Category> categoryList) {
-		CategoryList = categoryList;
+		this.categoryList = categoryList;
 	}
-
 }

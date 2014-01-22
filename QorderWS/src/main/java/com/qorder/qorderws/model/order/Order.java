@@ -35,27 +35,28 @@ public class Order {
 	private String tableNumber;
 
 	@Column(name = "DATE_TIME")
-	private String dateTime = DateFormat.getDateTimeInstance(DateFormat.LONG,DateFormat.LONG, Locale.US).format(new Date());
+	private String dateTime = DateFormat.getDateTimeInstance(DateFormat.LONG,
+			DateFormat.LONG, Locale.US).format(new Date());
 
 	@OneToMany(targetEntity = ProductHolder.class, cascade = CascadeType.ALL, orphanRemoval = true)
-	@JoinColumn(name = "ORDER_ID")
+	@JoinColumn(name = "FK_ORDER_ID")
 	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<ProductHolder> orderList = new ArrayList<ProductHolder>();
 
-	@ManyToOne(targetEntity = Business.class)
-	@JoinColumn(name = "BUSINESS_ID")
+	@ManyToOne(targetEntity = Business.class, optional = false)
+	@JoinColumn(name = "FK_BUSINESS_ID", nullable = false, updatable = false)
 	private Business business;
-	
+
 	@Column(name = "TOTAL_PRICE")
 	private BigDecimal totalPrice;
-	
+
 	@Column(name = "ORDER_STATUS")
 	private EOrderStatus status = EOrderStatus.PENDING;
 
 	public Order() {
-		 
-		   }
-	
+
+	}
+
 	public long getId() {
 		return id;
 	}
@@ -101,9 +102,8 @@ public class Order {
 	}
 
 	public BigDecimal getTotalPrice() {
-	    totalPrice = new BigDecimal(0);
-		for(ProductHolder productHolder : orderList)
-		{
+		totalPrice = new BigDecimal(0);
+		for (ProductHolder productHolder : orderList) {
 			totalPrice = totalPrice.add(productHolder.getHoldingProductsPrice());
 		}
 		return totalPrice;
@@ -112,7 +112,7 @@ public class Order {
 	public void setTotalPrice(BigDecimal totalPrice) {
 		this.totalPrice = totalPrice;
 	}
-	
+
 	public EOrderStatus getStatus() {
 		return status;
 	}
@@ -120,5 +120,5 @@ public class Order {
 	public void setStatus(EOrderStatus orderStatus) {
 		this.status = orderStatus;
 	}
-	
+
 }

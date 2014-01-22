@@ -17,54 +17,62 @@ import com.qorder.qorderws.model.category.Category;
 
 @Transactional
 public class CategoryDAO implements ICategoryDAO {
-	
+
 	private SessionFactory sessionFactory;
-	private static final Logger LOGGER = LoggerFactory.getLogger(CategoryDAO.class);
+	private static final Logger LOGGER = LoggerFactory
+			.getLogger(CategoryDAO.class);
 	private String ExceptionTime;
 
 	public SessionFactory getSessionFactory() {
 		return sessionFactory;
 	}
+
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public List<Category> fetchCategoriesForBusiness(long businessId) throws BusinessDoesNotExistException {
+	public List<Category> fetchCategoriesForBusiness(long businessId)
+			throws BusinessDoesNotExistException {
 		List<Category> fetchedList = null;
-		try{
-			fetchedList = sessionFactory.getCurrentSession()
+		try {
+			fetchedList = sessionFactory
+					.getCurrentSession()
 					.createQuery("SELECT CategoryList FROM Business as b WHERE b.id= :id")
 					.setParameter("id", businessId).list();
-		}catch (final HibernateException ex){
-			this.ExceptionTime = DateFormat.getDateTimeInstance(DateFormat.LONG,DateFormat.LONG, Locale.US).format(new Date());
-		       LOGGER.warn(
-		           "Hibernate exception was raised while trying to fetch categories for business, info: " +
-		           ex.getLocalizedMessage(),ex,this.ExceptionTime);	
+		} catch (final HibernateException ex) {
+			this.ExceptionTime = DateFormat.getDateTimeInstance(
+					DateFormat.LONG, DateFormat.LONG, Locale.US).format(
+					new Date());
+			LOGGER.warn(
+					"Hibernate exception was raised while trying to fetch categories for business, info: "
+							+ ex.getLocalizedMessage(), ex, this.ExceptionTime);
 		}
 		if (fetchedList == null) {
 			throw new BusinessDoesNotExistException();
 		}
-		return fetchedList;		
+		return fetchedList;
 	}
- 
-	
+
 	@Override
-	public Category findById(long categoryId) throws CategoryDoesNotExistException {
-		Category category= null;
+	public Category findById(long categoryId)
+			throws CategoryDoesNotExistException {
+		Category category = null;
 		try {
-			category = (Category) sessionFactory.getCurrentSession().get(Category.class, categoryId);
-			
+			category = (Category) sessionFactory.getCurrentSession().get(
+					Category.class, categoryId);
+
+		} catch (final HibernateException ex) {
+			this.ExceptionTime = DateFormat.getDateTimeInstance(
+					DateFormat.LONG, DateFormat.LONG, Locale.US).format(
+					new Date());
+			LOGGER.warn(
+					"Hibernate exception was raised while trying to find category by id, info: "
+							+ ex.getLocalizedMessage(), ex, this.ExceptionTime);
 		}
-		catch(final HibernateException ex) {
-			this.ExceptionTime = DateFormat.getDateTimeInstance(DateFormat.LONG,DateFormat.LONG, Locale.US).format(new Date());
-		       LOGGER.warn(
-		           "Hibernate exception was raised while trying to find category by id, info: " +
-		           ex.getLocalizedMessage(),ex,this.ExceptionTime);	
-		}
-		if (category==null) {
-			throw new CategoryDoesNotExistException();	
+		if (category == null) {
+			throw new CategoryDoesNotExistException();
 		}
 		return category;
 	}
@@ -74,43 +82,51 @@ public class CategoryDAO implements ICategoryDAO {
 		try {
 			sessionFactory.getCurrentSession().save(category);
 			return true;
-		} catch(final HibernateException ex){
-			this.ExceptionTime = DateFormat.getDateTimeInstance(DateFormat.LONG,DateFormat.LONG, Locale.US).format(new Date());
-		       LOGGER.warn(
-		           "Hibernate exception was raised while trying to save category, info: " +
-		           ex.getLocalizedMessage(),ex,this.ExceptionTime);	
+		} catch (final HibernateException ex) {
+			this.ExceptionTime = DateFormat.getDateTimeInstance(
+					DateFormat.LONG, DateFormat.LONG, Locale.US).format(
+					new Date());
+			LOGGER.warn(
+					"Hibernate exception was raised while trying to save category, info: "
+							+ ex.getLocalizedMessage(), ex, this.ExceptionTime);
 		}
-			return false;
+		return false;
 	}
 
-	//TODO : Throws CategoryDoesNotExistException
+	// TODO : Throws CategoryDoesNotExistException
 	@Override
-	public boolean update(Category category) throws CategoryDoesNotExistException {
+	public boolean update(Category category)
+			throws CategoryDoesNotExistException {
 		try {
 			sessionFactory.getCurrentSession().update(category);
 			return true;
-		} catch(final HibernateException ex){
-			this.ExceptionTime = DateFormat.getDateTimeInstance(DateFormat.LONG,DateFormat.LONG, Locale.US).format(new Date());
-		       LOGGER.warn(
-		           "Hibernate exception was raised while trying to update category, info: " +
-		           ex.getLocalizedMessage(),ex,this.ExceptionTime);	
+		} catch (final HibernateException ex) {
+			this.ExceptionTime = DateFormat.getDateTimeInstance(
+					DateFormat.LONG, DateFormat.LONG, Locale.US).format(
+					new Date());
+			LOGGER.warn(
+					"Hibernate exception was raised while trying to update category, info: "
+							+ ex.getLocalizedMessage(), ex, this.ExceptionTime);
 		}
-			return false;
+		return false;
 	}
 
-	//TODO : Throws CategoryDoesNotExistException
+	// TODO : Throws CategoryDoesNotExistException
 	@Override
-	public boolean delete(Category category) throws CategoryDoesNotExistException {
+	public boolean delete(Category category)
+			throws CategoryDoesNotExistException {
 		try {
 			sessionFactory.getCurrentSession().delete(category);
 			return true;
-		} catch(final HibernateException ex){
-			this.ExceptionTime = DateFormat.getDateTimeInstance(DateFormat.LONG,DateFormat.LONG, Locale.US).format(new Date());
-		       LOGGER.warn(
-		           "Hibernate exception was raised while trying to delete category, info: " +
-		           ex.getLocalizedMessage(),ex,this.ExceptionTime);	
+		} catch (final HibernateException ex) {
+			this.ExceptionTime = DateFormat.getDateTimeInstance(
+					DateFormat.LONG, DateFormat.LONG, Locale.US).format(
+					new Date());
+			LOGGER.warn(
+					"Hibernate exception was raised while trying to delete category, info: "
+							+ ex.getLocalizedMessage(), ex, this.ExceptionTime);
 		}
-		return false;	
+		return false;
 	}
 
 }

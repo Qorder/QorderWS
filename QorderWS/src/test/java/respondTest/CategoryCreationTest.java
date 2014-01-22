@@ -1,6 +1,7 @@
 package respondTest;
 
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -28,29 +29,36 @@ public class CategoryCreationTest {
 	@Test
 	public final void testPutCategoryToBusinessSuccess() {
 		System.out.println("\nTest successful category save to web service:");
-		long businessId = 1;
+		long menuId = 1;
 		Category category = createMockCategory();
 		client.putNewCategory(
 				"http://localhost:8080/qorderws/categories/business?id=",
-				businessId, category);
+				menuId, category);
 
 		System.out
 				.println("Check object characteristics after parsing from Json:\n");
-		MenuDTO businessInfo = client
+		MenuDTO menuDTO = client
 				.requestForMenu(
-						"http://localhost:8080/qorderws/menus/business?id=",
-						businessId);
-		System.out.println("Business info: " + businessInfo.getBusinessName());
-
-		for (CategoryDTO categoryDTO : businessInfo.getCategoryInfoList()) {
+						"http://localhost:8080/qorderws/menus/menu?id=",
+						menuId);
+		
+		assertNotNull(menuDTO);
+		
+		for (CategoryDTO categoryDTO : menuDTO.getCategoryInfoList()) {
 			System.out.println(categoryDTO.toString());
 			if (categoryDTO.getName().equals(category.getName())) {
-				client.postNewProducts("http://localhost:8080/qorderws/products/category?id=",
-						categoryDTO.getId(), getProducts());
+				try
+				{
+					client.postNewProducts("http://localhost:8080/qorderws/products/category?id=",categoryDTO.getId(), getProducts());
+				}
+				catch(Exception ex)
+				{
+					System.out.println(ex.getMessage());
+					fail();
+				}
 			}
 
 		}
-		assertNotNull(businessInfo);
 	}
 
 	@Test

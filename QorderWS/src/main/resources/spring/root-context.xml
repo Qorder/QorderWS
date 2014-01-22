@@ -52,7 +52,7 @@
 	</bean>
 
 	<bean id="menuService" class="com.qorder.qorderws.service.MenuService">
-		<property name="businessDAO" ref="businessDAO" />
+		<property name="menuDAO" ref="menuDAO" />
 	</bean>
 
 	<bean id="productService" class="com.qorder.qorderws.service.ProductService">
@@ -80,7 +80,7 @@
 	<bean id="businessDAO" class="com.qorder.qorderws.dao.BusinessDAO"
 		autowire="byName" />
 
-<!-- 	<bean id="businessDAOmock" class="com.qorder.qorderws.dao.BusinessDaoMock"
-		autowire="byName" />  -->
+	<bean id="menuDAO" class="com.qorder.qorderws.dao.MenuDAO"
+		autowire="byName" />
 
 </beans>

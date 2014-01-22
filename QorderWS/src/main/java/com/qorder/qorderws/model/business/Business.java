@@ -4,13 +4,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -19,41 +15,16 @@ import com.qorder.qorderws.model.menu.Menu;
 
 @Entity
 @Table(name = "BUSINESSES")
-public class Business {
+public class Business extends AbstractBusiness {
 
-	@Id
-	@GeneratedValue
-	@Column(name = "BUSINESS_ID")
-	private long id;
-
-	@Column(name = "NAME")
-	private String name;
-
-	@OneToOne
-	@MapsId
-	@Column(name="MENU_ID")
+	@OneToOne(optional = false, cascade = CascadeType.ALL)
+	@JoinColumn(name = "FK_MENU_ID")
 	private Menu menu;
 
-	@OneToMany(targetEntity = Business.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-	@JoinColumn(name = "BUSINESS_ID")
-	private Set<Business> childBusinesses = new HashSet<Business>();
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "parentBusiness")
+	private Set<ChildBusiness> childBusinesses = new HashSet<ChildBusiness>();
 
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
+	@Override
 	public Menu getMenu() {
 		return menu;
 	}
@@ -62,17 +33,17 @@ public class Business {
 		this.menu = menu;
 	}
 
-	public Set<Business> getChildBusinesses() {
+	public Set<ChildBusiness> getChildBusinesses() {
 		return childBusinesses;
 	}
 
-	public void setChildBusinesses(Set<Business> childBusinesses) {
+	public void setChildBusinesses(Set<ChildBusiness> childBusinesses) {
 		this.childBusinesses = childBusinesses;
 	}
 
-	public boolean addBusiness(Business business) {
+	public boolean addChild(ChildBusiness business) {
 		if (childBusinesses.add(business)) {
-			business.setMenu(menu);
+			business.setParent(this);
 			return true;
 		}
 		return false;

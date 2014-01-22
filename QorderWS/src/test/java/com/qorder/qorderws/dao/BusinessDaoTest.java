@@ -75,7 +75,7 @@ public class BusinessDaoTest extends DBTestCase {
 	
 	@Test(expected=BusinessDoesNotExistException.class)
 	public void testExistsDelete() throws BusinessDoesNotExistException {
-		this.testBusiness.setId(3);
+		this.testBusiness.setId((long) 3);
 		this.testBusinessDAO.delete(testBusiness);
 		this.testBusinessDAO.findById(3);
 	}
@@ -83,7 +83,7 @@ public class BusinessDaoTest extends DBTestCase {
 
 	@Test
 	public void testExistsUpdate() throws BusinessDoesNotExistException {
-		this.testBusiness.setId(2);
+		this.testBusiness.setId((long) 2);
 		this.testBusiness.setName("Trakter");
 		this.testBusinessDAO.update(testBusiness);
 		this.testBusiness = (Business) this.testBusinessDAO.findById(2);

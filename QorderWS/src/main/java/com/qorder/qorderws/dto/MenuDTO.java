@@ -8,16 +8,15 @@ import com.qorder.qorderws.dto.category.CategoryDTO;
 
 public class MenuDTO {
 	
-	private String businessName;
+	private Long id;
 	
 	private List<CategoryDTO> categoryInfoList = new ArrayList<CategoryDTO>();
 	
-	public String getBusinessName() {
-		return businessName;
+	public Long getId() {
+		return id;
 	}
-	
-	public void setBusinessName(String businessName) {
-		this.businessName = businessName;
+	public void setId(Long id) {
+		this.id = id;
 	}
 	public List<CategoryDTO> getCategoryInfoList() {
 		return categoryInfoList;
