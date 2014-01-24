@@ -21,20 +21,19 @@ public final class PropertyBuilder {
 	private void constructProperties(String propertyPath) {
 		try 
 		{
-			Resource resource = new ClassPathResource(propertyPath); //"references.properties"
+			Resource resource = new ClassPathResource(propertyPath);
 			properties = PropertiesLoaderUtils.loadProperties(resource);
 		} 
 		catch (IOException e) 
 		{
-			LOGGER.debug("Reference property file not found!! Exception: " + e.getLocalizedMessage(), e);
-			e.printStackTrace();
+			LOGGER.warn("Reference property file not found!! Exception: " + e.getLocalizedMessage(), e);
 		}
 	}
-
+	
 	/**
 	 * 
-	 * @return property file
-	 * @return null if no property file found
+	 * @return property file or null if no property file found
+	 * 
 	 */
 	public Properties getProperties() {
 		return properties;

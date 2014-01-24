@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.qorder.qorderws.dto.order.BusinessOrdersDTO;
 import com.qorder.qorderws.dto.order.OrderDTO;
 import com.qorder.qorderws.dto.order.OrderViewDTO;
 import com.qorder.qorderws.exception.BusinessDoesNotExistException;
@@ -35,28 +34,32 @@ public class OrderController {
 	ResponseEntity<OrderViewDTO> createOrder(@RequestParam Long id, @RequestBody OrderDTO orderDTO) throws BusinessDoesNotExistException {
 		LOGGER.info("Request for order submit");
 		OrderViewDTO orderView = orderService.submitOrder(id, orderDTO);
+		
 		return new ResponseEntity<OrderViewDTO>(orderView,HttpStatus.CREATED);
 	}
 	
 	@RequestMapping(value = "/business", params = "id", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	ResponseEntity<BusinessOrdersDTO> getOrdersByBusinessId(@RequestParam Long id) throws BusinessDoesNotExistException {
-		BusinessOrdersDTO businessOrders = orderService.fetchOrdersByBusinessID(id);
-		LOGGER.info("Request for business orders.\nFetchedList size is " + businessOrders.getOrders().size());
-		return new ResponseEntity<BusinessOrdersDTO>(businessOrders, HttpStatus.OK);
+	ResponseEntity<OrderViewDTO[]> getOrdersByBusinessId(@RequestParam Long id) throws BusinessDoesNotExistException {
+		OrderViewDTO[] businessOrders = orderService.fetchOrdersByBusinessID(id);
+		LOGGER.info("Request for business orders.\nFetchedList size is " + businessOrders.length);
+		
+		return new ResponseEntity<OrderViewDTO[]>(businessOrders, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value ="/business/{businessId}/order", params = "status", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	ResponseEntity<BusinessOrdersDTO> getOrdersByStatus(@PathVariable Long businessId, @RequestParam String status) throws BusinessDoesNotExistException, IllegalArgumentException {
+	ResponseEntity<OrderViewDTO[]> getOrdersByStatus(@PathVariable Long businessId, @RequestParam String status) throws BusinessDoesNotExistException, IllegalArgumentException {
 		EOrderStatus orderStatus = EOrderStatus.valueOf(status);
-		BusinessOrdersDTO businessOrders = orderService.fetchOrdersByStatus(businessId, orderStatus);
-		LOGGER.info("Request for business orders with status query.\nFetchedList size is " + businessOrders.getOrders().size());
-		return new ResponseEntity<BusinessOrdersDTO>(businessOrders, HttpStatus.OK);
+		OrderViewDTO[] businessOrders = orderService.fetchOrdersByStatus(businessId, orderStatus);
+		LOGGER.info("Request for business orders with status query.\nFetchedList size is " + businessOrders.length);
+		
+		return new ResponseEntity<OrderViewDTO[]>(businessOrders, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value ="/order", params="id", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	ResponseEntity<OrderViewDTO> getOrdersById(@RequestParam Long id) throws OrderDoesNotExistException {
 		OrderViewDTO orderView = orderService.fetchOrderById(id);
 		LOGGER.info("Request for order with id " + id);
+		
 		return new ResponseEntity<OrderViewDTO>(orderView, HttpStatus.OK);
 	}
 	
@@ -64,6 +67,7 @@ public class OrderController {
 	ResponseEntity<Void> changeOrderStatus(@PathVariable Long orderId, @RequestParam String status) throws OrderDoesNotExistException, IllegalArgumentException {
 		EOrderStatus orderStatus = EOrderStatus.valueOf(status);
 		orderService.changeOrderStatus(orderId, orderStatus);
+		
 		return new ResponseEntity<Void>(HttpStatus.ACCEPTED);
 	}
 	

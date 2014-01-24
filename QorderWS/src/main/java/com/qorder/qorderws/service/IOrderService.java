@@ -1,6 +1,5 @@
 package com.qorder.qorderws.service;
 
-import com.qorder.qorderws.dto.order.BusinessOrdersDTO;
 import com.qorder.qorderws.dto.order.OrderDTO;
 import com.qorder.qorderws.dto.order.OrderViewDTO;
 import com.qorder.qorderws.exception.BusinessDoesNotExistException;
@@ -11,9 +10,9 @@ public interface IOrderService {
     
 	OrderViewDTO submitOrder(long businessId, OrderDTO order) throws BusinessDoesNotExistException;
     
-    BusinessOrdersDTO fetchOrdersByBusinessID(long businessId) throws BusinessDoesNotExistException;
+	OrderViewDTO[] fetchOrdersByBusinessID(long businessId) throws BusinessDoesNotExistException;
 
-	BusinessOrdersDTO fetchOrdersByStatus(long businessId, EOrderStatus orderStatus) throws BusinessDoesNotExistException;
+	OrderViewDTO[] fetchOrdersByStatus(long businessId, EOrderStatus orderStatus) throws BusinessDoesNotExistException;
 
 	void changeOrderStatus(Long orderId, EOrderStatus orderStatus) throws OrderDoesNotExistException;
 

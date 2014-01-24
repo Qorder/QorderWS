@@ -1,13 +1,13 @@
 
 package com.qorder.qorderws.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.transaction.annotation.Transactional;
 
 import com.qorder.qorderws.dao.IBusinessDAO;
 import com.qorder.qorderws.dao.IOrderDAO;
-import com.qorder.qorderws.dto.order.BusinessOrdersDTO;
 import com.qorder.qorderws.dto.order.OrderDTO;
 import com.qorder.qorderws.dto.order.OrderViewDTO;
 import com.qorder.qorderws.exception.BusinessDoesNotExistException;
@@ -33,30 +33,30 @@ public class OrderService implements IOrderService {
 
 	@Transactional(readOnly = true)
 	@Override
-	public BusinessOrdersDTO fetchOrdersByBusinessID(long businessId) throws BusinessDoesNotExistException {
+	public OrderViewDTO[] fetchOrdersByBusinessID(long businessId) throws BusinessDoesNotExistException {
 		List<Order> orderList = orderDAO.fetchOrderForBusiness(businessId);
-		
-		BusinessOrdersDTO businessOrders = new BusinessOrdersDTO();
+		List<OrderViewDTO> businessOrders = new ArrayList<OrderViewDTO>();
 		for(Order order : orderList)
 		{
 			OrderViewDTO orderView = new OrderToOrderViewDTOMapper().map(order, new OrderViewDTO());
-			businessOrders.addOrderViewDTO(orderView);
+			businessOrders.add(orderView);
 		}
-		return businessOrders;
+		return businessOrders.toArray(new OrderViewDTO[businessOrders.size()]);
+		
 	}
 
 	@Transactional(readOnly = true)
 	@Override
-	public BusinessOrdersDTO fetchOrdersByStatus(long businessId, EOrderStatus orderStatus) throws BusinessDoesNotExistException {
-		List<Order> orderList = orderDAO.fetchOrdersByStatus(businessId, orderStatus);
+	public OrderViewDTO[] fetchOrdersByStatus(long businessId, EOrderStatus orderStatus) throws BusinessDoesNotExistException {
 		
-		BusinessOrdersDTO businessOrders = new BusinessOrdersDTO();
+		List<Order> orderList = orderDAO.fetchOrdersByStatus(businessId, orderStatus);
+		List<OrderViewDTO> businessOrders = new ArrayList<OrderViewDTO>();
 		for(Order order : orderList)
 		{
 			OrderViewDTO orderView = new OrderToOrderViewDTOMapper().map(order, new OrderViewDTO());
-			businessOrders.addOrderViewDTO(orderView);
+			businessOrders.add(orderView);
 		}
-		return businessOrders;
+		return businessOrders.toArray(new OrderViewDTO[businessOrders.size()]);
 	}
 
 	@Override
