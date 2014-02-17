@@ -27,8 +27,8 @@ public class Category {
 	@Column(name = "NAME")
 	private String name;
 
-	@OneToMany(targetEntity = Product.class,cascade=CascadeType.ALL,fetch=FetchType.LAZY, orphanRemoval=true)
-	@JoinColumn(name = "PRODUCT_CATEGORY_ID")
+	@OneToMany(targetEntity = Product.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+	@JoinColumn(name = "FK_PRODUCT_CATEGORY_ID")
 	private List<Product> productList = new ArrayList<Product>();
 
 	public long getId() {
@@ -54,7 +54,7 @@ public class Category {
 	public void setProductList(List<Product> productList) {
 		this.productList = productList;
 	}
-	
+
 	public boolean addProduct(Product product) {
 		return productList.add(product);
 	}

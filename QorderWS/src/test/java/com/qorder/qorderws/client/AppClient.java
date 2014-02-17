@@ -6,21 +6,21 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
+import com.qorder.qorderws.dto.BusinessDTO;
 import com.qorder.qorderws.dto.MenuDTO;
 import com.qorder.qorderws.dto.category.CategoryDTO;
 import com.qorder.qorderws.dto.category.DetailedCategoryDTO;
 import com.qorder.qorderws.dto.order.OrderDTO;
 import com.qorder.qorderws.dto.product.DetailedProductDTO;
 import com.qorder.qorderws.mapper.CategoryToCategoryDTOMapper;
-import com.qorder.qorderws.model.business.Business;
 import com.qorder.qorderws.model.category.Category;
 
 public class AppClient {
 	
 	private RestTemplate restTemplate = new RestTemplate();
 	
-	public MenuDTO requestForMenu(String uri, Long businessId) {
-		ResponseEntity<MenuDTO> response = restTemplate.getForEntity(uri + businessId, MenuDTO.class);
+	public MenuDTO requestForMenu(String uri, Long menuId) {
+		ResponseEntity<MenuDTO> response = restTemplate.getForEntity(uri + menuId, MenuDTO.class);
 		MenuDTO menuDTO = response.getBody();
 		return menuDTO;
 	}
@@ -36,7 +36,7 @@ public class AppClient {
 		restTemplate.put(url + businessId, new CategoryToCategoryDTOMapper().map(category, new CategoryDTO()));
 	}
 	
-	public void putNewBusiness(String url, Long ownerId, Business business) throws HttpClientErrorException {
+	public void putNewBusiness(String url, Long ownerId, BusinessDTO business) throws HttpClientErrorException {
 		restTemplate.put(url + ownerId, business);
 	}
 	
@@ -47,6 +47,5 @@ public class AppClient {
 	public void putNewOrder(String url, Long businessId, OrderDTO orderDTO) throws HttpClientErrorException {
 		restTemplate.put(url + businessId, orderDTO);
 	}
-	
 
 }

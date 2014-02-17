@@ -2,6 +2,7 @@ package respondTest;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.fail;
 
 import java.util.Iterator;
 
@@ -35,42 +36,46 @@ public class MenuTest {
 	@After
 	public void tearDown() throws Exception {
 	}
-
-	@Test
-	public final void test() {
-		
-	}
 	
 	@Test
 	public final void testSuccessfulGetMenuById() {
 		System.out.println("Test menu controller succesful respond:");
-		long businessId=1;
-		MenuDTO businessInfo =  client.requestForMenu("http://localhost:8080/qorderws/menus/business?id=",businessId);
-		System.out.println("1: Check object characteristics after parsing from Json:");
-		System.out.println("Business info: " + businessInfo.getBusinessName());
-		Iterator<CategoryDTO> categoryItr = businessInfo.getCategoryInfoList().iterator();
-		while(categoryItr.hasNext())
+		try
 		{
-			CategoryDTO categoryInfo = categoryItr.next();
-			System.out.println(categoryInfo.toString());
+			long menuId=1;
+			MenuDTO menuDTO =  client.requestForMenu("http://localhost:8080/qorderws/menus/menu?id=",menuId);
+			
+			assertNotNull(menuDTO);
+			
+			System.out.println("1: Check object characteristics after parsing from Json:");
+			Iterator<CategoryDTO> categoryItr = menuDTO.getCategoryInfoList().iterator();
+			while(categoryItr.hasNext())
+			{
+				CategoryDTO categoryInfo = categoryItr.next();
+				System.out.println(categoryInfo.toString());
+			}
 		}
-		assertNotNull(businessInfo);
+		catch(Exception ex)
+		{
+			System.out.println(ex.getMessage());
+			fail();
+		}
 	}
 	
 	@Test
 	public final void testFailedGetMenuById() {
 		System.out.println("\n\n2: Test menu controller exceptions for non stored objects:");
-		long businessId = 100;
-		MenuDTO fetchedInfo = null;
+		MenuDTO menuDTO = null;
 		try
 		{
-			 fetchedInfo =  client.requestForMenu("http://localhost:8080/qorderws/menus/business?id=",businessId);
+			long menuId = 100;
+			menuDTO = client.requestForMenu("http://localhost:8080/qorderws/menus/menu?id=",menuId);
 		}
 		catch(Exception ex)
 		{
 			System.out.println(ex.getMessage());
 		}
-		assertNull(fetchedInfo);
+		assertNull(menuDTO);
 	}
 
 }

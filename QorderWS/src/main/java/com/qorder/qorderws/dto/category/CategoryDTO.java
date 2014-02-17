@@ -2,7 +2,7 @@ package com.qorder.qorderws.dto.category;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
-import com.qorder.qorderws.utils.ReferenceProvider;
+import com.qorder.qorderws.utils.providers.ReferenceProvider;
 
 @JsonIgnoreProperties("context")
 public class CategoryDTO {

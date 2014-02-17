@@ -1,65 +1,52 @@
 package com.qorder.qorderws.model.business;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import com.qorder.qorderws.model.category.Category;
+import com.qorder.qorderws.model.menu.Menu;
 
 @Entity
 @Table(name = "BUSINESSES")
-public class Business {
+public class Business extends AbstractBusiness {
 
-	@Id
-	@GeneratedValue
-	@Column(name = "BUSINESS_ID")
-	private long id;
+	@OneToOne(optional = false, cascade = CascadeType.ALL)
+	@JoinColumn(name = "FK_MENU_ID")
+	private Menu menu;
 
-	@Column(name = "NAME")
-	private String name;
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "parentBusiness")
+	private Set<ChildBusiness> childBusinesses = new HashSet<ChildBusiness>();
 
-	@OneToMany(targetEntity = Category.class, cascade=CascadeType.ALL, fetch=FetchType.LAZY, orphanRemoval=true)
-	@JoinColumn(name = "BUSINESS_ID")
-	private List<Category> CategoryList = new ArrayList<Category>();
-
-	public Business(String name) {
-		this.name = name;
-	}
-	
-	public Business() {
-		this.name="";
+	@Override
+	public Menu getMenu() {
+		return menu;
 	}
 
-	public long getId() {
-		return id;
+	public void setMenu(Menu menu) {
+		this.menu = menu;
 	}
 
-	public void setId(long id) {
-		this.id = id;
+	public Set<ChildBusiness> getChildBusinesses() {
+		return childBusinesses;
 	}
 
-	public String getName() {
-		return name;
+	public void setChildBusinesses(Set<ChildBusiness> childBusinesses) {
+		this.childBusinesses = childBusinesses;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public boolean addChild(ChildBusiness business) {
+		if (childBusinesses.add(business)) {
+			business.setParent(this);
+			return true;
+		}
+		return false;
 	}
 
-	public List<Category> getCategoryList() {
-		return CategoryList;
-	}
-
-	public void setCategoryList(List<Category> categoryList) {
-		CategoryList = categoryList;
-	}
 }

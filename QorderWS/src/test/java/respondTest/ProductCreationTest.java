@@ -81,7 +81,7 @@ public class ProductCreationTest {
 
 	private DetailedProductDTO createMockProduct() {
 		DetailedProductDTO product = new DetailedProductDTO();
-		product.setName("club sandwitch");
+		product.setName("club sandwich");
 		product.setPrice(BigDecimal.valueOf(4.5));
 		product.setDetails("classic-wth chicken nuggets-with giros");
 		return product;

@@ -2,7 +2,7 @@ package com.qorder.qorderws.dto.product;
 
 import java.math.BigDecimal;
 
-import com.qorder.qorderws.utils.ReferenceProvider;
+import com.qorder.qorderws.utils.providers.ReferenceProvider;
 
 public class DetailedProductDTO {
 

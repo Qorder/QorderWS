@@ -1,18 +1,19 @@
 package com.qorder.qorderws.exception;
 
-public class OrderDoesNotExistException extends Exception {
-	
+public class MenuDoesNotExistException extends Exception {
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public OrderDoesNotExistException() {
+	public MenuDoesNotExistException() {
 		super();
 	}
 
-	public OrderDoesNotExistException(String arg0) {
+	public MenuDoesNotExistException(String arg0) {
 		super(arg0);
+
 	}
 
 }

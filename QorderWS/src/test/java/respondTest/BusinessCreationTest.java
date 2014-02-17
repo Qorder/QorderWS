@@ -1,5 +1,7 @@
 package respondTest;
 
+import static org.junit.Assert.fail;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,13 +13,16 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.qorder.qorderws.client.AppClient;
+import com.qorder.qorderws.dto.BusinessDTO;
+import com.qorder.qorderws.mapper.BusinessToBusinessDTOMapper;
 import com.qorder.qorderws.model.business.Business;
 import com.qorder.qorderws.model.category.Category;
+import com.qorder.qorderws.model.menu.Menu;
 import com.qorder.qorderws.model.product.Product;
 
 public class BusinessCreationTest {
 	
-	private AppClient client = new AppClient();
+	private AppClient client;
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -29,7 +34,7 @@ public class BusinessCreationTest {
 
 	@Before
 	public void setUp() throws Exception {
-		
+		this.client = new AppClient();
 	}
 
 	@After
@@ -38,14 +43,26 @@ public class BusinessCreationTest {
 
 	@Test
 	public final void CreateBusinessRequesttest() {
-		long ownerId = 0;
-		client.putNewBusiness("http://localhost:8080/qorderws/businesses/owner?id=", ownerId, createMockBussineses());
+		long ownerId = 1;
+		Business business = createMockBussineses();
+		try 
+		{
+			client.putNewBusiness("http://localhost:8080/qorderws/businesses/owner?id=", ownerId, new BusinessToBusinessDTOMapper().map(business, new BusinessDTO()));
+		} 
+		catch (Exception ex) 
+		{
+			System.out.println(ex.getMessage());
+			fail(ex.getMessage());
+		}
+		
 		
 	}
 	
 	private Business createMockBussineses() {
-		Business business = new Business("To Meraki");
-
+		Business business = new Business();
+		business.setName("To Meraki");
+		Menu menu = new Menu();
+		
 		// category 1
 		Category category1 = new Category();
 		category1.setName("Food");
@@ -135,7 +152,9 @@ public class BusinessCreationTest {
 		categoryList.add(category2);
 		categoryList.add(category3);
 		
-		business.setCategoryList(categoryList);
+		menu.setCategoryList(categoryList);
+		business.setMenu(menu);
+		
 		return business;
 	}
 
