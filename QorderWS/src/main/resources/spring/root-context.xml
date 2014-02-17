@@ -48,7 +48,7 @@
 
 	<bean id="categoryService" class="com.qorder.qorderws.service.CategoryService">
 		<property name="categoryDAO" ref="categoryDAO" />
-		<property name="businessDAO" ref="businessDAO" />
+		<property name="menuDAO" ref="menuDAO" />
 	</bean>
 
 	<bean id="menuService" class="com.qorder.qorderws.service.MenuService">

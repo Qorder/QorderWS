@@ -27,12 +27,12 @@ public class CategoryCreationTest {
 	}
 
 	@Test
-	public final void testPutCategoryToBusinessSuccess() {
+	public final void testPutCategoryToMenuSuccess() {
 		System.out.println("\nTest successful category save to web service:");
 		long menuId = 1;
 		Category category = createMockCategory();
 		client.putNewCategory(
-				"http://localhost:8080/qorderws/categories/business?id=",
+				"http://localhost:8080/qorderws/categories/menu?id=",
 				menuId, category);
 
 		System.out
@@ -62,15 +62,15 @@ public class CategoryCreationTest {
 	}
 
 	@Test
-	public final void testPutCategoryToBusinessFail() {
+	public final void testPutCategoryToMenuFail() {
 		System.out.println("\nTest failed category save to web service:");
-		long businessId = 100;
+		long menuId = 100;
 		Category category = createMockCategory();
 
 		try {
 			client.putNewCategory(
-					"http://localhost:8080/qorderws/categories/business?id=",
-					businessId, category);
+					"http://localhost:8080/qorderws/categories/menu?id=",
+					menuId, category);
 		} catch (Exception ex) {
 			System.out.println(ex.getMessage());
 		}

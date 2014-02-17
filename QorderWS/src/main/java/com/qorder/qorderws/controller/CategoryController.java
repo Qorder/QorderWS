@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.qorder.qorderws.dto.category.CategoryDTO;
 import com.qorder.qorderws.dto.category.DetailedCategoryDTO;
-import com.qorder.qorderws.exception.BusinessDoesNotExistException;
 import com.qorder.qorderws.exception.CategoryDoesNotExistException;
+import com.qorder.qorderws.exception.MenuDoesNotExistException;
 import com.qorder.qorderws.service.ICategoryService;
 
 @Controller
@@ -31,8 +31,8 @@ public class CategoryController {
 	@Autowired
 	private ICategoryService categoryService;
 
-	@RequestMapping(value = "/business", params = "id", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
-	ResponseEntity<Void> crateCategory(@RequestParam Long id, @RequestBody CategoryDTO categoryDTO) throws BusinessDoesNotExistException {
+	@RequestMapping(value = "/menu", params = "id", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
+	ResponseEntity<Void> crateCategory(@RequestParam Long id, @RequestBody CategoryDTO categoryDTO) throws MenuDoesNotExistException {
 		LOGGER.info("Request for category creation with business id equals :" + id);
 		categoryService.createCategory(id, categoryDTO);
 		return new ResponseEntity<Void>(HttpStatus.CREATED);
@@ -46,7 +46,7 @@ public class CategoryController {
 	}
 	
 	
-	@ExceptionHandler({ CategoryDoesNotExistException.class, BusinessDoesNotExistException.class})
+	@ExceptionHandler({ CategoryDoesNotExistException.class, MenuDoesNotExistException.class})
 	ResponseEntity<String> sendNotFoundException(Exception ex) {
 		LOGGER.warn("Exception was thrown, with cause " + ex.getCause() + "\nMessage: " + ex.getLocalizedMessage(), ex );
 		return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
