@@ -2,6 +2,7 @@ package respondTest;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.fail;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -28,14 +29,13 @@ public class OrderSubmitTest {
 	}
 
 	@Test
-	public void SuccessfulOrderSubmittest() {
+	public void SuccessfulOrderSubmitTest() {
 		System.out.println("Put Request for order submit to registered business");
 		long businessId = 1;
 		OrderDTO order = new OrderDTO();
 		order.setTableNumber("B12");
 		order.setOrders(createOrderList());
 		
-		Exception ex1 = null;
 		try
 		{
 			client.putNewOrder("http://localhost:8080/qorderws/orders/business?id=", businessId, order);
@@ -43,20 +43,19 @@ public class OrderSubmitTest {
 		catch(Exception ex)
 		{
 			System.out.println(ex.getMessage());
-			ex1 = ex;
+			assertNull(ex);
 		}
-		assertNull(ex1);
+		fail();
 	}
 	
 	@Test
-	public void FailedOrderSubmittest() {
+	public void FailedOrderSubmitTest() {
 		System.out.println("Put Request for order submit to not registered business");
 		long businessId = 50;
 		OrderDTO order = new OrderDTO();
 		order.setTableNumber("A12");
 		order.setOrders(createOrderList());
 		
-		Exception ex1 = null;
 		try
 		{
 			client.putNewOrder("http://localhost:8080/qorderws/orders/business?id=", businessId, order);
@@ -64,9 +63,9 @@ public class OrderSubmitTest {
 		catch(Exception ex)
 		{
 			System.out.println("Web service error message: " + ex.getMessage());
-			ex1 = ex;
+			assertNotNull(ex);
 		}
-		assertNotNull(ex1);
+		fail();
 	}
 	
 	@Test
@@ -76,8 +75,6 @@ public class OrderSubmitTest {
 		OrderDTO order = new OrderDTO();
 		order.setTableNumber("A2");
 		order.setOrders(createOrderList());
-		
-		Exception ex1 = null;
 		try
 		{
 			client.putNewOrder("http://localhost:8080/qorderws/orders/business?id=", businessId, order);
@@ -85,9 +82,8 @@ public class OrderSubmitTest {
 		catch(Exception ex)
 		{
 			System.out.println(ex.getMessage());
-			ex1 = ex;
+			fail("Order submit with quantity failed");
 		}
-		assertNull(ex1);
 	}
 	
 	private List<BasketProductDTO> createOrderList() {

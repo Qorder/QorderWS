@@ -1,7 +1,6 @@
 package respondTest;
 
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 
 import java.util.Iterator;
@@ -65,17 +64,16 @@ public class MenuTest {
 	@Test
 	public final void testFailedGetMenuById() {
 		System.out.println("\n\n2: Test menu controller exceptions for non stored objects:");
-		MenuDTO menuDTO = null;
 		try
 		{
 			long menuId = 100;
-			menuDTO = client.requestForMenu("http://localhost:8080/qorderws/menus/menu?id=",menuId);
+			client.requestForMenu("http://localhost:8080/qorderws/menus/menu?id=",menuId);
 		}
 		catch(Exception ex)
 		{
 			System.out.println(ex.getMessage());
+			assertNotNull(ex);
 		}
-		assertNull(menuDTO);
 	}
 
 }

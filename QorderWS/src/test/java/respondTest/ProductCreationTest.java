@@ -76,6 +76,7 @@ public class ProductCreationTest {
 					categoryId, products);
 		} catch (Exception ex) {
 			System.out.println(ex.getMessage());
+			assertNotNull(ex);
 		}
 	}
 
@@ -83,7 +84,8 @@ public class ProductCreationTest {
 		DetailedProductDTO product = new DetailedProductDTO();
 		product.setName("club sandwich");
 		product.setPrice(BigDecimal.valueOf(4.5));
-		product.setDetails("classic-wth chicken nuggets-with giros");
+		product.setDetails("classic-with chicken nuggets-with giros");
+		product.setDescription("I'm a description for club sandwich!");
 		return product;
 	}
 

@@ -73,6 +73,7 @@ public class CategoryCreationTest {
 					menuId, category);
 		} catch (Exception ex) {
 			System.out.println(ex.getMessage());
+			assertNotNull(ex);
 		}
 	}
 

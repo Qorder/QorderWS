@@ -42,7 +42,7 @@ public class BusinessCreationTest {
 	}
 
 	@Test
-	public final void CreateBusinessRequesttest() {
+	public final void CreateBusinessRequestTest() {
 		long ownerId = 1;
 		Business business = createMockBussineses();
 		try 
@@ -51,7 +51,6 @@ public class BusinessCreationTest {
 		} 
 		catch (Exception ex) 
 		{
-			System.out.println(ex.getMessage());
 			fail(ex.getMessage());
 		}
 		
@@ -83,7 +82,7 @@ public class BusinessCreationTest {
 		product2.setPrice(BigDecimal.valueOf(2.0));
 		product2.addDetail("Chicken");
 		product2.addDetail("pork");
-		product2.setDescription("Description for guros goes here");
+		product2.setDescription("Description for giros goes here");
 		
 		foodProductList.add(product1);
 		foodProductList.add(product2);
