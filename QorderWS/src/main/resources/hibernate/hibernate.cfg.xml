@@ -24,7 +24,7 @@
 		<mapping class="com.qorder.qorderws.model.product.Product" />
 		<mapping class="com.qorder.qorderws.model.category.Category" />
 		<mapping class="com.qorder.qorderws.model.menu.Menu" />
-		<mapping class="com.qorder.qorderws.model.business.AbstractBusiness" />
+		<mapping class="com.qorder.qorderws.model.business.ABusiness" />
 		<mapping class="com.qorder.qorderws.model.business.Business" />
 		<mapping class="com.qorder.qorderws.model.business.ChildBusiness" />
 	</session-factory>

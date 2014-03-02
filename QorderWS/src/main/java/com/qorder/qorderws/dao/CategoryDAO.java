@@ -1,9 +1,6 @@
 package com.qorder.qorderws.dao;
 
-import java.text.DateFormat;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
@@ -21,7 +18,6 @@ public class CategoryDAO implements ICategoryDAO {
 	private SessionFactory sessionFactory;
 	private static final Logger LOGGER = LoggerFactory
 			.getLogger(CategoryDAO.class);
-	private String ExceptionTime;
 
 	public SessionFactory getSessionFactory() {
 		return sessionFactory;
@@ -39,15 +35,13 @@ public class CategoryDAO implements ICategoryDAO {
 		try {
 			fetchedList = sessionFactory
 					.getCurrentSession()
-					.createQuery("SELECT CategoryList FROM Business as b WHERE b.id= :id")
+					.createQuery(
+							"SELECT CategoryList FROM Business as b WHERE b.id= :id")
 					.setParameter("id", businessId).list();
 		} catch (final HibernateException ex) {
-			this.ExceptionTime = DateFormat.getDateTimeInstance(
-					DateFormat.LONG, DateFormat.LONG, Locale.US).format(
-					new Date());
 			LOGGER.warn(
 					"Hibernate exception was raised while trying to fetch categories for business, info: "
-							+ ex.getLocalizedMessage(), ex, this.ExceptionTime);
+							+ ex.getLocalizedMessage(), ex);
 		}
 		if (fetchedList == null) {
 			throw new BusinessDoesNotExistException();
@@ -64,12 +58,9 @@ public class CategoryDAO implements ICategoryDAO {
 					Category.class, categoryId);
 
 		} catch (final HibernateException ex) {
-			this.ExceptionTime = DateFormat.getDateTimeInstance(
-					DateFormat.LONG, DateFormat.LONG, Locale.US).format(
-					new Date());
 			LOGGER.warn(
 					"Hibernate exception was raised while trying to find category by id, info: "
-							+ ex.getLocalizedMessage(), ex, this.ExceptionTime);
+							+ ex.getLocalizedMessage(), ex);
 		}
 		if (category == null) {
 			throw new CategoryDoesNotExistException();
@@ -83,12 +74,9 @@ public class CategoryDAO implements ICategoryDAO {
 			sessionFactory.getCurrentSession().save(category);
 			return true;
 		} catch (final HibernateException ex) {
-			this.ExceptionTime = DateFormat.getDateTimeInstance(
-					DateFormat.LONG, DateFormat.LONG, Locale.US).format(
-					new Date());
 			LOGGER.warn(
 					"Hibernate exception was raised while trying to save category, info: "
-							+ ex.getLocalizedMessage(), ex, this.ExceptionTime);
+							+ ex.getLocalizedMessage(), ex);
 		}
 		return false;
 	}
@@ -101,12 +89,9 @@ public class CategoryDAO implements ICategoryDAO {
 			sessionFactory.getCurrentSession().update(category);
 			return true;
 		} catch (final HibernateException ex) {
-			this.ExceptionTime = DateFormat.getDateTimeInstance(
-					DateFormat.LONG, DateFormat.LONG, Locale.US).format(
-					new Date());
 			LOGGER.warn(
 					"Hibernate exception was raised while trying to update category, info: "
-							+ ex.getLocalizedMessage(), ex, this.ExceptionTime);
+							+ ex.getLocalizedMessage(), ex);
 		}
 		return false;
 	}
@@ -119,12 +104,9 @@ public class CategoryDAO implements ICategoryDAO {
 			sessionFactory.getCurrentSession().delete(category);
 			return true;
 		} catch (final HibernateException ex) {
-			this.ExceptionTime = DateFormat.getDateTimeInstance(
-					DateFormat.LONG, DateFormat.LONG, Locale.US).format(
-					new Date());
 			LOGGER.warn(
 					"Hibernate exception was raised while trying to delete category, info: "
-							+ ex.getLocalizedMessage(), ex, this.ExceptionTime);
+							+ ex.getLocalizedMessage(), ex);
 		}
 		return false;
 	}

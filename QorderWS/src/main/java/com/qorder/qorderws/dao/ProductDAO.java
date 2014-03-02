@@ -1,9 +1,6 @@
 package com.qorder.qorderws.dao;
 
-import java.text.DateFormat;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
@@ -21,7 +18,6 @@ public class ProductDAO implements IProductDAO {
 	private SessionFactory sessionFactory;
 	private static final Logger LOGGER = LoggerFactory
 			.getLogger(ProductDAO.class);
-	private String ExceptionTime;
 
 	public SessionFactory getSessionFactory() {
 		return sessionFactory;
@@ -43,12 +39,9 @@ public class ProductDAO implements IProductDAO {
 							"SELECT productList FROM Category as c WHERE c.id= :id")
 					.setParameter("id", categoryId).list();
 		} catch (final HibernateException ex) {
-			this.ExceptionTime = DateFormat.getDateTimeInstance(
-					DateFormat.LONG, DateFormat.LONG, Locale.US).format(
-					new Date());
 			LOGGER.warn(
 					"Hibernate exception was raised while trying to fetch categories for business, info: "
-							+ ex.getLocalizedMessage(), ex, this.ExceptionTime);
+							+ ex.getLocalizedMessage(), ex);
 		}
 		if (fetchedList == null) {
 			throw new CategoryDoesNotExistException();
@@ -63,12 +56,9 @@ public class ProductDAO implements IProductDAO {
 			product = (Product) sessionFactory.getCurrentSession().get(
 					Product.class, productId);
 		} catch (final HibernateException ex) {
-			this.ExceptionTime = DateFormat.getDateTimeInstance(
-					DateFormat.LONG, DateFormat.LONG, Locale.US).format(
-					new Date());
 			LOGGER.warn(
 					"Hibernate exception was raised while trying to find product by id, info: "
-							+ ex.getLocalizedMessage(), ex, this.ExceptionTime);
+							+ ex.getLocalizedMessage(), ex);
 		}
 		if (product == null) {
 			throw new ProductDoesNotExistException();
@@ -82,46 +72,35 @@ public class ProductDAO implements IProductDAO {
 			sessionFactory.getCurrentSession().save(product);
 			return true;
 		} catch (final HibernateException ex) {
-			this.ExceptionTime = DateFormat.getDateTimeInstance(
-					DateFormat.LONG, DateFormat.LONG, Locale.US).format(
-					new Date());
 			LOGGER.warn(
 					"Hibernate exception was raised while trying to save product, info: "
-							+ ex.getLocalizedMessage(), ex, this.ExceptionTime);
+							+ ex.getLocalizedMessage(), ex);
 		}
 		return false;
 	}
 
-	// TODO : Throws ProductDoesNotExistException
 	@Override
 	public boolean update(Product product) throws ProductDoesNotExistException {
 		try {
 			sessionFactory.getCurrentSession().update(product);
 			return true;
 		} catch (final HibernateException ex) {
-			this.ExceptionTime = DateFormat.getDateTimeInstance(
-					DateFormat.LONG, DateFormat.LONG, Locale.US).format(
-					new Date());
 			LOGGER.warn(
 					"Hibernate exception was raised while trying to update product, info: "
-							+ ex.getLocalizedMessage(), ex, this.ExceptionTime);
+							+ ex.getLocalizedMessage(), ex);
 		}
 		return false;
 	}
 
-	// TODO : Throws ProductDoesNotExistException
 	@Override
 	public boolean delete(Product product) throws ProductDoesNotExistException {
 		try {
 			sessionFactory.getCurrentSession().delete(product);
 			return true;
 		} catch (final HibernateException ex) {
-			this.ExceptionTime = DateFormat.getDateTimeInstance(
-					DateFormat.LONG, DateFormat.LONG, Locale.US).format(
-					new Date());
 			LOGGER.warn(
 					"Hibernate exception was raised while trying to delete product, info: "
-							+ ex.getLocalizedMessage(), ex, this.ExceptionTime);
+							+ ex.getLocalizedMessage(), ex);
 		}
 		return false;
 	}

@@ -9,7 +9,7 @@ import com.qorder.qorderws.model.menu.Menu;
 
 @Entity
 @Table(name = "CHILDBUSINESSES")
-public class ChildBusiness extends AbstractBusiness {
+public class ChildBusiness extends ABusiness {
 	
 	@ManyToOne(optional=false)
 	@JoinColumn(name="FK_BUSINESS", nullable=false)

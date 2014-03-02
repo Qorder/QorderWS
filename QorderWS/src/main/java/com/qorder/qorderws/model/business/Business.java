@@ -15,7 +15,7 @@ import com.qorder.qorderws.model.menu.Menu;
 
 @Entity
 @Table(name = "BUSINESSES")
-public class Business extends AbstractBusiness {
+public class Business extends ABusiness {
 
 	@OneToOne(optional = false, cascade = CascadeType.ALL)
 	@JoinColumn(name = "FK_MENU_ID")
@@ -47,6 +47,10 @@ public class Business extends AbstractBusiness {
 			return true;
 		}
 		return false;
+	}
+
+	public boolean removeChild(ChildBusiness business) {
+		return childBusinesses.remove(business);
 	}
 
 }

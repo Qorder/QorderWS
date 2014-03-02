@@ -8,7 +8,7 @@ import javax.persistence.MappedSuperclass;
 import com.qorder.qorderws.model.menu.Menu;
 
 @MappedSuperclass
-public abstract class AbstractBusiness {
+public abstract class ABusiness {
 	
 	@Id
 	@GeneratedValue
