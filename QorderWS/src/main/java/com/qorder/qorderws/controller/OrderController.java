@@ -67,9 +67,11 @@ public class OrderController {
 	ResponseEntity<Void> changeOrderStatus(@PathVariable Long orderId, @RequestParam String status) throws OrderDoesNotExistException, IllegalArgumentException {
 		EOrderStatus orderStatus = EOrderStatus.valueOf(status);
 		orderService.changeOrderStatus(orderId, orderStatus);
+		LOGGER.info("Request to change status if order with id " + orderId);
 		
 		return new ResponseEntity<Void>(HttpStatus.ACCEPTED);
 	}
+	
 	
 	@ExceptionHandler({ BusinessDoesNotExistException.class, OrderDoesNotExistException.class })
 	ResponseEntity<String> sendNotFoundException(BusinessDoesNotExistException ex) {

@@ -27,14 +27,12 @@ public class HomeController {
 		logger.info("Welcome to Qorder Web Service! The server locale is {}.",
 				locale);
 
-		Date date = new Date();
 		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG,
 				DateFormat.LONG, locale);
 
-		String formattedDate = dateFormat.format(date);
+		String formattedDate = dateFormat.format(new Date());
 
 		model.addAttribute("serverTime", formattedDate);
-
 		return "home";
 	}
 

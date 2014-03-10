@@ -269,7 +269,7 @@
 				<configuration>
 					<source>${java-version}</source>
 					<target>${java-version}</target>
-					<skiptests>true</skiptests>
+					<skiptests>false</skiptests>
 				</configuration>
 			</plugin>
 

@@ -7,7 +7,7 @@ public interface IMenuDAO {
 	
 	void save(Menu menu);
 	
-	void update(Menu menu);
+	void update(Menu menu) throws MenuDoesNotExistException;
 	
 	Menu delete(Long menuId) throws MenuDoesNotExistException;
 	
