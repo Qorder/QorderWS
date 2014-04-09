@@ -18,17 +18,18 @@
 	<context:property-placeholder
 		location="WEB-INF/resources/hibernate/dataSource.properties" />
 
+	<tx:annotation-driven transaction-manager="transactionManager" />
+
 	<bean id="transactionManager"
 		class="org.springframework.orm.hibernate4.HibernateTransactionManager"
 		autowire="byName" />
-
-	<tx:annotation-driven transaction-manager="transactionManager" />
 
 	<bean id="sessionFactory"
 		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean"
 		autowire="byName">
 		<property name="packagesToScan" value="com.qorder.qorderws.model" />
-		<property name="configLocation" value="classpath:/hibernate/hibernate.cfg.xml" />
+		<property name="configLocation"
+			value="WEB-INF/resources/hibernate/hibernate.cfg.xml" />
 	</bean>
 
 	<bean id="dataSource"

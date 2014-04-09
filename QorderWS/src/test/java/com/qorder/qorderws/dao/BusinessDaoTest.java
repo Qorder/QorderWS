@@ -22,7 +22,7 @@ import com.qorder.qorderws.exception.BusinessDoesNotExistException;
 import com.qorder.qorderws.model.business.Business;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations={"/test-context.xml"})
+@ContextConfiguration(locations={"classpath:/test-context.xml"})
 public class BusinessDaoTest extends DBTestCase {
 	
 	@Autowired
