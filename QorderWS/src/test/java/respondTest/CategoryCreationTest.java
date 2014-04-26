@@ -31,16 +31,12 @@ public class CategoryCreationTest {
 		System.out.println("\nTest successful category save to web service:");
 		long menuId = 1;
 		Category category = createMockCategory();
-		client.putNewCategory(
-				"http://localhost:8080/qorderws/categories/menu?id=",
-				menuId, category);
+		client.putNewCategory("/categories/menu?id=", menuId, category);
 
 		System.out
 				.println("Check object characteristics after parsing from Json:\n");
 		MenuDTO menuDTO = client
-				.requestForMenu(
-						"http://localhost:8080/qorderws/menus/menu?id=",
-						menuId);
+				.requestForMenu("/menus/menu?id=", menuId);
 		
 		assertNotNull(menuDTO);
 		
@@ -49,7 +45,7 @@ public class CategoryCreationTest {
 			if (categoryDTO.getName().equals(category.getName())) {
 				try
 				{
-					client.postNewProducts("http://localhost:8080/qorderws/products/category?id=",categoryDTO.getId(), getProducts());
+					client.postNewProducts("/products/category?id=",categoryDTO.getId(), getProducts());
 				}
 				catch(Exception ex)
 				{
@@ -68,9 +64,7 @@ public class CategoryCreationTest {
 		Category category = createMockCategory();
 
 		try {
-			client.putNewCategory(
-					"http://localhost:8080/qorderws/categories/menu?id=",
-					menuId, category);
+			client.putNewCategory("/categories/menu?id=", menuId, category);
 		} catch (Exception ex) {
 			System.out.println(ex.getMessage());
 			assertNotNull(ex);

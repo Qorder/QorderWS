@@ -42,7 +42,7 @@ public class MenuTest {
 		try
 		{
 			long menuId=1;
-			MenuDTO menuDTO =  client.requestForMenu("http://localhost:8080/qorderws/menus/menu?id=",menuId);
+			MenuDTO menuDTO =  client.requestForMenu("/menus/menu?id=",menuId);
 			
 			assertNotNull(menuDTO);
 			
@@ -67,7 +67,7 @@ public class MenuTest {
 		try
 		{
 			long menuId = 100;
-			client.requestForMenu("http://localhost:8080/qorderws/menus/menu?id=",menuId);
+			client.requestForMenu("/menus/menu?id=",menuId);
 		}
 		catch(Exception ex)
 		{

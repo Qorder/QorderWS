@@ -1,7 +1,6 @@
 package respondTest;
 
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 
 import java.math.BigDecimal;
@@ -38,14 +37,13 @@ public class OrderSubmitTest {
 		
 		try
 		{
-			client.putNewOrder("http://localhost:8080/qorderws/orders/business?id=", businessId, order);
+			client.putNewOrder("/qorderws/orders/business?id=", businessId, order);
 		}
 		catch(Exception ex)
 		{
 			System.out.println(ex.getMessage());
-			assertNull(ex);
+			fail();
 		}
-		fail();
 	}
 	
 	@Test
@@ -55,10 +53,9 @@ public class OrderSubmitTest {
 		OrderDTO order = new OrderDTO();
 		order.setTableNumber("A12");
 		order.setOrders(createOrderList());
-		
 		try
 		{
-			client.putNewOrder("http://localhost:8080/qorderws/orders/business?id=", businessId, order);
+			client.putNewOrder("/qorderws/orders/business?id=", businessId, order);
 		}
 		catch(Exception ex)
 		{
@@ -77,7 +74,7 @@ public class OrderSubmitTest {
 		order.setOrders(createOrderList());
 		try
 		{
-			client.putNewOrder("http://localhost:8080/qorderws/orders/business?id=", businessId, order);
+			client.putNewOrder("/qorderws/orders/business?id=", businessId, order);
 		}
 		catch(Exception ex)
 		{

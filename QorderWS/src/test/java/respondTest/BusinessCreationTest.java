@@ -47,7 +47,7 @@ public class BusinessCreationTest {
 		Business business = createMockBussineses();
 		try 
 		{
-			client.putNewBusiness("http://localhost:8080/qorderws/businesses/owner?id=", ownerId, new BusinessToBusinessDTOMapper().map(business, new BusinessDTO()));
+			client.putNewBusiness("/businesses/owner?id=", ownerId, new BusinessToBusinessDTOMapper().map(business, new BusinessDTO()));
 		} 
 		catch (Exception ex) 
 		{

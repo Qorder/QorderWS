@@ -9,7 +9,7 @@ public class CategoryDTO {
 	
 	private Long id;
 	private String name;
-	private final String uri = ReferenceProvider.getURIfor("category");
+	private final String uri = ReferenceProvider.INSTANCE.getURIfor("category");
 	
 	public String getName() {
 		return name;

@@ -11,7 +11,7 @@ public class DetailedProductDTO {
 	private BigDecimal price;
 	private String details; //seperator - 
 	private String description;
-	private final String imageRequestURI = ReferenceProvider.getURIfor("image");
+	private final String imageRequestURI = ReferenceProvider.INSTANCE.getURIfor("image");
 	
 	public long getId() {
 		return id;

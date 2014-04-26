@@ -14,38 +14,40 @@ import com.qorder.qorderws.dto.order.OrderDTO;
 import com.qorder.qorderws.dto.product.DetailedProductDTO;
 import com.qorder.qorderws.mapper.CategoryToCategoryDTOMapper;
 import com.qorder.qorderws.model.category.Category;
+import com.qorder.qorderws.utils.providers.ReferenceProvider;
 
 public class AppClient {
 	
 	private RestTemplate restTemplate = new RestTemplate();
+	private ReferenceProvider refProvider = ReferenceProvider.INSTANCE;
 	
 	public MenuDTO requestForMenu(String uri, Long menuId) {
-		ResponseEntity<MenuDTO> response = restTemplate.getForEntity(uri + menuId, MenuDTO.class);
+		ResponseEntity<MenuDTO> response = restTemplate.getForEntity(refProvider.getHost() + uri + menuId, MenuDTO.class);
 		MenuDTO menuDTO = response.getBody();
 		return menuDTO;
 	}
 	
 	public DetailedCategoryDTO requestForCategory(String uri, Long categoryId) {
-		ResponseEntity<DetailedCategoryDTO> response = restTemplate.getForEntity(uri + categoryId, DetailedCategoryDTO.class);
+		ResponseEntity<DetailedCategoryDTO> response = restTemplate.getForEntity(refProvider.getHost() + uri + categoryId, DetailedCategoryDTO.class);
 		DetailedCategoryDTO categoryDTO = response.getBody();
 		return categoryDTO;
 	}
 	
 	//FIXME: rest request not working error 405
 	public void putNewCategory(String url, Long businessId, Category category) throws HttpClientErrorException {
-		restTemplate.put(url + businessId, new CategoryToCategoryDTOMapper().map(category, new CategoryDTO()));
+		restTemplate.put(refProvider.getHost() + url + businessId, new CategoryToCategoryDTOMapper().map(category, new CategoryDTO()));
 	}
 	
 	public void putNewBusiness(String url, Long ownerId, BusinessDTO business) throws HttpClientErrorException {
-		restTemplate.put(url + ownerId, business);
+		restTemplate.put(refProvider.getHost() + url + ownerId, business);
 	}
 	
 	public void postNewProducts(String url, Long categoryId, List<DetailedProductDTO> products) throws HttpClientErrorException {
-		restTemplate.put(url + categoryId, products);
+		restTemplate.put(refProvider.getHost() + url + categoryId, products);
 	}
 	
 	public void putNewOrder(String url, Long businessId, OrderDTO orderDTO) throws HttpClientErrorException {
-		restTemplate.put(url + businessId, orderDTO);
+		restTemplate.put(refProvider.getHost() + url + businessId, orderDTO);
 	}
 
 }
