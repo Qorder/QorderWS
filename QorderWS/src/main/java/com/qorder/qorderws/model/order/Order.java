@@ -5,7 +5,6 @@ import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -20,7 +19,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
-import com.qorder.qorderws.model.business.Business;
+import com.qorder.qorderws.model.business.ABusiness;
 
 @Entity
 @Table(name = "ORDERS")
@@ -35,17 +34,16 @@ public class Order {
 	private String tableNumber;
 
 	@Column(name = "DATE_TIME")
-	private String dateTime = DateFormat.getDateTimeInstance(DateFormat.LONG,
-			DateFormat.LONG, Locale.US).format(new Date());
+	private String dateTime = DateFormat.getDateTimeInstance().format(new Date());
 
 	@OneToMany(targetEntity = ProductHolder.class, cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name = "FK_ORDER_ID")
 	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<ProductHolder> orderList = new ArrayList<ProductHolder>();
 
-	@ManyToOne(targetEntity = Business.class, optional = false)
+	@ManyToOne(targetEntity = ABusiness.class, optional = false)
 	@JoinColumn(name = "FK_BUSINESS_ID", nullable = false, updatable = false)
-	private Business business;
+	private ABusiness business;
 
 	@Column(name = "TOTAL_PRICE")
 	private BigDecimal totalPrice;
@@ -89,11 +87,11 @@ public class Order {
 		this.orderList = orderList;
 	}
 
-	public Business getBusiness() {
+	public ABusiness getBusiness() {
 		return business;
 	}
 
-	public void setBusiness(Business business) {
+	public void setBusiness(ABusiness business) {
 		this.business = business;
 	}
 

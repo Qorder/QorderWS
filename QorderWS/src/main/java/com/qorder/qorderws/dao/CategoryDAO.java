@@ -1,14 +1,11 @@
 package com.qorder.qorderws.dao;
 
-import java.util.List;
-
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.qorder.qorderws.exception.BusinessDoesNotExistException;
 import com.qorder.qorderws.exception.CategoryDoesNotExistException;
 import com.qorder.qorderws.model.category.Category;
 
@@ -25,28 +22,6 @@ public class CategoryDAO implements ICategoryDAO {
 
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
-	}
-
-	@Override
-	@SuppressWarnings("unchecked")
-	public List<Category> fetchCategoriesForBusiness(long businessId)
-			throws BusinessDoesNotExistException {
-		List<Category> fetchedList = null;
-		try {
-			fetchedList = sessionFactory
-					.getCurrentSession()
-					.createQuery(
-							"SELECT CategoryList FROM Business as b WHERE b.id= :id")
-					.setParameter("id", businessId).list();
-		} catch (final HibernateException ex) {
-			LOGGER.warn(
-					"Hibernate exception was raised while trying to fetch categories for business, info: "
-							+ ex.getLocalizedMessage(), ex);
-		}
-		if (fetchedList == null) {
-			throw new BusinessDoesNotExistException();
-		}
-		return fetchedList;
 	}
 
 	@Override

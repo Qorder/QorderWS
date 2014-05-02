@@ -34,7 +34,7 @@ public class OrderService implements IOrderService {
 	@Transactional(readOnly = true)
 	@Override
 	public OrderViewDTO[] fetchOrdersByBusinessID(long businessId) throws BusinessDoesNotExistException {
-		List<Order> orderList = orderDAO.fetchOrderForBusiness(businessId);
+		List<Order> orderList = orderDAO.fetchOrdersForBusiness(businessId);
 		List<OrderViewDTO> businessOrders = new ArrayList<OrderViewDTO>();
 		for(Order order : orderList)
 		{
