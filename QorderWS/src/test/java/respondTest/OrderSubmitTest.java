@@ -30,14 +30,14 @@ public class OrderSubmitTest {
 	@Test
 	public void SuccessfulOrderSubmitTest() {
 		System.out.println("Put Request for order submit to registered business");
-		long businessId = 1;
+		Long businessId = 1L;
 		OrderDTO order = new OrderDTO();
 		order.setTableNumber("B12");
 		order.setOrders(createOrderList());
 		
 		try
 		{
-			client.putNewOrder("/qorderws/orders/business?id=", businessId, order);
+			client.putNewOrder("/orders/business?id=", businessId, order);
 		}
 		catch(Exception ex)
 		{
@@ -49,32 +49,31 @@ public class OrderSubmitTest {
 	@Test
 	public void FailedOrderSubmitTest() {
 		System.out.println("Put Request for order submit to not registered business");
-		long businessId = 50;
+		Long businessId = 50L;
 		OrderDTO order = new OrderDTO();
 		order.setTableNumber("A12");
 		order.setOrders(createOrderList());
 		try
 		{
-			client.putNewOrder("/qorderws/orders/business?id=", businessId, order);
+			client.putNewOrder("/orders/business?id=", businessId, order);
 		}
 		catch(Exception ex)
 		{
 			System.out.println("Web service error message: " + ex.getMessage());
 			assertNotNull(ex);
 		}
-		fail();
 	}
 	
 	@Test
 	public void SuccessfulOrderWithQuantitySubmittest() {
 		System.out.println("Put Request for order submit to registered business with quantity and selected attribute");
-		long businessId = 1;
+		Long businessId = 1L;
 		OrderDTO order = new OrderDTO();
 		order.setTableNumber("A2");
 		order.setOrders(createOrderList());
 		try
 		{
-			client.putNewOrder("/qorderws/orders/business?id=", businessId, order);
+			client.putNewOrder("/orders/business?id=", businessId, order);
 		}
 		catch(Exception ex)
 		{

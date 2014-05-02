@@ -15,7 +15,7 @@ public class BusinessService implements IBusinessService {
 	@Transactional(readOnly = true)
 	@Override
 	public Business fetchBusinessById(long businessId) throws BusinessDoesNotExistException {
-		return (Business) businessDAO.findById(businessId);
+		return businessDAO.findById(businessId);
 	}
 
 	@Override

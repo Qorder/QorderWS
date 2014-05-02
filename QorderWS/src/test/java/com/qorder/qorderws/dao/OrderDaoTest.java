@@ -18,20 +18,26 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.qorder.qorderws.exception.BusinessDoesNotExistException;
 import com.qorder.qorderws.exception.OrderDoesNotExistException;
+import com.qorder.qorderws.model.business.ABusiness;
+import com.qorder.qorderws.model.business.Business;
 import com.qorder.qorderws.model.order.EOrderStatus;
 import com.qorder.qorderws.model.order.Order;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "/test-context.xml" })
+@Transactional
 public class OrderDaoTest extends DBTestCase {
 
 	@Autowired
 	private IOrderDAO testOrderDAO;
+	
 	@Autowired
 	private DataSource testDataSource;
+	
 	private Order order;
 
 	public IOrderDAO getOrderDao() {
@@ -44,8 +50,7 @@ public class OrderDaoTest extends DBTestCase {
 
 	@Override
 	protected IDataSet getDataSet() throws Exception {
-		return new FlatXmlDataSetBuilder().build(new FileInputStream(
-				"src/test/resources/Dbunit/DbunitOrders.xml"));
+		return new FlatXmlDataSetBuilder().build(new FileInputStream("src/test/resources/Dbunit/DbunitOrders.xml"));
 	}
 
 	/*
@@ -56,8 +61,7 @@ public class OrderDaoTest extends DBTestCase {
 	 */
 	@Before
 	public void setUp() throws Exception {
-		IDatabaseConnection connection = new DatabaseDataSourceConnection(
-				testDataSource);
+		IDatabaseConnection connection = new DatabaseDataSourceConnection(testDataSource);
 		DatabaseOperation.CLEAN_INSERT.execute(connection, getDataSet());
 		this.order = new Order();
 	}
@@ -66,19 +70,25 @@ public class OrderDaoTest extends DBTestCase {
 	public void testFetchOrderForBusiness()
 			throws BusinessDoesNotExistException {
 		List<Order> orderList = new ArrayList<Order>();
-		orderList = this.testOrderDAO.fetchOrderForBusiness(1);
+		orderList = this.testOrderDAO.fetchOrdersForBusiness(1);
 		assertEquals("25", orderList.get(0).getTableNumber());
 		assertEquals(2, orderList.size());
 	}
 
 	@Test
-	public void testSave() throws BusinessDoesNotExistException,
-			OrderDoesNotExistException {
-		this.order.setTableNumber("50");
-		this.testOrderDAO.save(this.order);
-		// Warning : change the ID each time you add an order in the
-		// DbunitOrders.xml file.
-		assertEquals("50", this.testOrderDAO.findById(6).getTableNumber());
+	public void testSave() throws BusinessDoesNotExistException, OrderDoesNotExistException {
+		order.setTableNumber("50B");
+		ABusiness business = new Business();
+		business.setId(1L);
+		order.setBusiness(business);
+		testOrderDAO.save(order);
+		
+		boolean orderPeristed = testOrderDAO.fetchOrdersForBusiness(1L).stream()
+				.anyMatch((order) -> { 
+					return order.getTableNumber().equals("50B");
+				});
+		
+		assertTrue(orderPeristed);
 	}
 
 	@Test

@@ -8,7 +8,7 @@
 	<packaging>war</packaging>
 	<version>0.4.0-BUILD-SNAPSHOT</version>
 	<properties>
-		<java-version>1.7</java-version>
+		<java-version>1.8</java-version>
 		<junit-version>4.11</junit-version>
 		<org.springframework-version>4.0.1.RELEASE</org.springframework-version>
 		<org.springframework.security-version>3.2.0.RELEASE</org.springframework.security-version>
@@ -275,4 +275,13 @@
 
 		</plugins>
 	</build>
+	<organization>
+		<name>Qorder</name>
+		<url>https://github.com/Qorder</url>
+	</organization>
+	<issueManagement>
+		<system>Github</system>
+		<url>https://github.com/Qorder/QorderWs</url>
+	</issueManagement>
+	<url>https://github.com/Qorder/QorderWs</url>
 </project>
