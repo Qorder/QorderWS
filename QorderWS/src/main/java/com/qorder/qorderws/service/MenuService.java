@@ -3,31 +3,28 @@ package com.qorder.qorderws.service;
 
 import org.springframework.transaction.annotation.Transactional;
 
-import com.qorder.qorderws.dao.IBusinessDAO;
+import com.qorder.qorderws.dao.IMenuDAO;
 import com.qorder.qorderws.dto.MenuDTO;
-import com.qorder.qorderws.exception.BusinessDoesNotExistException;
-import com.qorder.qorderws.mapper.BusinessToMenuDTOMapper;
-import com.qorder.qorderws.model.business.Business;
+import com.qorder.qorderws.exception.MenuDoesNotExistException;
+import com.qorder.qorderws.mapper.MenuToMenuDTOMapper;
+import com.qorder.qorderws.model.menu.Menu;
 
 @Transactional
 public class MenuService implements IMenuService {
 
-	private IBusinessDAO businessDAO;
+	private IMenuDAO menuDAO;
 	
-	@Transactional(readOnly = true)
 	@Override
-	public MenuDTO fetchMenuByBusinessId(long businessId) throws BusinessDoesNotExistException {
-		Business business = businessDAO.findById(businessId);
-		return new BusinessToMenuDTOMapper().map(business, new MenuDTO());
-	}
-	
-	
-	public IBusinessDAO getBusinessDAO() {
-		return businessDAO;
+	public MenuDTO fetchMenuById(Long menuId) throws MenuDoesNotExistException {
+		Menu menu = menuDAO.findById(menuId);
+		return new MenuToMenuDTOMapper().map(menu, new MenuDTO());
 	}
 
-	public void setBusinessDAO(IBusinessDAO businessDAO) {
-		this.businessDAO = businessDAO;
+	public IMenuDAO getMenuDAO() {
+		return menuDAO;
 	}
 
+	public void setMenuDAO(IMenuDAO menuDAO) {
+		this.menuDAO = menuDAO;
+	}
 }

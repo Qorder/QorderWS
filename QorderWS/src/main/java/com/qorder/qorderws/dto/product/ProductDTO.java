@@ -2,14 +2,14 @@ package com.qorder.qorderws.dto.product;
 
 import java.math.BigDecimal;
 
-import com.qorder.qorderws.utils.ReferenceProvider;
+import com.qorder.qorderws.utils.providers.ReferenceProvider;
 
 public class ProductDTO {
 	
 	private Long id;
 	private String name;
 	private BigDecimal price;
-	private final String uri = ReferenceProvider.getURIfor("product");
+	private final String uri = ReferenceProvider.INSTANCE.getURIfor("product");
 	
 	public Long getId() {
 		return id;

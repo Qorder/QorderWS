@@ -13,12 +13,14 @@ import org.dbunit.database.IDatabaseConnection;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
 import org.dbunit.operation.DatabaseOperation;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.qorder.qorderws.exception.CategoryDoesNotExistException;
 import com.qorder.qorderws.exception.ProductDoesNotExistException;
@@ -27,17 +29,18 @@ import com.qorder.qorderws.model.product.Product;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "/test-context.xml" })
+@Transactional
 public class ProductDaoTest extends DBTestCase {
 
 	@Autowired
 	private IProductDAO testProductDAO;
+	
 	@Autowired
 	private ICategoryDAO testCategoryDAO;
+	
 	@Autowired
 	private DataSource testDataSource;
-	private Product testProd;
-	private Category testCat;
-
+	
 	public IProductDAO getProductDao() {
 		return testProductDAO;
 	}
@@ -59,98 +62,96 @@ public class ProductDaoTest extends DBTestCase {
 	 */
 	@Before
 	public void setUp() throws Exception {
-		IDatabaseConnection connection = new DatabaseDataSourceConnection(
-				testDataSource);
+		IDatabaseConnection connection = new DatabaseDataSourceConnection(testDataSource);
 		DatabaseOperation.CLEAN_INSERT.execute(connection, getDataSet());
-		this.testProd = new Product();
-		this.testCat = new Category();
 	}
 	
-	//TODO : Tests gia periptoseis pou den iparxei to product
+	@After
+	public void restoreDB() {
+		//DatabaseOperation
+	}
 	
 	@Test
-	public void testExistsFindById() throws ProductDoesNotExistException
-	{
-		this.testProd = this.testProductDAO.findById(1);
-		assertEquals("MPYRA1",this.testProd.getName());	
+	public void testProductExists() throws ProductDoesNotExistException {
+			Product product = this.testProductDAO.findById(1);
+			assertNotNull(product);	
 	}
 	
 	@Test(expected=ProductDoesNotExistException.class)
-	public void testDoesNotExistFindById() throws ProductDoesNotExistException {
-		this.testProd= this.testProductDAO.findById(1337);
+	public void testProductDoesNotExist() throws ProductDoesNotExistException {
+		Product product = testProductDAO.findById(1337);
+		assertNull(product);
 	}
-	
+
 	@Test
 	public void testFetchProductsForCategory() throws CategoryDoesNotExistException {
-		List<Product> testProdList = testProductDAO.fetchProductsForCategory(1);
-		assertEquals(7, testProdList.size());
-		assertEquals("MPYRA4", testProdList.get(3).getName());
+		List<Product> productList = testCategoryDAO.findById(1).getProductList();
+		assertNotNull(productList);
 	}
 	
 	@Test
-	public void testExistsUpdate() throws ProductDoesNotExistException {
-		this.testProd.setId(5);
-		this.testProd.setName("MPYRA5MINPWUPDATED15");
-		this.testProductDAO.update(testProd);
-
-		this.testProd = this.testProductDAO.findById(5);
-		assertTrue(this.testProd.getName().contentEquals("MPYRA5MINPWUPDATED15"));
+	public void testSuccessfulUpdate() throws ProductDoesNotExistException {
+		Product product = testProductDAO.findById(2);
+		product.setDescription("updated desc");
+		testProductDAO.update(product);
+		
+		Product product2 = testProductDAO.findById(2);
+		assertEquals(product.getDescription(), product2.getDescription());
 	}
 	
 	@Test(expected=ProductDoesNotExistException.class)
-	public void testExistsDelete() throws ProductDoesNotExistException {
-		this.testProd.setId(5);
-		this.testProductDAO.delete(testProd);
-		this.testProductDAO.findById(5);
-	}
-	
-	//TODO : test gia attributes
-	@Test
-	public void testFetchProductsForCategoryAndDescriptions() throws CategoryDoesNotExistException {
-		List<Product> testProdList = testProductDAO.fetchProductsForCategory(1);
-		assertEquals(2, testProdList.get(0).getDescriptions().size());
-		assertEquals("MIKRH",testProdList.get(0).getDescriptions().get(0));
+	public void testSuccessfulDelete() throws ProductDoesNotExistException {
+		Product product = testProductDAO.findById(3);	
+		testProductDAO.delete(product);
+		
+		Product product2 = testProductDAO.findById(3);
+		assertNull(product2);
 	}
 	
 	@Test
-	public void testExistsUpdateDescriptions() throws ProductDoesNotExistException {
-		this.testProd = this.testProductDAO.findById(1);
-		this.testProd.getDescriptions().add("mauri");
-		this.testProductDAO.update(testProd);
-		this.testProd = this.testProductDAO.findById(1);
-		assertEquals("mauri",this.testProd.getDescriptions().get(2));
+	public void testSuccessfulDescriptionUpdate() throws ProductDoesNotExistException {
+		Product product = this.testProductDAO.findById(1);
+		product.getDetails().add("mauri");
+		testProductDAO.update(product);
+		
+		Product product2 = this.testProductDAO.findById(1);
+		boolean detailUpdated = product2.getDetails().stream().anyMatch((detail) -> {
+			return detail.equals("mauri");
+		});
+		
+		assertTrue(detailUpdated);
 	}
 	
 	@Test
-	public void testSaveProductsWithoutDescriptions() throws ProductDoesNotExistException{
-		this.testProd = new Product();
-		this.testProd.setName("mpyra6");
-		this.testProd.setPrice(BigDecimal.valueOf(7));
-		this.testProductDAO.save(testProd);
-		this.testProd = this.testProductDAO.findById(8);
-		assertTrue(this.testProd.getDescriptions().isEmpty());
-		assertEquals("mpyra6",this.testProd.getName());
+	public void testSuccessfulProductCreation() throws ProductDoesNotExistException, CategoryDoesNotExistException {
+		Product product = new Product();
+		product.setName("New simple Beer");
+		product.setPrice(BigDecimal.valueOf(7));
+		product.setDescription("Some description");
+		
+		Category someCategory = testCategoryDAO.findById(1);
+		someCategory.addProduct(product);
+		testCategoryDAO.save(someCategory);
+		
+		boolean productCreated = testCategoryDAO.findById(1).getProductList().stream()
+				.anyMatch((fetchedProduct) -> {
+					return fetchedProduct.equals(product);
+				});
+		
+		assertTrue(productCreated);
 	}
 	
-	@Test
-	public void testSaveProductsAndDescriptions() throws ProductDoesNotExistException{
-		this.testProd = new Product();
-		this.testProd.setName("mpyra7");
-		this.testProd.setPrice(BigDecimal.valueOf(5));
-		this.testProd.getDescriptions().add("save");
-		this.testProductDAO.save(testProd);
-		this.testProd = this.testProductDAO.findById(9);
-		assertEquals("save",this.testProd.getDescriptions().get(0));
-		assertEquals("mpyra7",this.testProd.getName());
-	}
-	
-	 @Test(expected=ProductDoesNotExistException.class)
-	 public void testDeleteOrphansAfterBusinessDeleted() throws CategoryDoesNotExistException, IOException, ProductDoesNotExistException {
-		 this.testCat=this.testCategoryDAO.findById(1);
-		 this.testCategoryDAO.delete(this.testCat);
-	     this.testProductDAO.findById(6);
-	     this.testProductDAO.findById(7);
+	 @Test(expected = ProductDoesNotExistException.class)
+	 public void testNoOrphansAfterCategoryDeleted() throws CategoryDoesNotExistException, IOException, ProductDoesNotExistException {
+		 Category someCategory = testCategoryDAO.findById(3);
+		 assertNotNull(someCategory);
+		 
+		 Long someProductId = someCategory.getProductList().get(0).getId();
+		 
+		 testCategoryDAO.delete(someCategory);
+		 
+		 Product product = testProductDAO.findById(someProductId);
+		 assertNull(product);
 	   }
-	
 	
 }

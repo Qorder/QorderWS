@@ -17,7 +17,7 @@ public interface IOrderDAO {
 	
 	Order findById(long orderId) throws OrderDoesNotExistException;
 	
-	public List<Order> fetchOrderForBusiness(long businessId) throws BusinessDoesNotExistException;
+	public List<Order> fetchOrdersForBusiness(long businessId) throws BusinessDoesNotExistException;
 
 	List<Order> fetchOrdersByStatus(long businessId, EOrderStatus orderStatus) throws BusinessDoesNotExistException;
 }

@@ -2,14 +2,14 @@ package com.qorder.qorderws.dto.category;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
-import com.qorder.qorderws.utils.ReferenceProvider;
+import com.qorder.qorderws.utils.providers.ReferenceProvider;
 
 @JsonIgnoreProperties("context")
 public class CategoryDTO {
 	
 	private Long id;
 	private String name;
-	private final String uri = ReferenceProvider.getURIfor("category");
+	private final String uri = ReferenceProvider.INSTANCE.getURIfor("category");
 	
 	public String getName() {
 		return name;

@@ -18,11 +18,5 @@
 		<property name="show_sql">true</property>
 
 		<property name="hbm2ddl.auto">create</property>
-
-		<mapping class="com.qorder.qorderws.model.order.Order" />
-		<mapping class="com.qorder.qorderws.model.order.ProductHolder" />
-		<mapping class="com.qorder.qorderws.model.product.Product" />
-		<mapping class="com.qorder.qorderws.model.category.Category" />
-		<mapping class="com.qorder.qorderws.model.business.Business" />
 	</session-factory>
 </hibernate-configuration>

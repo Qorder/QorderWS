@@ -1,5 +1,7 @@
 package respondTest;
 
+import static org.junit.Assert.fail;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,13 +13,16 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.qorder.qorderws.client.AppClient;
+import com.qorder.qorderws.dto.BusinessDTO;
+import com.qorder.qorderws.mapper.BusinessToBusinessDTOMapper;
 import com.qorder.qorderws.model.business.Business;
 import com.qorder.qorderws.model.category.Category;
+import com.qorder.qorderws.model.menu.Menu;
 import com.qorder.qorderws.model.product.Product;
 
 public class BusinessCreationTest {
 	
-	private AppClient client = new AppClient();
+	private AppClient client;
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -29,7 +34,7 @@ public class BusinessCreationTest {
 
 	@Before
 	public void setUp() throws Exception {
-		
+		this.client = new AppClient();
 	}
 
 	@After
@@ -37,15 +42,26 @@ public class BusinessCreationTest {
 	}
 
 	@Test
-	public final void CreateBusinessRequesttest() {
-		long ownerId = 0;
-		client.putNewBusiness("http://localhost:8080/qorderws/businesses/owner?id=", ownerId, createMockBussineses());
+	public final void CreateBusinessRequestTest() {
+		long ownerId = 1;
+		Business business = createMockBussineses();
+		try 
+		{
+			client.putNewBusiness("/businesses/owner?id=", ownerId, new BusinessToBusinessDTOMapper().map(business, new BusinessDTO()));
+		} 
+		catch (Exception ex) 
+		{
+			fail(ex.getMessage());
+		}
+		
 		
 	}
 	
 	private Business createMockBussineses() {
-		Business business = new Business("To Meraki");
-
+		Business business = new Business();
+		business.setName("To Meraki");
+		Menu menu = new Menu();
+		
 		// category 1
 		Category category1 = new Category();
 		category1.setName("Food");
@@ -56,16 +72,18 @@ public class BusinessCreationTest {
 		Product product1 = new Product();
 		product1.setName("Souvlaki");
 		product1.setPrice(BigDecimal.valueOf(1.4));
-		product1.addDescription("Chicken");
-		product1.addDescription("pork");
+		product1.addDetail("Chicken");
+		product1.addDetail("pork");
+		product1.setDescription("Description for souvlaki goes here");
 
 		// category 1 product 2
 		Product product2 = new Product();
 		product2.setName("Giros");
 		product2.setPrice(BigDecimal.valueOf(2.0));
-		product2.addDescription("Chicken");
-		product2.addDescription("pork");
-
+		product2.addDetail("Chicken");
+		product2.addDetail("pork");
+		product2.setDescription("Description for giros goes here");
+		
 		foodProductList.add(product1);
 		foodProductList.add(product2);
 		category1.setProductList(foodProductList);
@@ -81,18 +99,18 @@ public class BusinessCreationTest {
 		Product product3 = new Product();
 		product3.setName("Juice");
 		product3.setPrice(BigDecimal.valueOf(2.0));
-		product3.addDescription("Motion");
-		product3.addDescription("3 fruits");
-		product3.addDescription("7 vitamins");
+		product3.addDetail("Motion");
+		product3.addDetail("3 fruits");
+		product3.addDetail("7 vitamins");
 
 		// category 2 product 4
 		Product product4 = new Product();
 		//product4.setId(3);
 		product4.setName("Tea");
 		product4.setPrice(BigDecimal.valueOf(2.0));
-		product4.addDescription("Sweet");
-		product4.addDescription("semisweet");
-		product4.addDescription("no sugar");
+		product4.addDetail("Sweet");
+		product4.addDetail("semisweet");
+		product4.addDetail("no sugar");
 
 		drinkProductList.add(product3);
 		drinkProductList.add(product4);
@@ -109,18 +127,18 @@ public class BusinessCreationTest {
 		Product product5 = new Product();
 		product5.setName("Frappe");
 		product5.setPrice(BigDecimal.valueOf(1.5));
-		product5.addDescription("Sweet");
-		product5.addDescription("Semisweet");
-		product5.addDescription("no sugar");
-		product5.addDescription("Milk");
+		product5.addDetail("Sweet");
+		product5.addDetail("Semisweet");
+		product5.addDetail("no sugar");
+		product5.addDetail("Milk");
 		
 		// category 3 product 6
 		Product product6 = new Product();
 		product6.setName("Cappuccino");
 		product6.setPrice(BigDecimal.valueOf(2.5));
-		product6.addDescription("Sweet");
-		product6.addDescription("semisweet");
-		product6.addDescription("no sugar");
+		product6.addDetail("Sweet");
+		product6.addDetail("semisweet");
+		product6.addDetail("no sugar");
 
 		coffeeProductList.add(product5);
 		coffeeProductList.add(product6);
@@ -133,7 +151,9 @@ public class BusinessCreationTest {
 		categoryList.add(category2);
 		categoryList.add(category3);
 		
-		business.setCategoryList(categoryList);
+		menu.setCategoryList(categoryList);
+		business.setMenu(menu);
+		
 		return business;
 	}
 

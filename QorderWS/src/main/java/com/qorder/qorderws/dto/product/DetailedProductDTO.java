@@ -2,7 +2,7 @@ package com.qorder.qorderws.dto.product;
 
 import java.math.BigDecimal;
 
-import com.qorder.qorderws.utils.ReferenceProvider;
+import com.qorder.qorderws.utils.providers.ReferenceProvider;
 
 public class DetailedProductDTO {
 
@@ -10,7 +10,8 @@ public class DetailedProductDTO {
 	private String name;
 	private BigDecimal price;
 	private String details; //seperator - 
-	private final String imageRequestURI = ReferenceProvider.getURIfor("image");
+	private String description;
+	private final String imageRequestURI = ReferenceProvider.INSTANCE.getURIfor("image");
 	
 	public long getId() {
 		return id;
@@ -47,4 +48,13 @@ public class DetailedProductDTO {
 	public String getImageRequestURI() {
 		return imageRequestURI + String.valueOf(id);
 	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	
 }

@@ -45,15 +45,11 @@ public class ProductCreationTest {
 		long categoryId = 1;
 		List<DetailedProductDTO> products = new ArrayList<DetailedProductDTO>();
 		products.add(createMockProduct());
-		client.postNewProducts(
-				"http://localhost:8080/qorderws/products/category?id=",
-				categoryId, products);
+		client.postNewProducts("/products/category?id=", categoryId, products);
 
 		System.out
 				.println("\nCheck object characteristics after parsing from Json:");
-		DetailedCategoryDTO categoryDTO = client.requestForCategory(
-				"http://localhost:8080/qorderws/categories/category?id=",
-				categoryId);
+		DetailedCategoryDTO categoryDTO = client.requestForCategory("/categories/category?id=",	categoryId);
 		System.out.println("Category info: " + categoryDTO.getName());
 		Iterator<ProductDTO> productItr = categoryDTO.getProductList()
 				.iterator();
@@ -71,19 +67,21 @@ public class ProductCreationTest {
 		List<DetailedProductDTO> products = new ArrayList<DetailedProductDTO>();
 		products.add(createMockProduct());
 		try {
-			client.postNewProducts(
-					"http://localhost:8080/qorderws/products/category?id=",
-					categoryId, products);
-		} catch (Exception ex) {
+			client.postNewProducts("/products/category?id=", categoryId, products);
+		} 
+		catch (Exception ex) 
+		{
 			System.out.println(ex.getMessage());
+			assertNotNull(ex);
 		}
 	}
 
 	private DetailedProductDTO createMockProduct() {
 		DetailedProductDTO product = new DetailedProductDTO();
-		product.setName("club sandwitch");
+		product.setName("club sandwich");
 		product.setPrice(BigDecimal.valueOf(4.5));
-		product.setDetails("classic-wth chicken nuggets-with giros");
+		product.setDetails("classic-with chicken nuggets-with giros");
+		product.setDescription("I'm a description for club sandwich!");
 		return product;
 	}
 

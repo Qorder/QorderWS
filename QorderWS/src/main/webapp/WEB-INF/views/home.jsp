@@ -9,8 +9,7 @@
 		<h1>Qorder Web Service</h1>
 		<marquee>
 			<h2>
-				Spring team: Grigoris - Stathis<br />Hibernate team: Alexis - Antonis
-			</h2>
+				Spring team: Grigoris - Stathis<br />Hibernate team: Alexis - Antonis</h2>
 		</marquee>
 		<P>The time on the server is ${serverTime}.</P>
 	</center>

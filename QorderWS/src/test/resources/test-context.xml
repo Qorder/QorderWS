@@ -12,46 +12,44 @@
 	<!-- bean definitions here -->
 	<context:annotation-config />
 
-	<context:property-placeholder
-		location="hibernate/dataSource.properties" />
+	<context:property-placeholder 
+	    location="/hibernate/testDataSource.properties" />
+
+	<tx:annotation-driven transaction-manager="testTransactionManager" />
 
 	<bean id="testTransactionManager"
 		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
 		<property name="sessionFactory" ref="testSessionFactory"></property>
 	</bean>
 
-	<tx:annotation-driven transaction-manager="testTransactionManager" />
-
 	<bean id="testSessionFactory"
 		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
-		
 		<property name="dataSource" ref="testDataSource"></property>
-		
 		<property name="packagesToScan" value="com.qorder.qorderws.model" />
-		<property name="configLocation" value="classpath:/hibernate/hibernate.cfg.xml" />
+		<property name="configLocation" value="hibernate/hibernate.cfg.xml" />
 	</bean>
 
 	<bean id="testDataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-		<property name="driverClassName" value="${dataSource.driver}" />
-		<property name="url" value="${dataSource.url}" />
-		<property name="username" value="${dataSource.username}" />
-		<property name="password" value="${dataSource.password}" />
+		<property name="driverClassName" value="${driver}" />
+		<property name="url" value="${url}" />
+		<property name="username" value="${username}" />
+		<property name="password" value="${password}" />
 	</bean>
 
 	<bean id="testBusinessDAO" class="com.qorder.qorderws.dao.BusinessDAO">
-	    <property name="sessionFactory" ref="testSessionFactory"></property>
+		<property name="sessionFactory" ref="testSessionFactory"></property>
 	</bean>
-	
+
 	<bean id="testCategoryDAO" class="com.qorder.qorderws.dao.CategoryDAO">
-	    <property name="sessionFactory" ref="testSessionFactory"></property>
+		<property name="sessionFactory" ref="testSessionFactory"></property>
 	</bean>
-	
+
 	<bean id="testProductDAO" class="com.qorder.qorderws.dao.ProductDAO">
-	    <property name="sessionFactory" ref="testSessionFactory"></property>
+		<property name="sessionFactory" ref="testSessionFactory"></property>
 	</bean>
-	
+
 	<bean id="testOrderDAO" class="com.qorder.qorderws.dao.OrderDAO">
-	    <property name="sessionFactory" ref="testSessionFactory"></property>
+		<property name="sessionFactory" ref="testSessionFactory"></property>
 	</bean>
 </beans>

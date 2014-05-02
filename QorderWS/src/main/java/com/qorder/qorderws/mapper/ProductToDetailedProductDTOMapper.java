@@ -13,8 +13,9 @@ public class ProductToDetailedProductDTOMapper implements IMapper<Product, Detai
 		target.setName(source.getName());
 		target.setPrice(source.getPrice());
 		
-		String details = StringUtils.collectionToDelimitedString(source.getDescriptions(), "-");
+		String details = StringUtils.collectionToDelimitedString(source.getDetails(), "-");
 		target.setDetails(details);
+		target.setDescription(source.getDescription());
 		
 		return target;
 	}
