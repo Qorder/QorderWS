@@ -83,12 +83,12 @@ public class OrderDaoTest extends DBTestCase {
 		order.setBusiness(business);
 		testOrderDAO.save(order);
 		
-		boolean orderPeristed = testOrderDAO.fetchOrdersForBusiness(1L).stream()
+		boolean orderPersisted = testOrderDAO.fetchOrdersForBusiness(1L).stream()
 				.anyMatch((order) -> { 
 					return order.getTableNumber().equals("50B");
 				});
 		
-		assertTrue(orderPeristed);
+		assertTrue(orderPersisted);
 	}
 
 	@Test
