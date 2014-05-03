@@ -37,8 +37,6 @@ public class OrderDaoTest extends DBTestCase {
 	
 	@Autowired
 	private DataSource testDataSource;
-	
-	private Order order;
 
 	public IOrderDAO getOrderDao() {
 		return testOrderDAO;
@@ -63,31 +61,29 @@ public class OrderDaoTest extends DBTestCase {
 	public void setUp() throws Exception {
 		IDatabaseConnection connection = new DatabaseDataSourceConnection(testDataSource);
 		DatabaseOperation.CLEAN_INSERT.execute(connection, getDataSet());
-		this.order = new Order();
 	}
 
 	@Test
-	public void testFetchOrderForBusiness()
-			throws BusinessDoesNotExistException {
-		List<Order> orderList = new ArrayList<Order>();
-		orderList = this.testOrderDAO.fetchOrdersForBusiness(1);
-		assertEquals("25", orderList.get(0).getTableNumber());
-		assertEquals(2, orderList.size());
+	public void testFetchOrderForBusiness() throws BusinessDoesNotExistException {
+		List<Order> orderList = testOrderDAO.fetchOrdersForBusiness(1);
+		Order someOrder = orderList.get(0);
+		assertNotNull(someOrder);
 	}
 
 	@Test
 	public void testSave() throws BusinessDoesNotExistException, OrderDoesNotExistException {
-		order.setTableNumber("50B");
-		ABusiness business = new Business();
-		business.setId(1L);
-		order.setBusiness(business);
-		testOrderDAO.save(order);
+		ABusiness someBusiness = new Business();
+		someBusiness.setId(1L);
+		
+		Order someorder = new Order();
+		someorder.setBusiness(someBusiness);
+		someorder.setTableNumber("50B");
+		testOrderDAO.save(someorder);
 		
 		boolean orderPersisted = testOrderDAO.fetchOrdersForBusiness(1L).stream()
 				.anyMatch((order) -> { 
 					return order.getTableNumber().equals("50B");
 				});
-		
 		assertTrue(orderPersisted);
 	}
 
@@ -102,8 +98,7 @@ public class OrderDaoTest extends DBTestCase {
 	}
 
 	@Test
-	public void testFetchPendingOrdersForBusiness()
-			throws BusinessDoesNotExistException {
+	public void testFetchPendingOrdersForBusiness() throws BusinessDoesNotExistException {
 		List<Order> orderList = new ArrayList<Order>();
 		orderList = this.testOrderDAO.fetchOrdersByStatus(2,
 				EOrderStatus.PENDING);
@@ -112,8 +107,7 @@ public class OrderDaoTest extends DBTestCase {
 	}
 
 	@Test
-	public void testFetchAcceptedOrdersForBusiness()
-			throws BusinessDoesNotExistException {
+	public void testFetchAcceptedOrdersForBusiness() throws BusinessDoesNotExistException {
 		List<Order> orderList = new ArrayList<Order>();
 		orderList = this.testOrderDAO.fetchOrdersByStatus(1,
 				EOrderStatus.ACCEPTED);

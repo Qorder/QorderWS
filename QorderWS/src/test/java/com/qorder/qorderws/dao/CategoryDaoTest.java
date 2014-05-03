@@ -40,7 +40,7 @@ public class CategoryDaoTest extends DBTestCase {
 
 	@Override
 	protected IDataSet getDataSet() throws Exception {
-		return new FlatXmlDataSetBuilder().build(new FileInputStream("src/test/resources/Dbunit/DbunitCategories.xml"));
+		return new FlatXmlDataSetBuilder().build(new FileInputStream("src/test/resources/Dbunit/DemoDatabase.xml"));
 	}
 
 	@Before
@@ -48,8 +48,6 @@ public class CategoryDaoTest extends DBTestCase {
 		IDatabaseConnection connection = new DatabaseDataSourceConnection(testDataSource);
 		DatabaseOperation.CLEAN_INSERT.execute(connection, getDataSet());
 	}
-
-	// TODO : Tests gia periptoseis pou den iparxei to category
 
 	@Test
 	public void testExistsFindById() throws CategoryDoesNotExistException, IOException {

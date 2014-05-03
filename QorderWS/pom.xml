@@ -283,4 +283,8 @@
 		<url>https://github.com/Qorder/QorderWs</url>
 	</issueManagement>
 	<url>https://github.com/Qorder/QorderWs</url>
+	<ciManagement>
+		<system>Travis CI</system>
+		<url>https://travis-ci.org/</url>
+	</ciManagement>
 </project>

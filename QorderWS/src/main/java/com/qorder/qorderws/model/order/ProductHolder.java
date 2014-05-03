@@ -35,7 +35,7 @@ public class ProductHolder {
 	
 	@ManyToOne(targetEntity=Product.class)
 	@JoinColumn(name="PRODUCT_ID")
-	@LazyCollection(LazyCollectionOption.FALSE)
+	//@LazyCollection(LazyCollectionOption.FALSE)
 	private Product product;
 
 	public long getId() {

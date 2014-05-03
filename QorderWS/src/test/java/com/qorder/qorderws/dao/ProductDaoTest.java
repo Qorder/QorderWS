@@ -51,7 +51,7 @@ public class ProductDaoTest extends DBTestCase {
 
 	@Override
 	protected IDataSet getDataSet() throws Exception {
-		return new FlatXmlDataSetBuilder().build(new FileInputStream("src/test/resources/Dbunit/DbunitProducts.xml"));
+		return new FlatXmlDataSetBuilder().build(new FileInputStream("src/test/resources/Dbunit/DemoDatabase.xml"));
 	}
 
 	/*

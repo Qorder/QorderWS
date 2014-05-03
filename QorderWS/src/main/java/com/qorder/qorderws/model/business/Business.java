@@ -7,8 +7,8 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.qorder.qorderws.model.menu.Menu;
@@ -17,8 +17,8 @@ import com.qorder.qorderws.model.menu.Menu;
 @Table(name = "BUSINESSES")
 public class Business extends ABusiness {
 
-	@OneToOne(optional = false, cascade = CascadeType.ALL)
-	@JoinColumn(name = "FK_MENU_ID")
+	@ManyToOne(optional=false) 
+	@JoinColumn(name = "FK_MENU_ID", nullable=false, updatable=false)
 	private Menu menu;
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "parentBusiness")
