@@ -9,7 +9,6 @@ import com.qorder.qorderws.dto.category.CategoryDTO;
 public class MenuDTO {
 	
 	private Long id;
-	
 	private List<CategoryDTO> categoryInfoList = new ArrayList<CategoryDTO>();
 	
 	public Long getId() {

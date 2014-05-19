@@ -24,7 +24,7 @@ public class Menu {
 	@Column(name = "MENU_ID")
 	private Long id;
 	
-	@OneToMany(targetEntity = Category.class, cascade=CascadeType.ALL, fetch=FetchType.LAZY, orphanRemoval=true)
+	@OneToMany(targetEntity = Category.class, fetch = FetchType.LAZY, cascade=CascadeType.ALL, orphanRemoval=true)
 	@JoinColumn(name ="FK_MENU_ID")
 	private List<Category> categoryList = new ArrayList<Category>();
 

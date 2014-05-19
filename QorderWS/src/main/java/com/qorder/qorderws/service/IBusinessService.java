@@ -1,11 +1,13 @@
 package com.qorder.qorderws.service;
 
-import com.qorder.qorderws.exception.BusinessDoesNotExistException;
-import com.qorder.qorderws.model.business.Business;
+import com.qorder.qorderws.dto.BusinessDTO;
+import com.qorder.qorderws.exception.ResourceNotFoundException;
+import com.qorder.qorderws.model.business.ABusiness;
 
 public interface IBusinessService {
 	
-	Business fetchBusinessById(long businessId) throws BusinessDoesNotExistException;
+	void createBusiness(BusinessDTO businessDTO);
 	
-	void createBusiness(Business business);
+	ABusiness fetchBusinessByID(Long businessId) throws ResourceNotFoundException;
+	
 }

@@ -2,22 +2,24 @@ package com.qorder.qorderws.dao;
 
 import java.util.List;
 
-import com.qorder.qorderws.exception.BusinessDoesNotExistException;
-import com.qorder.qorderws.exception.OrderDoesNotExistException;
+import com.qorder.qorderws.exception.PersistanceLayerException;
+import com.qorder.qorderws.exception.ResourceNotFoundException;
 import com.qorder.qorderws.model.order.EOrderStatus;
 import com.qorder.qorderws.model.order.Order;
 
 public interface IOrderDAO {
-	
+
 	Order save(Order order);
 
-	boolean update(Order order) throws OrderDoesNotExistException;
+	void update(Order order) throws PersistanceLayerException;
 
-	boolean delete(Order order);
-	
-	Order findById(long orderId) throws OrderDoesNotExistException;
-	
-	public List<Order> fetchOrdersForBusiness(long businessId) throws BusinessDoesNotExistException;
+	void delete(Order order) throws PersistanceLayerException;
 
-	List<Order> fetchOrdersByStatus(long businessId, EOrderStatus orderStatus) throws BusinessDoesNotExistException;
+	Order findById(long orderId) throws PersistanceLayerException, ResourceNotFoundException;
+
+	public List<Order> fetchOrdersForBusiness(long businessId)
+			throws PersistanceLayerException, ResourceNotFoundException;
+
+	List<Order> fetchOrdersByStatus(long businessId, EOrderStatus orderStatus)
+			throws PersistanceLayerException, ResourceNotFoundException;
 }

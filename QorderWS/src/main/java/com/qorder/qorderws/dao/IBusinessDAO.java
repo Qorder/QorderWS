@@ -1,15 +1,17 @@
 package com.qorder.qorderws.dao;
 
-import com.qorder.qorderws.exception.BusinessDoesNotExistException;
+import com.qorder.qorderws.exception.PersistanceLayerException;
+import com.qorder.qorderws.exception.ResourceNotFoundException;
+import com.qorder.qorderws.model.business.ABusiness;
 import com.qorder.qorderws.model.business.Business;
 
 public interface IBusinessDAO {
 	
-	boolean save(Business business);
+	void save(Business business) throws PersistanceLayerException;
 	
-	boolean update(Business business) throws BusinessDoesNotExistException;
+	void update(Business business) throws PersistanceLayerException;
 	
-	boolean delete(Business business) throws BusinessDoesNotExistException;
+	void delete(Business business) throws PersistanceLayerException;
 	
-	Business findById(long businessId) throws BusinessDoesNotExistException;
+	ABusiness findById(long businessId) throws PersistanceLayerException, ResourceNotFoundException;
 }

@@ -4,7 +4,3 @@ jdk:
 
 before_install:
 - cd QorderWS
-
-services: mysql
-before_script:
-  - mysql -e 'create database qorderdb;'

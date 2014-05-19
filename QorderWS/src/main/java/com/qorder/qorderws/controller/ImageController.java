@@ -34,19 +34,19 @@ public class ImageController {
 		InputStream imageStream = context.getResourceAsStream("WEB-INF/resources/images/products/" + id.toString() + ".JPG");
 		byte[] imageByteArray = ByteStreams.toByteArray(imageStream);
 		
-		return new ResponseEntity<byte[]>(imageByteArray, HttpStatus.OK);
+		return new ResponseEntity<>(imageByteArray, HttpStatus.OK);
 	}
 	
 	@ExceptionHandler(IOException.class)
 	public ResponseEntity<String> sendException(Exception ex) {
 		LOGGER.warn("Exception was thrown, with cause " + ex.getCause() + "\nMessage: " + ex.getLocalizedMessage(), ex );
-		return new ResponseEntity<String>("An IOException was raised", HttpStatus.FAILED_DEPENDENCY);
+		return new ResponseEntity<>("An IOException was raised", HttpStatus.FAILED_DEPENDENCY);
 	}
 	
 	@ExceptionHandler(NullPointerException.class)
 	public ResponseEntity<String> sendBadRequestException(Exception ex) {
 		LOGGER.warn("Exception was thrown, with cause " + ex.getCause() + "\nMessage: " + ex.getLocalizedMessage(), ex );
-		return new ResponseEntity<String>("An IOException was raised", HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<>("An IOException was raised", HttpStatus.BAD_REQUEST);
 	}
 
 }

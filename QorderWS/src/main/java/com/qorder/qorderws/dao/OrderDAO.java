@@ -9,8 +9,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.qorder.qorderws.exception.BusinessDoesNotExistException;
-import com.qorder.qorderws.exception.OrderDoesNotExistException;
+import com.qorder.qorderws.exception.PersistanceLayerException;
+import com.qorder.qorderws.exception.ResourceNotFoundException;
 import com.qorder.qorderws.model.order.EOrderStatus;
 import com.qorder.qorderws.model.order.Order;
 
@@ -18,7 +18,8 @@ import com.qorder.qorderws.model.order.Order;
 public class OrderDAO implements IOrderDAO {
 
 	private SessionFactory sessionFactory;
-	private static final Logger LOGGER = LoggerFactory.getLogger(OrderDAO.class);
+	private static final Logger LOGGER = LoggerFactory
+			.getLogger(OrderDAO.class);
 
 	public SessionFactory getSessionFactory() {
 		return sessionFactory;
@@ -29,101 +30,103 @@ public class OrderDAO implements IOrderDAO {
 	}
 
 	@Override
-	public Order save(Order order) {
+	public Order save(Order order) throws PersistanceLayerException {
 		try {
 			sessionFactory.getCurrentSession().save(order);
 		} catch (final HibernateException ex) {
 			LOGGER.warn(
 					"Hibernate exception was raised while trying to save order, info: "
 							+ ex.getLocalizedMessage(), ex);
+			throw new PersistanceLayerException();
 		}
 		return order;
 	}
 
 	@Override
-	public boolean update(Order order) throws OrderDoesNotExistException {
+	public void update(Order order) throws PersistanceLayerException {
 		try {
 			sessionFactory.getCurrentSession().update(order);
-			return true;
 		} catch (final HibernateException ex) {
 			LOGGER.warn(
 					"Hibernate exception was raised while trying to update order, info: "
 							+ ex.getLocalizedMessage(), ex);
+			throw new PersistanceLayerException();
 		}
-		return false;
 	}
 
 	@Override
-	public boolean delete(Order order) {
+	public void delete(Order order) throws PersistanceLayerException {
 		try {
 			sessionFactory.getCurrentSession().delete(order);
-			return true;
 		} catch (final HibernateException ex) {
 			LOGGER.warn(
 					"Hibernate exception was raised while trying to delete order, info: "
 							+ ex.getLocalizedMessage(), ex);
+			throw new ResourceNotFoundException();
 		}
-
-		return false;
 	}
 
 	@Override
-	public Order findById(long orderId) throws OrderDoesNotExistException {
-		Order order = null;
+	public Order findById(long orderId) throws PersistanceLayerException, ResourceNotFoundException {
 		try {
-			order = (Order) sessionFactory.getCurrentSession().get(Order.class, orderId);
+			Order order = (Order) sessionFactory.getCurrentSession().get(Order.class, orderId);
+			if(order == null) {
+				throw new ResourceNotFoundException("Order not found!");
+			}
+			return order;
+			
 		} catch (final HibernateException ex) {
 			LOGGER.warn(
 					"Hibernate exception was raised while trying to find order by id, info: "
 							+ ex.getLocalizedMessage(), ex);
+			throw new PersistanceLayerException();
 		}
-		if (order == null) {
-			throw new OrderDoesNotExistException();
-		}
-		return order;
-
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public List<Order> fetchOrdersForBusiness(long businessId)
-			throws BusinessDoesNotExistException {
-		List<Order> fetchedList = null;
+	public List<Order> fetchOrdersForBusiness(long businessId) throws PersistanceLayerException, ResourceNotFoundException {
 		try {
-			fetchedList = sessionFactory.getCurrentSession()
+			List<Order> orderList = (List<Order>) sessionFactory.getCurrentSession()
 					.createCriteria(Order.class)
-					.add(Restrictions.eq("business.id", businessId)).list();
-
+					.add(Restrictions.eq("business.id", businessId))
+					.list();
+			
+			if(orderList == null) {
+				throw new ResourceNotFoundException("Orders not found");
+			}
+			return orderList;
+			
 		} catch (final HibernateException ex) {
 			LOGGER.warn(
 					"Hibernate exception was raised while trying to fetch orders for business, info: "
 							+ ex.getLocalizedMessage(), ex);
+			throw new PersistanceLayerException();
 		}
-		if (fetchedList == null) {
-			throw new BusinessDoesNotExistException();
-		}
-		return fetchedList;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public List<Order> fetchOrdersByStatus(long businessId,
-			EOrderStatus orderStatus) throws BusinessDoesNotExistException {
-		List<Order> fetchedList = null;
+			EOrderStatus orderStatus) throws PersistanceLayerException, ResourceNotFoundException {
 		try {
-			fetchedList = sessionFactory.getCurrentSession()
+			List<Order> orderList = (List<Order>) sessionFactory.getCurrentSession()
 					.createCriteria(Order.class)
 					.add(Restrictions.eq("business.id", businessId))
-					.add(Restrictions.eq("status", orderStatus)).list();
+					.add(Restrictions.eq("status", orderStatus))
+					.list();
+			
+			if(orderList == null) {
+				throw new ResourceNotFoundException("Orders not found");
+			}
+			return orderList;
+			
 		} catch (final HibernateException ex) {
 			LOGGER.warn(
 					"Hibernate exception was raised while trying to fetch orders by status for business, info: "
 							+ ex.getLocalizedMessage(), ex);
+			throw new PersistanceLayerException();
 		}
-		if (fetchedList == null) {
-			throw new BusinessDoesNotExistException();
-		}
-		return fetchedList;
 	}
 
 }

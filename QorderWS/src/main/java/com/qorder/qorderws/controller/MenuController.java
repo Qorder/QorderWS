@@ -14,8 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.qorder.qorderws.dto.MenuDTO;
-import com.qorder.qorderws.exception.BusinessDoesNotExistException;
-import com.qorder.qorderws.exception.MenuDoesNotExistException;
+import com.qorder.qorderws.exception.ResourceNotFoundException;
 import com.qorder.qorderws.service.IMenuService;
 
 @RestController
@@ -31,27 +30,25 @@ public class MenuController {
 	/**
 	 * 
 	 * @param id
-	 * @return menu transfer object to client
-	 * @throws BusinessDoesNotExistException
-	 * @throws MenuDoesNotExistException 
+	 * @return menu transfer object to client 
 	 */
 	@Transactional(readOnly = true)
 	@RequestMapping(value = "/menu", params = "id", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<MenuDTO> getMenuById(@RequestParam Long id) throws MenuDoesNotExistException {
+	public ResponseEntity<MenuDTO> getMenuById(@RequestParam Long id) throws ResourceNotFoundException {
 		LOGGER.info("Request for menu with id parameter equal " + id.toString(), id);
 		MenuDTO menuDto = menuService.fetchMenuById(id);
-		return new ResponseEntity<MenuDTO>(menuDto, HttpStatus.OK);
+		return new ResponseEntity<>(menuDto, HttpStatus.OK);
 	}
 	
-	@ExceptionHandler(MenuDoesNotExistException.class)
+	/*@ExceptionHandler(ResourceNotFoundException.class)
 	public ResponseEntity<String> sendNotFoundException(Exception ex) {
 		LOGGER.warn("Exception was thrown, with cause " + ex.getCause() + "\nMessage: " + ex.getLocalizedMessage(), ex );
 		return new ResponseEntity<String>("Entity does not exist", HttpStatus.NOT_FOUND);
 	}
-	
+	*/
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<String> sendException(Exception ex) {
 		LOGGER.warn("Exception was thrown, with cause " + ex.getCause() + "\nMessage: " + ex.getLocalizedMessage(), ex );
-		return new ResponseEntity<String>("Exception was raised", HttpStatus.CONFLICT);
+		return new ResponseEntity<>("Exception was raised", HttpStatus.CONFLICT);
 	}
 }

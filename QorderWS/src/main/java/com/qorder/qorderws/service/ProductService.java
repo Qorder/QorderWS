@@ -2,16 +2,12 @@ package com.qorder.qorderws.service;
 
 import java.io.IOException;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.qorder.qorderws.dao.ICategoryDAO;
 import com.qorder.qorderws.dao.IProductDAO;
 import com.qorder.qorderws.dto.product.DetailedProductDTO;
-import com.qorder.qorderws.exception.CategoryDoesNotExistException;
-import com.qorder.qorderws.exception.ProductDoesNotExistException;
+import com.qorder.qorderws.exception.ResourceNotFoundException;
 import com.qorder.qorderws.mapper.DetailedProductDTOtoProductMapper;
 import com.qorder.qorderws.mapper.ProductToDetailedProductDTOMapper;
 import com.qorder.qorderws.model.category.Category;
@@ -25,13 +21,13 @@ public class ProductService implements IProductService {
 
 	@Transactional(readOnly = true)
 	@Override
-	public DetailedProductDTO fetchProductById(long productId) throws ProductDoesNotExistException {
+	public DetailedProductDTO fetchProductById(long productId) throws ResourceNotFoundException {
 		Product product = productDAO.findById(productId);
 		return new ProductToDetailedProductDTOMapper().map(product, new DetailedProductDTO());
 	}
 
 	@Override
-	public void storeProducts(long categoryId, DetailedProductDTO[] productsDTO) throws CategoryDoesNotExistException, IOException {
+	public void storeProducts(long categoryId, DetailedProductDTO[] productsDTO) throws ResourceNotFoundException, IOException {
 		Category category = categoryDAO.findById(categoryId);
 		for(DetailedProductDTO productDTO : productsDTO)
 		{
@@ -39,16 +35,6 @@ public class ProductService implements IProductService {
 			category.addProduct(product);
 		}
 		categoryDAO.update(category);
-	}
-
-	@ExceptionHandler({ CategoryDoesNotExistException.class })
-	ResponseEntity<String> sendNotFoundException(Exception ex) {
-		return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
-	}
-	
-	@ExceptionHandler({ IOException.class })
-	ResponseEntity<String> sendIOException(Exception ex) {
-		return new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
 

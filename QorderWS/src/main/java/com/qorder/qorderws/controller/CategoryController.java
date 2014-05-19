@@ -17,8 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.qorder.qorderws.dto.category.CategoryDTO;
 import com.qorder.qorderws.dto.category.DetailedCategoryDTO;
-import com.qorder.qorderws.exception.CategoryDoesNotExistException;
-import com.qorder.qorderws.exception.MenuDoesNotExistException;
+import com.qorder.qorderws.exception.ResourceNotFoundException;
 import com.qorder.qorderws.service.ICategoryService;
 
 @RestController
@@ -32,26 +31,26 @@ public class CategoryController {
 	private ICategoryService categoryService;
 
 	@RequestMapping(value = "/menu", params = "id", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
-	ResponseEntity<Void> crateCategory(@RequestParam Long id, @RequestBody CategoryDTO categoryDTO) throws MenuDoesNotExistException {
+	ResponseEntity<Void> crateCategory(@RequestParam Long id, @RequestBody CategoryDTO categoryDTO) throws ResourceNotFoundException {
 		LOGGER.info("Request for category creation with business id equals :" + id);
 		categoryService.createCategory(id, categoryDTO);
-		return new ResponseEntity<Void>(HttpStatus.CREATED);
+		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 	
 	@RequestMapping(value = "/category", params = "id", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	ResponseEntity<DetailedCategoryDTO> getCategory(@RequestParam Long id) throws CategoryDoesNotExistException {
+	ResponseEntity<DetailedCategoryDTO> getCategory(@RequestParam Long id) throws ResourceNotFoundException {
 		LOGGER.info("Request for category with id equals "+id);
 		DetailedCategoryDTO detailedCategory = categoryService.fetchCategoryByID(id);
-		return new ResponseEntity<DetailedCategoryDTO>( detailedCategory, HttpStatus.OK);
+		return new ResponseEntity<>( detailedCategory, HttpStatus.OK);
 	}
 	
 	
-	@ExceptionHandler({ CategoryDoesNotExistException.class, MenuDoesNotExistException.class})
+	/*@ExceptionHandler({ CategoryDoesNotExistException.class, MenuDoesNotExistException.class})
 	ResponseEntity<String> sendNotFoundException(Exception ex) {
 		LOGGER.warn("Exception was thrown, with cause " + ex.getCause() + "\nMessage: " + ex.getLocalizedMessage(), ex );
 		return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
 	}
-	
+	*/
 	@ExceptionHandler({ IOException.class })
 	ResponseEntity<String> sendIOException(Exception ex) {
 		LOGGER.warn("Exception was thrown, with cause " + ex.getCause() + "\nMessage: " + ex.getLocalizedMessage(), ex );

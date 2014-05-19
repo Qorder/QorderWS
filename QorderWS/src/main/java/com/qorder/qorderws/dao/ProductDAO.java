@@ -6,7 +6,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.qorder.qorderws.exception.ProductDoesNotExistException;
+import com.qorder.qorderws.exception.PersistanceLayerException;
+import com.qorder.qorderws.exception.ResourceNotFoundException;
 import com.qorder.qorderws.model.product.Product;
 
 @Transactional
@@ -25,59 +26,56 @@ public class ProductDAO implements IProductDAO {
 	}
 
 	@Override
-	public Product findById(long productId) throws ProductDoesNotExistException {
-		Product product = null;
+	public Product findById(long productId) throws PersistanceLayerException, ResourceNotFoundException {
 		try {
-			product = (Product) sessionFactory.getCurrentSession().get(
-					Product.class, productId);
+			Product product = (Product) sessionFactory.getCurrentSession().get(Product.class, productId);
+			if(product == null) {
+				throw new ResourceNotFoundException("Product not found!");
+			}
+			return product;
+			
 		} catch (final HibernateException ex) {
 			LOGGER.warn(
 					"Hibernate exception was raised while trying to find product by id, info: "
 							+ ex.getLocalizedMessage(), ex);
+			throw new PersistanceLayerException();
 		}
-		if (product == null) {
-			throw new ProductDoesNotExistException();
-		}
-		return product;
 	}
 
 	@Override
-	public boolean save(Product product) {
+	public void save(Product product) throws PersistanceLayerException {
 		try {
 			sessionFactory.getCurrentSession().save(product);
-			return true;
 		} catch (final HibernateException ex) {
 			LOGGER.warn(
 					"Hibernate exception was raised while trying to save product, info: "
 							+ ex.getLocalizedMessage(), ex);
+			throw new PersistanceLayerException();
 		}
-		return false;
 	}
 
 	@Override
-	public boolean update(Product product) throws ProductDoesNotExistException {
+	public void update(Product product) throws PersistanceLayerException {
 		try {
 			sessionFactory.getCurrentSession().update(product);
-			return true;
 		} catch (final HibernateException ex) {
 			LOGGER.warn(
 					"Hibernate exception was raised while trying to update product, info: "
 							+ ex.getLocalizedMessage(), ex);
+			throw new PersistanceLayerException();
 		}
-		return false;
 	}
 
 	@Override
-	public boolean delete(Product product) throws ProductDoesNotExistException {
+	public void delete(Product product) throws PersistanceLayerException {
 		try {
 			sessionFactory.getCurrentSession().delete(product);
-			return true;
 		} catch (final HibernateException ex) {
 			LOGGER.warn(
 					"Hibernate exception was raised while trying to delete product, info: "
 							+ ex.getLocalizedMessage(), ex);
+			throw new PersistanceLayerException();
 		}
-		return false;
 	}
 
 }

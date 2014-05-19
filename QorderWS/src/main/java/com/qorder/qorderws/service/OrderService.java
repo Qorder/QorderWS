@@ -10,8 +10,7 @@ import com.qorder.qorderws.dao.IBusinessDAO;
 import com.qorder.qorderws.dao.IOrderDAO;
 import com.qorder.qorderws.dto.order.OrderDTO;
 import com.qorder.qorderws.dto.order.OrderViewDTO;
-import com.qorder.qorderws.exception.BusinessDoesNotExistException;
-import com.qorder.qorderws.exception.OrderDoesNotExistException;
+import com.qorder.qorderws.exception.ResourceNotFoundException;
 import com.qorder.qorderws.mapper.OrderDTOtoOrderMapper;
 import com.qorder.qorderws.mapper.OrderToOrderViewDTOMapper;
 import com.qorder.qorderws.model.order.EOrderStatus;
@@ -24,7 +23,7 @@ public class OrderService implements IOrderService {
 	private IBusinessDAO businessDAO;
 	
 	@Override
-	public OrderViewDTO submitOrder(long businessId, OrderDTO orderDTO) throws BusinessDoesNotExistException {
+	public OrderViewDTO submitOrder(long businessId, OrderDTO orderDTO) throws ResourceNotFoundException {
 		Order order = new  OrderDTOtoOrderMapper().map(orderDTO, new Order());
 		order.setBusiness(businessDAO.findById(businessId));
 		orderDAO.save(order);
@@ -33,7 +32,7 @@ public class OrderService implements IOrderService {
 
 	@Transactional(readOnly = true)
 	@Override
-	public OrderViewDTO[] fetchOrdersByBusinessID(long businessId) throws BusinessDoesNotExistException {
+	public OrderViewDTO[] fetchOrdersByBusinessID(long businessId) throws ResourceNotFoundException {
 		List<Order> orderList = orderDAO.fetchOrdersForBusiness(businessId);
 		List<OrderViewDTO> businessOrders = new ArrayList<OrderViewDTO>();
 		for(Order order : orderList)
@@ -47,7 +46,7 @@ public class OrderService implements IOrderService {
 
 	@Transactional(readOnly = true)
 	@Override
-	public OrderViewDTO[] fetchOrdersByStatus(long businessId, EOrderStatus orderStatus) throws BusinessDoesNotExistException {
+	public OrderViewDTO[] fetchOrdersByStatus(long businessId, EOrderStatus orderStatus) throws ResourceNotFoundException {
 		
 		List<Order> orderList = orderDAO.fetchOrdersByStatus(businessId, orderStatus);
 		List<OrderViewDTO> businessOrders = new ArrayList<OrderViewDTO>();
@@ -60,14 +59,14 @@ public class OrderService implements IOrderService {
 	}
 
 	@Override
-	public void changeOrderStatus(Long orderId, EOrderStatus orderStatus) throws OrderDoesNotExistException {
+	public void changeOrderStatus(Long orderId, EOrderStatus orderStatus) throws ResourceNotFoundException {
 		Order order = orderDAO.findById(orderId);
 		order.setStatus(orderStatus);
 		orderDAO.save(order);
 	}
 	
 	@Override
-	public OrderViewDTO fetchOrderById(Long orderId) throws OrderDoesNotExistException {
+	public OrderViewDTO fetchOrderById(Long orderId) throws ResourceNotFoundException {
 		Order order = orderDAO.findById(orderId);
 		return new OrderToOrderViewDTOMapper().map(order, new OrderViewDTO());
 	}

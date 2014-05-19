@@ -9,15 +9,13 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
 
 import com.qorder.qorderws.model.business.ABusiness;
 
@@ -36,12 +34,11 @@ public class Order {
 	@Column(name = "DATE_TIME")
 	private String dateTime = DateFormat.getDateTimeInstance().format(new Date());
 
-	@OneToMany(targetEntity = ProductHolder.class, cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(targetEntity = ProductHolder.class,fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name = "FK_ORDER_ID")
-	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<ProductHolder> orderList = new ArrayList<ProductHolder>();
 
-	@ManyToOne(targetEntity = ABusiness.class, optional = false)
+	@ManyToOne(targetEntity = ABusiness.class,fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "FK_BUSINESS_ID", nullable = false, updatable = false)
 	private ABusiness business;
 

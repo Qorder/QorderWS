@@ -6,7 +6,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.qorder.qorderws.exception.BusinessDoesNotExistException;
+import com.qorder.qorderws.exception.PersistanceLayerException;
+import com.qorder.qorderws.exception.ResourceNotFoundException;
 import com.qorder.qorderws.model.business.Business;
 
 @Transactional
@@ -25,74 +26,66 @@ public class BusinessDAO implements IBusinessDAO {
 	}
 
 	@Override
-	public boolean save(Business business) {
+	public void save(Business business) throws PersistanceLayerException {
 		try {
 			sessionFactory.getCurrentSession().save(business);
-			return true;
 		} catch (final HibernateException ex) {
 			LOGGER.warn(
 					"Hibernate exception was raised while trying to save business, info: "
 							+ ex.getLocalizedMessage(), ex);
+			throw new PersistanceLayerException("Save exception");
 		}
-		return false;
 	}
 
 	/*
 	 * Only single-row updates TODO : Throws BusinessDoesNotExistException
 	 */
 	@Override
-	public boolean update(Business business) {
+	public void update(Business business) throws PersistanceLayerException {
 		try {
 			sessionFactory.getCurrentSession().update(business);
-			return true;
 		} catch (final HibernateException ex) {
 			LOGGER.warn(
 					"Hibernate exception was raised while trying to update business, info: "
 							+ ex.getLocalizedMessage(), ex);
+			throw new PersistanceLayerException("Update exception");
 		}
-		return false;
 	}
 
 	/*
-	 * // TODO : Throws BusinessDoesNotExistException
 	 * 
 	 * @Return boolean
 	 */
 	@Override
-	public boolean delete(Business business)
-			throws BusinessDoesNotExistException {
+	public void delete(Business business) throws PersistanceLayerException {
 		try {
 			sessionFactory.getCurrentSession().delete(business);
-			return true;
 		} catch (final HibernateException ex) {
 			LOGGER.warn(
 					"Hibernate exception was raised while trying to delete business, info: "
 							+ ex.getLocalizedMessage(), ex);
+			throw new PersistanceLayerException("Delete exception");
 		}
-		return false;
 	}
 
 	/*
 	 * @Return "filled" Business object if the id exists
-	 * 
-	 * @Throws BusinessDoesNotExistException
 	 */
 	@Override
-	public Business findById(long businessId)
-			throws BusinessDoesNotExistException {
-		Business business = null;
+	public Business findById(long businessId) throws PersistanceLayerException, ResourceNotFoundException {
 		try {
-			business = (Business) sessionFactory.getCurrentSession().get(
-					Business.class, businessId);
+			Business business = (Business) sessionFactory.getCurrentSession()
+					.get(Business.class, businessId);
 			if (business == null) {
-				throw new BusinessDoesNotExistException();
+				throw new ResourceNotFoundException("Business not found");
 			}
+			return business;
 		} catch (final HibernateException ex) {
 			LOGGER.warn(
-					"Hibernate exception was raised while trying to find business by id, info: "
+					"Hibernate exception raised while trying to find business by id, info: "
 							+ ex.getLocalizedMessage(), ex);
+			throw new PersistanceLayerException("Business not found");
 		}
-		return business;
 	}
 
 }

@@ -32,9 +32,9 @@ public class Product {
 	@Column(name = "PRICE")
 	private BigDecimal price = new BigDecimal(0);
 
-	@ElementCollection(fetch = FetchType.EAGER)
-	@CollectionTable(name = "PRODUCT_DETAILS", joinColumns = @JoinColumn(name = "PRODUCT_ID"))
 	@Column(name = "DETAILS")
+	@CollectionTable(name = "PRODUCT_DETAILS", joinColumns = @JoinColumn(name = "FK_PRODUCT_ID"))
+	@ElementCollection(fetch = FetchType.EAGER)
 	private List<String> details = new ArrayList<String>();
 
 	public Product(String name, BigDecimal price) {

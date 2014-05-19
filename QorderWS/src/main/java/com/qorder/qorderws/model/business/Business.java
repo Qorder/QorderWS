@@ -17,12 +17,12 @@ import com.qorder.qorderws.model.menu.Menu;
 @Table(name = "BUSINESSES")
 public class Business extends ABusiness {
 
-	@ManyToOne(optional=false) 
+	@ManyToOne(fetch=FetchType.LAZY, optional=false) 
 	@JoinColumn(name = "FK_MENU_ID", nullable=false, updatable=false)
 	private Menu menu;
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "parentBusiness")
-	private Set<ChildBusiness> childBusinesses = new HashSet<ChildBusiness>();
+	@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY, mappedBy = "parentBusiness")
+	private Set<BranchBusiness> branchBusinesses = new HashSet<BranchBusiness>();
 
 	@Override
 	public Menu getMenu() {
@@ -33,24 +33,24 @@ public class Business extends ABusiness {
 		this.menu = menu;
 	}
 
-	public Set<ChildBusiness> getChildBusinesses() {
-		return childBusinesses;
+	public Set<BranchBusiness> getBranchBusinesses() {
+		return branchBusinesses;
 	}
 
-	public void setChildBusinesses(Set<ChildBusiness> childBusinesses) {
-		this.childBusinesses = childBusinesses;
+	public void setBranchBusinesses(Set<BranchBusiness> childBusinesses) {
+		this.branchBusinesses = childBusinesses;
 	}
 
-	public boolean addChild(ChildBusiness business) {
-		if (childBusinesses.add(business)) {
+	public boolean addBranch(BranchBusiness business) {
+		if (branchBusinesses.add(business)) {
 			business.setParent(this);
 			return true;
 		}
 		return false;
 	}
 
-	public boolean removeChild(ChildBusiness business) {
-		return childBusinesses.remove(business);
+	public boolean removeChild(BranchBusiness business) {
+		return branchBusinesses.remove(business);
 	}
 
 }

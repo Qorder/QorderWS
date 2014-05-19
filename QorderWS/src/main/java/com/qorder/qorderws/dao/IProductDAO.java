@@ -1,15 +1,16 @@
 package com.qorder.qorderws.dao;
 
-import com.qorder.qorderws.exception.ProductDoesNotExistException;
+import com.qorder.qorderws.exception.PersistanceLayerException;
+import com.qorder.qorderws.exception.ResourceNotFoundException;
 import com.qorder.qorderws.model.product.Product;
 
 public interface IProductDAO {
 
-	boolean save(Product product);
+	void save(Product product) throws PersistanceLayerException;
 	
-	boolean update(Product product) throws ProductDoesNotExistException;
+	void update(Product product) throws PersistanceLayerException;
 	
-	boolean delete(Product product) throws ProductDoesNotExistException;
+	void delete(Product product) throws PersistanceLayerException;
 	
-	Product findById(long productId) throws ProductDoesNotExistException;
+	Product findById(long productId) throws PersistanceLayerException, ResourceNotFoundException;
 }

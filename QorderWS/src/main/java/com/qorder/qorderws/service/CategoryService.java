@@ -6,8 +6,7 @@ import com.qorder.qorderws.dao.ICategoryDAO;
 import com.qorder.qorderws.dao.IMenuDAO;
 import com.qorder.qorderws.dto.category.CategoryDTO;
 import com.qorder.qorderws.dto.category.DetailedCategoryDTO;
-import com.qorder.qorderws.exception.CategoryDoesNotExistException;
-import com.qorder.qorderws.exception.MenuDoesNotExistException;
+import com.qorder.qorderws.exception.ResourceNotFoundException;
 import com.qorder.qorderws.mapper.CategoryDTOtoCategoryMapper;
 import com.qorder.qorderws.mapper.CategoryToDetailedCategoryDtoMapper;
 import com.qorder.qorderws.model.category.Category;
@@ -21,14 +20,14 @@ public class CategoryService implements ICategoryService {
 
 	@Transactional(readOnly = true)
 	@Override
-	public DetailedCategoryDTO fetchCategoryByID(long categoryId) throws CategoryDoesNotExistException {
+	public DetailedCategoryDTO fetchCategoryByID(long categoryId) throws ResourceNotFoundException {
 		Category fetchedCategory = categoryDAO.findById(categoryId);
 		return new CategoryToDetailedCategoryDtoMapper().map(fetchedCategory, new DetailedCategoryDTO());
 	}
 
 	@Override
-	public void createCategory(long menuId, CategoryDTO categoryDTO) throws MenuDoesNotExistException {
-		Menu menu = menuDAO.findById(menuId); 
+	public void createCategory(long menuId, CategoryDTO categoryDTO) throws ResourceNotFoundException {
+		Menu menu = menuDAO.findById(menuId);
 		
 		Category category = new CategoryDTOtoCategoryMapper().map(categoryDTO, new Category());
 		

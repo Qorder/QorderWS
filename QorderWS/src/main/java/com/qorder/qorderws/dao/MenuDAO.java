@@ -5,7 +5,8 @@ import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.qorder.qorderws.exception.MenuDoesNotExistException;
+import com.qorder.qorderws.exception.PersistanceLayerException;
+import com.qorder.qorderws.exception.ResourceNotFoundException;
 import com.qorder.qorderws.model.menu.Menu;
 
 public class MenuDAO implements IMenuDAO {
@@ -22,7 +23,7 @@ public class MenuDAO implements IMenuDAO {
 	}
 
 	@Override
-	public void save(Menu menu) {
+	public void save(Menu menu) throws PersistanceLayerException {
 		try
 		{
 			sessionFactory.getCurrentSession().save(menu);
@@ -30,11 +31,12 @@ public class MenuDAO implements IMenuDAO {
 		catch(final HibernateException ex)
 		{
 			LOGGER.warn("Hibernate exception was thrown while trying to save menu, info: " + ex.getLocalizedMessage(), ex);
+			throw new PersistanceLayerException();
 		}
 	}
 
 	@Override
-	public void update(Menu menu) {
+	public void update(Menu menu) throws PersistanceLayerException {
 		try
 		{
 			sessionFactory.getCurrentSession().update(menu);
@@ -42,42 +44,39 @@ public class MenuDAO implements IMenuDAO {
 		catch(final HibernateException ex)
 		{
 			LOGGER.warn("Hibernate exception was thrown while trying to update business, info: " + ex.getLocalizedMessage(), ex);
+			throw new PersistanceLayerException();
 		}
 	}
 
 	@Override
-	public Menu delete(Long menuId) throws MenuDoesNotExistException {
-		Menu menu = null;
+	public void delete(Menu menu) throws PersistanceLayerException {
 		try
-		{
-			menu = findById(menuId); 
+		{ 
 			sessionFactory.getCurrentSession().delete(menu);
-			return menu;
 		}
 		catch(final HibernateException ex)
 		{
 			LOGGER.warn("Hibernate exception was thrown while trying to delete menu, info: " + ex.getLocalizedMessage(), ex);
+			throw new PersistanceLayerException();
 		}
-		return menu;
 	}
 
 	@Override
-	public Menu findById(long menuId) throws MenuDoesNotExistException {
-		Menu menu = null;
+	public Menu findById(long menuId) throws PersistanceLayerException, ResourceNotFoundException {
 		try
 		{
-			//Warn: it does not work!!!
-		 	menu = (Menu) sessionFactory.getCurrentSession().get(Menu.class, menuId);
+		 	Menu menu = (Menu) sessionFactory.getCurrentSession().get(Menu.class, menuId);
 		 	if(menu == null)
 		 	{
-		 		throw new MenuDoesNotExistException();
+		 		throw new ResourceNotFoundException("Menu not found!");
 		 	}
+		 	return menu;
 		}
 		catch(final HibernateException ex)
 		{
 			LOGGER.warn("Hibernate exception was thrown while trying to fetch menu, info: " + ex.getLocalizedMessage(), ex);
+			throw new PersistanceLayerException();
 		}
-		return menu;
 	}
 
 }

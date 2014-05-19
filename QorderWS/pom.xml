@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.qorder</groupId>
 	<artifactId>qorderws</artifactId>
 	<name>QorderWS</name>
 	<packaging>war</packaging>
 	<version>0.4.0-BUILD-SNAPSHOT</version>
+
 	<properties>
 		<java-version>1.8</java-version>
 		<skipTests>false</skipTests>
 		<junit-version>4.11</junit-version>
-		<org.springframework-version>4.0.1.RELEASE</org.springframework-version>
-		<org.springframework.security-version>3.2.0.RELEASE</org.springframework.security-version>
+		<org.springframework-version>4.0.2.RELEASE</org.springframework-version>
+		<org.springframework.security-version>3.2.3.RELEASE</org.springframework.security-version>
 		<org.aspectj-version>1.6.10</org.aspectj-version>
 		<org.slf4j-version>1.6.6</org.slf4j-version>
 		<org.hibernate-version>4.2.7.SP1</org.hibernate-version>
@@ -24,13 +26,14 @@
 		<com.github.springtestdbunit>1.0.1</com.github.springtestdbunit>
 		<com.google.guava-version>15.0</com.google.guava-version>
 	</properties>
-	<dependencies>
 
+
+	<dependencies>
 		<!-- Spring -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
-			<version>${org.springframework-version}</version>
+			<version>${org.springframework-version}</version><!--$NO-MVN-MAN-VER$ -->
 			<exclusions>
 				<!-- Exclude Commons Logging in favor of SLF4j -->
 				<exclusion>
@@ -67,19 +70,26 @@
 			<artifactId>spring-security-core</artifactId>
 			<version>${org.springframework.security-version}</version>
 		</dependency>
-
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-web</artifactId>
 			<version>${org.springframework.security-version}</version>
 		</dependency>
-
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-config</artifactId>
 			<version>${org.springframework.security-version}</version>
 		</dependency>
 
+		<!-- Ensure that all the transitive dependencies of Spring Security will 
+			use the Spring 4.0.2.RELEASE modules -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-framework-bom</artifactId>
+			<version>${org.springframework-version}</version>
+			<type>pom</type>
+			<scope>import</scope>
+		</dependency>
 
 		<!-- Hibernate -->
 		<dependency>
@@ -100,7 +110,6 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<version>${mysql-version}</version>
 		</dependency>
-
 
 		<!-- AspectJ -->
 		<dependency>
@@ -200,14 +209,6 @@
 			<scope>test</scope>
 		</dependency>
 
-
-		<!-- Json parser -->
-		<dependency>
-			<groupId>org.codehaus.jackson</groupId>
-			<artifactId>jackson-mapper-asl</artifactId>
-			<version>${org.codehaus.jackson-version}</version>
-		</dependency>
-
 		<!-- Mockito framework dependency -->
 		<dependency>
 			<groupId>org.mockito</groupId>
@@ -216,14 +217,33 @@
 			<scope>test</scope>
 		</dependency>
 
+
+		<!-- Json parser -->
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+			<version>${org.codehaus.jackson-version}</version>
+		</dependency>
+
+
 		<!-- Google Guava -->
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
 			<version>${com.google.guava-version}</version>
 		</dependency>
-
 	</dependencies>
+
+	<repositories>
+		<!-- ... possibly other repository elements ... -->
+		<repository>
+			<id>spring-snapshot</id>
+			<name>Spring Snapshot Repository</name>
+			<url>http://repo.springsource.org/snapshot</url>
+		</repository>
+	</repositories>
+
+
 	<build>
 		<resources>
 			<!-- empty, not used yet -->
@@ -271,9 +291,10 @@
 					<skipTests>${skipTests}</skipTests>
 				</configuration>
 			</plugin>
-
 		</plugins>
 	</build>
+
+
 	<organization>
 		<name>Qorder</name>
 		<url>https://github.com/Qorder</url>
@@ -282,9 +303,9 @@
 		<system>Github</system>
 		<url>https://github.com/Qorder/QorderWs</url>
 	</issueManagement>
-	<url>https://github.com/Qorder/QorderWs</url>
+	<url>http://qorder.github.io/QorderWs</url>
 	<ciManagement>
 		<system>Travis CI</system>
-		<url>https://travis-ci.org/</url>
+		<url>https://travis-ci.org/Qorder/QorderWs</url>
 	</ciManagement>
 </project>

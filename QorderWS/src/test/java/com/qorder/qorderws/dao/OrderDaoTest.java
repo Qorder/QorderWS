@@ -20,8 +20,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.qorder.qorderws.exception.BusinessDoesNotExistException;
-import com.qorder.qorderws.exception.OrderDoesNotExistException;
+import com.qorder.qorderws.exception.ResourceNotFoundException;
 import com.qorder.qorderws.model.business.ABusiness;
 import com.qorder.qorderws.model.business.Business;
 import com.qorder.qorderws.model.order.EOrderStatus;
@@ -64,14 +63,14 @@ public class OrderDaoTest extends DBTestCase {
 	}
 
 	@Test
-	public void testFetchOrderForBusiness() throws BusinessDoesNotExistException {
+	public void testFetchOrderForBusiness() throws ResourceNotFoundException {
 		List<Order> orderList = testOrderDAO.fetchOrdersForBusiness(1);
 		Order someOrder = orderList.get(0);
 		assertNotNull(someOrder);
 	}
 
 	@Test
-	public void testSave() throws BusinessDoesNotExistException, OrderDoesNotExistException {
+	public void testSave() throws ResourceNotFoundException {
 		ABusiness someBusiness = new Business();
 		someBusiness.setId(1L);
 		
@@ -81,24 +80,24 @@ public class OrderDaoTest extends DBTestCase {
 		testOrderDAO.save(someorder);
 		
 		boolean orderPersisted = testOrderDAO.fetchOrdersForBusiness(1L).stream()
-				.anyMatch((order) -> { 
+                        .anyMatch((order) -> { 
 					return order.getTableNumber().equals("50B");
 				});
 		assertTrue(orderPersisted);
 	}
 
 	@Test
-	public void testFindById() throws OrderDoesNotExistException {
+	public void testFindById() throws ResourceNotFoundException {
 		assertEquals("25", this.testOrderDAO.findById(1).getTableNumber());
 	}
 
-	@Test(expected = OrderDoesNotExistException.class)
-	public void testFindByIdDoesntExist() throws OrderDoesNotExistException {
+	@Test(expected = ResourceNotFoundException.class)
+	public void testFindByIdDoesntExist() throws ResourceNotFoundException {
 		this.testOrderDAO.findById(3000);
 	}
 
 	@Test
-	public void testFetchPendingOrdersForBusiness() throws BusinessDoesNotExistException {
+	public void testFetchPendingOrdersForBusiness() throws ResourceNotFoundException {
 		List<Order> orderList = new ArrayList<Order>();
 		orderList = this.testOrderDAO.fetchOrdersByStatus(2,
 				EOrderStatus.PENDING);
@@ -107,7 +106,7 @@ public class OrderDaoTest extends DBTestCase {
 	}
 
 	@Test
-	public void testFetchAcceptedOrdersForBusiness() throws BusinessDoesNotExistException {
+	public void testFetchAcceptedOrdersForBusiness() throws ResourceNotFoundException {
 		List<Order> orderList = new ArrayList<Order>();
 		orderList = this.testOrderDAO.fetchOrdersByStatus(1,
 				EOrderStatus.ACCEPTED);
@@ -117,7 +116,7 @@ public class OrderDaoTest extends DBTestCase {
 
 	@Test
 	public void testFetchServicedOrdersForBusiness()
-			throws BusinessDoesNotExistException {
+			throws ResourceNotFoundException {
 		List<Order> orderList = new ArrayList<Order>();
 		orderList = this.testOrderDAO.fetchOrdersByStatus(2,
 				EOrderStatus.SERVICED);

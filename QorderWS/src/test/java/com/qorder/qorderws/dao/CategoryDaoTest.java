@@ -19,7 +19,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.qorder.qorderws.exception.CategoryDoesNotExistException;
+import com.qorder.qorderws.exception.ResourceNotFoundException;
 import com.qorder.qorderws.model.category.Category;
 import com.qorder.qorderws.model.product.Product;
 
@@ -50,19 +50,19 @@ public class CategoryDaoTest extends DBTestCase {
 	}
 
 	@Test
-	public void testExistsFindById() throws CategoryDoesNotExistException, IOException {
+	public void testExistsFindById() throws ResourceNotFoundException, IOException {
 		Category someCategory = testCategoryDAO.findById(1);
 		assertNotNull(someCategory);
 	}
 
-	@Test(expected = CategoryDoesNotExistException.class)
-	public void testCategoryNotFoundByID() throws CategoryDoesNotExistException, IOException {
+	@Test(expected = ResourceNotFoundException.class)
+	public void testCategoryNotFoundByID() throws ResourceNotFoundException, IOException {
 		Category someCategory = testCategoryDAO.findById(1337);
 		assertNull(someCategory);
 	}
 
 	@Test
-	public void testSuccessfulUpdate() throws CategoryDoesNotExistException, IOException {
+	public void testSuccessfulUpdate() throws ResourceNotFoundException, IOException {
 		Category someCategory = testCategoryDAO.findById(2);
 		someCategory.setName("Updated category name");
 		testCategoryDAO.update(someCategory);
@@ -71,8 +71,8 @@ public class CategoryDaoTest extends DBTestCase {
 		assertEquals(category.getName(), someCategory.getName());
 	}
 
-	@Test(expected = CategoryDoesNotExistException.class)
-	public void testSuccessfulDelete() throws CategoryDoesNotExistException, IOException {
+	@Test(expected = ResourceNotFoundException.class)
+	public void testSuccessfulDelete() throws ResourceNotFoundException, IOException {
 		Category someCategory = testCategoryDAO.findById(3);
 		testCategoryDAO.delete(someCategory);
 		
@@ -81,7 +81,7 @@ public class CategoryDaoTest extends DBTestCase {
 	}
 	
 	@Test
-	public void testProductAccess() throws CategoryDoesNotExistException {
+	public void testProductAccess() throws ResourceNotFoundException {
 		Category someCategory = testCategoryDAO.findById(1);
 		Product someProduct = someCategory.getProductList().get(0);
 		

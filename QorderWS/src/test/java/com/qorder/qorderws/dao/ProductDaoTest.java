@@ -22,8 +22,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.qorder.qorderws.exception.CategoryDoesNotExistException;
-import com.qorder.qorderws.exception.ProductDoesNotExistException;
+import com.qorder.qorderws.exception.ResourceNotFoundException;
 import com.qorder.qorderws.model.category.Category;
 import com.qorder.qorderws.model.product.Product;
 
@@ -72,25 +71,25 @@ public class ProductDaoTest extends DBTestCase {
 	}
 	
 	@Test
-	public void testProductExists() throws ProductDoesNotExistException {
+	public void testProductExists() throws ResourceNotFoundException {
 			Product product = this.testProductDAO.findById(1);
 			assertNotNull(product);	
 	}
 	
-	@Test(expected=ProductDoesNotExistException.class)
-	public void testProductDoesNotExist() throws ProductDoesNotExistException {
+	@Test(expected=ResourceNotFoundException.class)
+	public void testProductDoesNotExist() throws ResourceNotFoundException {
 		Product product = testProductDAO.findById(1337);
 		assertNull(product);
 	}
 
 	@Test
-	public void testFetchProductsForCategory() throws CategoryDoesNotExistException {
+	public void testFetchProductsForCategory() throws ResourceNotFoundException {
 		List<Product> productList = testCategoryDAO.findById(1).getProductList();
 		assertNotNull(productList);
 	}
 	
 	@Test
-	public void testSuccessfulUpdate() throws ProductDoesNotExistException {
+	public void testSuccessfulUpdate() throws ResourceNotFoundException {
 		Product product = testProductDAO.findById(2);
 		product.setDescription("updated desc");
 		testProductDAO.update(product);
@@ -99,8 +98,8 @@ public class ProductDaoTest extends DBTestCase {
 		assertEquals(product.getDescription(), product2.getDescription());
 	}
 	
-	@Test(expected=ProductDoesNotExistException.class)
-	public void testSuccessfulDelete() throws ProductDoesNotExistException {
+	@Test(expected=ResourceNotFoundException.class)
+	public void testSuccessfulDelete() throws ResourceNotFoundException {
 		Product product = testProductDAO.findById(3);	
 		testProductDAO.delete(product);
 		
@@ -109,7 +108,7 @@ public class ProductDaoTest extends DBTestCase {
 	}
 	
 	@Test
-	public void testSuccessfulDescriptionUpdate() throws ProductDoesNotExistException {
+	public void testSuccessfulDescriptionUpdate() throws ResourceNotFoundException {
 		Product product = this.testProductDAO.findById(1);
 		product.getDetails().add("mauri");
 		testProductDAO.update(product);
@@ -123,7 +122,7 @@ public class ProductDaoTest extends DBTestCase {
 	}
 	
 	@Test
-	public void testSuccessfulProductCreation() throws ProductDoesNotExistException, CategoryDoesNotExistException {
+	public void testSuccessfulProductCreation() throws ResourceNotFoundException {
 		Product product = new Product();
 		product.setName("New simple Beer");
 		product.setPrice(BigDecimal.valueOf(7));
@@ -141,8 +140,8 @@ public class ProductDaoTest extends DBTestCase {
 		assertTrue(productCreated);
 	}
 	
-	 @Test(expected = ProductDoesNotExistException.class)
-	 public void testNoOrphansAfterCategoryDeleted() throws CategoryDoesNotExistException, IOException, ProductDoesNotExistException {
+	 @Test(expected = ResourceNotFoundException.class)
+	 public void testNoOrphansAfterCategoryDeleted() throws ResourceNotFoundException, IOException {
 		 Category someCategory = testCategoryDAO.findById(3);
 		 assertNotNull(someCategory);
 		 

@@ -16,8 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.qorder.qorderws.dto.order.OrderDTO;
 import com.qorder.qorderws.dto.order.OrderViewDTO;
-import com.qorder.qorderws.exception.BusinessDoesNotExistException;
-import com.qorder.qorderws.exception.OrderDoesNotExistException;
+import com.qorder.qorderws.exception.ResourceNotFoundException;
 import com.qorder.qorderws.model.order.EOrderStatus;
 import com.qorder.qorderws.service.IOrderService;
 
@@ -31,57 +30,57 @@ public class OrderController {
 	private IOrderService orderService;
 
 	@RequestMapping(value = "/business", params = "id", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	ResponseEntity<OrderViewDTO> createOrder(@RequestParam Long id, @RequestBody OrderDTO orderDTO) throws BusinessDoesNotExistException {
+	ResponseEntity<OrderViewDTO> createOrder(@RequestParam Long id, @RequestBody OrderDTO orderDTO) throws ResourceNotFoundException {
 		LOGGER.info("Request for order submit");
 		OrderViewDTO orderView = orderService.submitOrder(id, orderDTO);
 		
-		return new ResponseEntity<OrderViewDTO>(orderView,HttpStatus.CREATED);
+		return new ResponseEntity<>(orderView,HttpStatus.CREATED);
 	}
 	
 	@RequestMapping(value = "/business", params = "id", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	ResponseEntity<OrderViewDTO[]> getOrdersByBusinessId(@RequestParam Long id) throws BusinessDoesNotExistException {
+	ResponseEntity<OrderViewDTO[]> getOrdersByBusinessId(@RequestParam Long id) throws ResourceNotFoundException {
 		OrderViewDTO[] businessOrders = orderService.fetchOrdersByBusinessID(id);
 		LOGGER.info("Request for business orders.\nFetchedList size is " + businessOrders.length);
 		
-		return new ResponseEntity<OrderViewDTO[]>(businessOrders, HttpStatus.OK);
+		return new ResponseEntity<>(businessOrders, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value ="/business/{businessId}/order", params = "status", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	ResponseEntity<OrderViewDTO[]> getOrdersByStatus(@PathVariable Long businessId, @RequestParam String status) throws BusinessDoesNotExistException, IllegalArgumentException {
+	ResponseEntity<OrderViewDTO[]> getOrdersByStatus(@PathVariable Long businessId, @RequestParam String status) throws ResourceNotFoundException, IllegalArgumentException {
 		EOrderStatus orderStatus = EOrderStatus.valueOf(status);
 		OrderViewDTO[] businessOrders = orderService.fetchOrdersByStatus(businessId, orderStatus);
 		LOGGER.info("Request for business orders with status query.\nFetchedList size is " + businessOrders.length);
 		
-		return new ResponseEntity<OrderViewDTO[]>(businessOrders, HttpStatus.OK);
+		return new ResponseEntity<>(businessOrders, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value ="/order", params="id", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	ResponseEntity<OrderViewDTO> getOrdersById(@RequestParam Long id) throws OrderDoesNotExistException {
+	ResponseEntity<OrderViewDTO> getOrdersById(@RequestParam Long id) throws ResourceNotFoundException {
 		OrderViewDTO orderView = orderService.fetchOrderById(id);
 		LOGGER.info("Request for order with id " + id);
 		
-		return new ResponseEntity<OrderViewDTO>(orderView, HttpStatus.OK);
+		return new ResponseEntity<>(orderView, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value ="/order/{orderId}/order", params = "status", method = RequestMethod.POST)
-	ResponseEntity<Void> changeOrderStatus(@PathVariable Long orderId, @RequestParam String status) throws OrderDoesNotExistException, IllegalArgumentException {
+	ResponseEntity<Void> changeOrderStatus(@PathVariable Long orderId, @RequestParam String status) throws ResourceNotFoundException, IllegalArgumentException {
 		EOrderStatus orderStatus = EOrderStatus.valueOf(status);
 		orderService.changeOrderStatus(orderId, orderStatus);
 		LOGGER.info("Request to change status if order with id " + orderId);
 		
-		return new ResponseEntity<Void>(HttpStatus.ACCEPTED);
+		return new ResponseEntity<>(HttpStatus.ACCEPTED);
 	}
 	
 	
-	@ExceptionHandler({ BusinessDoesNotExistException.class, OrderDoesNotExistException.class })
-	ResponseEntity<String> sendNotFoundException(BusinessDoesNotExistException ex) {
+	/*@ExceptionHandler(ResourceNotFoundException.class)
+	ResponseEntity<String> sendNotFoundException(ResourceNotFoundException ex) {
 		LOGGER.warn("Exception was thrown, with cause " + ex.getCause() + "\nMessage: " + ex.getLocalizedMessage(), ex );
 		return new ResponseEntity<String>(ex.getLocalizedMessage().toString(),HttpStatus.NOT_FOUND);
 	}
-	
+	*/
 	@ExceptionHandler(IllegalArgumentException.class)
 	ResponseEntity<String> sendBadRequestException(IllegalArgumentException ex) {
 		LOGGER.warn("Exception was thrown, with cause " + ex.getCause() + "\nMessage: " + ex.getLocalizedMessage(), ex );
-		return new ResponseEntity<String>(ex.getLocalizedMessage().toString(),HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<>(ex.getLocalizedMessage(),HttpStatus.BAD_REQUEST);
 	}
 }
