@@ -6,7 +6,7 @@ import com.qorder.qorderws.model.product.Product;
 
 public interface IProductDAO {
 
-	void save(Product product) throws PersistanceLayerException;
+	Product save(Product product) throws PersistanceLayerException;
 	
 	void update(Product product) throws PersistanceLayerException;
 	

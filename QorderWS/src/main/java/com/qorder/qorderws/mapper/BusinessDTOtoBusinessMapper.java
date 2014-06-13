@@ -2,7 +2,6 @@ package com.qorder.qorderws.mapper;
 
 import com.qorder.qorderws.dto.BusinessDTO;
 import com.qorder.qorderws.model.business.Business;
-import com.qorder.qorderws.model.menu.Menu;
 
 public class BusinessDTOtoBusinessMapper implements IMapper<BusinessDTO, Business> {
 
@@ -13,7 +12,6 @@ public class BusinessDTOtoBusinessMapper implements IMapper<BusinessDTO, Busines
 			target.setId(source.getId());
 		}
 		target.setName(source.getName());
-		target.setMenu(new MenuDTOtoMenuMapper().map(source.getMenu(), new Menu()));
 		return target;
 	}
 	

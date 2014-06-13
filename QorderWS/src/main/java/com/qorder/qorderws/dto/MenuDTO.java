@@ -3,8 +3,6 @@ package com.qorder.qorderws.dto;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.qorder.qorderws.dto.category.CategoryDTO;
-
 
 public class MenuDTO {
 	

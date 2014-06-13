@@ -43,9 +43,10 @@ public class CategoryDAO implements ICategoryDAO {
 	}
 
 	@Override
-	public void save(Category category) throws PersistanceLayerException {
+	public Category save(Category category) throws PersistanceLayerException {
 		try {
 			sessionFactory.getCurrentSession().save(category);
+			return category;
 		} catch (final HibernateException ex) {
 			LOGGER.warn(
 					"Hibernate exception was raised while trying to save category, info: "

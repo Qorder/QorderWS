@@ -1,28 +1,40 @@
 package com.qorder.qorderws.dto;
 
+import com.qorder.qorderws.utils.providers.ReferenceProvider;
+
 public class BusinessDTO {
 	
 	private Long id;
 	private String name;
-	private MenuDTO menu;
+	
+	private Long menuId;
+	private final String menuURI = ReferenceProvider.INSTANCE.getPathFor("menu");
 	
 	public Long getId() {
 		return id;
 	}
+	
 	public void setId(Long id) {
 		this.id = id;
 	}
+	
 	public String getName() {
 		return name;
 	}
+	
 	public void setName(String name) {
 		this.name = name;
 	}
-	public MenuDTO getMenu() {
-		return menu;
-	}
-	public void setMenu(MenuDTO menu) {
-		this.menu = menu;
+	
+	public Long getMenuId() {
+		return menuId;
 	}
 	
+	public void setMenuId(Long menuId) {
+		this.menuId = menuId;
+	}
+
+	public String getMenuURI() {
+		return menuURI;
+	}
 }

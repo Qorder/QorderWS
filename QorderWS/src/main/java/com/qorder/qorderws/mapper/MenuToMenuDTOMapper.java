@@ -1,7 +1,7 @@
 package com.qorder.qorderws.mapper;
 
+import com.qorder.qorderws.dto.CategoryDTO;
 import com.qorder.qorderws.dto.MenuDTO;
-import com.qorder.qorderws.dto.category.CategoryDTO;
 import com.qorder.qorderws.model.category.Category;
 import com.qorder.qorderws.model.menu.Menu;
 

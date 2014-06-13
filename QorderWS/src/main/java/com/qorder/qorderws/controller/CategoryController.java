@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.qorder.qorderws.dto.category.CategoryDTO;
-import com.qorder.qorderws.dto.category.DetailedCategoryDTO;
+import com.qorder.qorderws.dto.CategoryDTO;
+import com.qorder.qorderws.dto.product.ProductDTO;
 import com.qorder.qorderws.exception.ResourceNotFoundException;
 import com.qorder.qorderws.service.ICategoryService;
 
@@ -38,19 +38,12 @@ public class CategoryController {
 	}
 	
 	@RequestMapping(value = "/category", params = "id", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	ResponseEntity<DetailedCategoryDTO> getCategory(@RequestParam Long id) throws ResourceNotFoundException {
+	ResponseEntity<ProductDTO[]> getCategory(@RequestParam Long id) throws ResourceNotFoundException {
 		LOGGER.info("Request for category with id equals "+id);
-		DetailedCategoryDTO detailedCategory = categoryService.fetchCategoryByID(id);
-		return new ResponseEntity<>( detailedCategory, HttpStatus.OK);
+		ProductDTO[] categoryProducts = categoryService.fetchCategoryByID(id);
+		return new ResponseEntity<>( categoryProducts, HttpStatus.OK);
 	}
 	
-	
-	/*@ExceptionHandler({ CategoryDoesNotExistException.class, MenuDoesNotExistException.class})
-	ResponseEntity<String> sendNotFoundException(Exception ex) {
-		LOGGER.warn("Exception was thrown, with cause " + ex.getCause() + "\nMessage: " + ex.getLocalizedMessage(), ex );
-		return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
-	}
-	*/
 	@ExceptionHandler({ IOException.class })
 	ResponseEntity<String> sendIOException(Exception ex) {
 		LOGGER.warn("Exception was thrown, with cause " + ex.getCause() + "\nMessage: " + ex.getLocalizedMessage(), ex );

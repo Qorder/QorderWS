@@ -7,11 +7,11 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import com.qorder.qorderws.dto.BusinessDTO;
+import com.qorder.qorderws.dto.CategoryDTO;
 import com.qorder.qorderws.dto.MenuDTO;
-import com.qorder.qorderws.dto.category.CategoryDTO;
-import com.qorder.qorderws.dto.category.DetailedCategoryDTO;
 import com.qorder.qorderws.dto.order.OrderDTO;
 import com.qorder.qorderws.dto.product.DetailedProductDTO;
+import com.qorder.qorderws.dto.product.ProductDTO;
 import com.qorder.qorderws.mapper.CategoryToCategoryDTOMapper;
 import com.qorder.qorderws.model.category.Category;
 import com.qorder.qorderws.utils.providers.ReferenceProvider;
@@ -27,9 +27,9 @@ public class AppClient {
 		return menuDTO;
 	}
 	
-	public DetailedCategoryDTO requestForCategory(String uri, Long categoryId) {
-		ResponseEntity<DetailedCategoryDTO> response = restTemplate.getForEntity(refProvider.getHost() + uri + categoryId, DetailedCategoryDTO.class);
-		DetailedCategoryDTO categoryDTO = response.getBody();
+	public ProductDTO[] requestForCategory(String uri, Long categoryId) {
+		ResponseEntity<ProductDTO[]> response = restTemplate.getForEntity(refProvider.getHost() + uri + categoryId, ProductDTO[].class);
+		ProductDTO[] categoryDTO = response.getBody();
 		return categoryDTO;
 	}
 	

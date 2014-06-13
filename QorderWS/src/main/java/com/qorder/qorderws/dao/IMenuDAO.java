@@ -6,7 +6,7 @@ import com.qorder.qorderws.model.menu.Menu;
 
 public interface IMenuDAO {
 	
-	void save(Menu menu) throws PersistanceLayerException;
+	Menu save(Menu menu) throws PersistanceLayerException;
 	
 	void update(Menu menu) throws PersistanceLayerException;
 	

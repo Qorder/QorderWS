@@ -1,16 +1,21 @@
 package com.qorder.qorderws.utils.providers;
 
 
+
 public enum ReferenceProvider {
 	INSTANCE;
 
-	private final PropertyHandler provider = new PropertyHandler("references.properties");
+	private final PropertyHandler propHandler = new PropertyHandler("references.properties");
 
-	public String getURIfor(String entityName) {
-		return provider.getProperty("host") + provider.getProperty(entityName);
+	public String getPathFor(String entityName) {
+		return propHandler.getProperty("host") + propHandler.getProperty(entityName);
+	}
+	
+	public String getLocationFor(String entityName) {
+		return propHandler.getProperty(entityName);
 	}
 	
 	public String getHost() {
-		return provider.getProperty("host");
+		return propHandler.getProperty("host");
 	}
 }

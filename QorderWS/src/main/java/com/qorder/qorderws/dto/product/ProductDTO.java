@@ -9,7 +9,7 @@ public class ProductDTO {
 	private Long id;
 	private String name;
 	private BigDecimal price;
-	private final String uri = ReferenceProvider.INSTANCE.getURIfor("product");
+	private final String uri = ReferenceProvider.INSTANCE.getPathFor("product");
 	
 	public Long getId() {
 		return id;

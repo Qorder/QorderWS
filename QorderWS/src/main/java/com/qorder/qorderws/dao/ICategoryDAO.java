@@ -6,7 +6,7 @@ import com.qorder.qorderws.model.category.Category;
 
 public interface ICategoryDAO {
 	
-	void save(Category category) throws PersistanceLayerException;
+	Category save(Category category) throws PersistanceLayerException;
 	
 	void update(Category category) throws PersistanceLayerException;
 	

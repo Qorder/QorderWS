@@ -39,13 +39,8 @@ public class MenuController {
 		MenuDTO menuDto = menuService.fetchMenuById(id);
 		return new ResponseEntity<>(menuDto, HttpStatus.OK);
 	}
+
 	
-	/*@ExceptionHandler(ResourceNotFoundException.class)
-	public ResponseEntity<String> sendNotFoundException(Exception ex) {
-		LOGGER.warn("Exception was thrown, with cause " + ex.getCause() + "\nMessage: " + ex.getLocalizedMessage(), ex );
-		return new ResponseEntity<String>("Entity does not exist", HttpStatus.NOT_FOUND);
-	}
-	*/
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<String> sendException(Exception ex) {
 		LOGGER.warn("Exception was thrown, with cause " + ex.getCause() + "\nMessage: " + ex.getLocalizedMessage(), ex );

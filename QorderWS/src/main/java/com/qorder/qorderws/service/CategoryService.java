@@ -1,14 +1,17 @@
 package com.qorder.qorderws.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.transaction.annotation.Transactional;
 
 import com.qorder.qorderws.dao.ICategoryDAO;
 import com.qorder.qorderws.dao.IMenuDAO;
-import com.qorder.qorderws.dto.category.CategoryDTO;
-import com.qorder.qorderws.dto.category.DetailedCategoryDTO;
+import com.qorder.qorderws.dto.CategoryDTO;
+import com.qorder.qorderws.dto.product.ProductDTO;
 import com.qorder.qorderws.exception.ResourceNotFoundException;
 import com.qorder.qorderws.mapper.CategoryDTOtoCategoryMapper;
-import com.qorder.qorderws.mapper.CategoryToDetailedCategoryDtoMapper;
+import com.qorder.qorderws.mapper.ProductToProductDTOMapper;
 import com.qorder.qorderws.model.category.Category;
 import com.qorder.qorderws.model.menu.Menu;
 
@@ -20,9 +23,15 @@ public class CategoryService implements ICategoryService {
 
 	@Transactional(readOnly = true)
 	@Override
-	public DetailedCategoryDTO fetchCategoryByID(long categoryId) throws ResourceNotFoundException {
+	public ProductDTO[] fetchCategoryByID(long categoryId) throws ResourceNotFoundException {
 		Category fetchedCategory = categoryDAO.findById(categoryId);
-		return new CategoryToDetailedCategoryDtoMapper().map(fetchedCategory, new DetailedCategoryDTO());
+		
+		ProductToProductDTOMapper mapper = new ProductToProductDTOMapper();
+		List<ProductDTO> productList = new ArrayList<ProductDTO>();
+		fetchedCategory.getProductList().forEach((product) -> {
+			productList.add(mapper.map(product, new ProductDTO()));
+		} );
+		return productList.toArray(new ProductDTO[productList.size()]);
 	}
 
 	@Override

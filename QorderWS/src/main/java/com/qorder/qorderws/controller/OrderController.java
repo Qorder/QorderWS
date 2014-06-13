@@ -71,13 +71,6 @@ public class OrderController {
 		return new ResponseEntity<>(HttpStatus.ACCEPTED);
 	}
 	
-	
-	/*@ExceptionHandler(ResourceNotFoundException.class)
-	ResponseEntity<String> sendNotFoundException(ResourceNotFoundException ex) {
-		LOGGER.warn("Exception was thrown, with cause " + ex.getCause() + "\nMessage: " + ex.getLocalizedMessage(), ex );
-		return new ResponseEntity<String>(ex.getLocalizedMessage().toString(),HttpStatus.NOT_FOUND);
-	}
-	*/
 	@ExceptionHandler(IllegalArgumentException.class)
 	ResponseEntity<String> sendBadRequestException(IllegalArgumentException ex) {
 		LOGGER.warn("Exception was thrown, with cause " + ex.getCause() + "\nMessage: " + ex.getLocalizedMessage(), ex );

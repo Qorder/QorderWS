@@ -1,4 +1,4 @@
-package com.qorder.qorderws.dto.category;
+package com.qorder.qorderws.dto;
 
 import com.qorder.qorderws.utils.providers.ReferenceProvider;
 
@@ -6,7 +6,7 @@ public class CategoryDTO {
 	
 	private Long id;
 	private String name;
-	private final String uri = ReferenceProvider.INSTANCE.getURIfor("category");
+	private final String uri = ReferenceProvider.INSTANCE.getPathFor("category");
 	
 	public String getName() {
 		return name;

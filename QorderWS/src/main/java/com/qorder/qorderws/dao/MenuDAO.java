@@ -23,10 +23,11 @@ public class MenuDAO implements IMenuDAO {
 	}
 
 	@Override
-	public void save(Menu menu) throws PersistanceLayerException {
+	public Menu save(Menu menu) throws PersistanceLayerException {
 		try
 		{
 			sessionFactory.getCurrentSession().save(menu);
+			return menu;
 		}
 		catch(final HibernateException ex)
 		{

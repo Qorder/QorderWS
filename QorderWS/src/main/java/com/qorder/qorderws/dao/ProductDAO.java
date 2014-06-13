@@ -43,9 +43,10 @@ public class ProductDAO implements IProductDAO {
 	}
 
 	@Override
-	public void save(Product product) throws PersistanceLayerException {
+	public Product save(Product product) throws PersistanceLayerException {
 		try {
 			sessionFactory.getCurrentSession().save(product);
+			return product;
 		} catch (final HibernateException ex) {
 			LOGGER.warn(
 					"Hibernate exception was raised while trying to save product, info: "

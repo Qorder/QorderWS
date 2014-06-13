@@ -1,5 +1,7 @@
 package com.qorder.qorderws.dao;
 
+import java.util.List;
+
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
@@ -8,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.qorder.qorderws.exception.PersistanceLayerException;
 import com.qorder.qorderws.exception.ResourceNotFoundException;
+import com.qorder.qorderws.model.business.ABusiness;
 import com.qorder.qorderws.model.business.Business;
 
 @Transactional
@@ -26,9 +29,10 @@ public class BusinessDAO implements IBusinessDAO {
 	}
 
 	@Override
-	public void save(Business business) throws PersistanceLayerException {
+	public Business save(Business business) throws PersistanceLayerException {
 		try {
 			sessionFactory.getCurrentSession().save(business);
+			return business;
 		} catch (final HibernateException ex) {
 			LOGGER.warn(
 					"Hibernate exception was raised while trying to save business, info: "
@@ -86,6 +90,13 @@ public class BusinessDAO implements IBusinessDAO {
 							+ ex.getLocalizedMessage(), ex);
 			throw new PersistanceLayerException("Business not found");
 		}
+	}
+
+	//TODO: Implementation to return all registered businesses that user has
+	@Override
+	public List<ABusiness> fetchUserBusinesses(Long userId) throws PersistanceLayerException, ResourceNotFoundException {
+		//Not implemented yer!!!!
+		throw new ResourceNotFoundException("Businesses not found!");
 	}
 
 }
