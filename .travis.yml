@@ -4,3 +4,5 @@ jdk:
 
 before_install:
 - cd QorderWS
+
+travis setup releases

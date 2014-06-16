@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.qorder.qorderws.dto.BusinessDTO;
@@ -43,11 +42,11 @@ public class BusinessController {
 		return new ResponseEntity<>(headers, HttpStatus.CREATED);
 	}
 	
-	@RequestMapping(value = "/business", params = "id", method = RequestMethod.GET , produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<BusinessDTO> getBusiness(@RequestParam Long id)  throws ResourceNotFoundException {
+	@RequestMapping(value = "/business/{businessId}", method = RequestMethod.GET , produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<BusinessDTO> getBusiness(@PathVariable Long businessId)  throws ResourceNotFoundException {
 		LOGGER.info("Request for business");
 		
-		BusinessDTO business = businessService.fetchBusinessByID(id);
+		BusinessDTO business = businessService.fetchBusinessByID(businessId);
 		return new ResponseEntity<>(business, HttpStatus.OK);
 	}
 }
