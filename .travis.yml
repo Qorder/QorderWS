@@ -5,4 +5,14 @@ jdk:
 before_install:
 - cd QorderWS
 
-travis setup releases
+script:
+- mvn compile war:war
+
+deploy:
+  provider: releases
+  api-key: $ travis setup releases
+  file: "target/qorderws-pr-SNAPSHOT.war"
+  skip_cleanup: true
+  on:
+    tags: true
+    all_branches: true
