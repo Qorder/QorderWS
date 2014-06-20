@@ -11,7 +11,7 @@ script:
 deploy:
   provider: releases
   api-key: $ travis setup releases
-  file: "target/qorderws-pr-SNAPSHOT.war"
+  file: /target/qorderws-pr-SNAPSHOT.war
   skip_cleanup: true
   on:
     tags: true
