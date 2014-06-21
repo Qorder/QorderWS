@@ -5,6 +5,9 @@ before_install:
 - cd QorderWS
 script:
 - mvn compile war:war
+env:
+  global:
+    - secure: oMyaHQ/XXAEomhVUroYiNEpXQjDEYEG03xvfMfc1vyp7TQW/82vsYS64X2e4Semwo/MR3TSWYXiqi2Ylg7tkUPwg2YYwk8Pbl5w/yXNVu0tlY11V/ZOnO2eIMnCUnsPOj5ndHXP/YZ7u+s+yR1XF3nz7N8Okqz90df0JkxfENQs=
 
 deploy:
   provider: releases
