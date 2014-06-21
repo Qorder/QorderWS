@@ -1,17 +1,15 @@
 language: java
-jdk: 
+jdk:
 - oraclejdk8
-
 before_install:
 - cd QorderWS
-
 script:
 - mvn compile war:war
 
 deploy:
   provider: releases
-  api-key: 
-	secure: "Er37/mGvfNj2fNvJvAbIihDWra2L7du/VQ2GNXa6THgWQPIEwrtAqqr62lH61iHwhndLnujlWVOuF5t6R9+eFPdQPGKgQ7KTRGIxHG5oCkFVHflj9qfvgPrXCGZEMbKvQRJwIEKwOsI6V2EYTu8Th5MWZVAHYV7JUvdTStuBp4I="
+  api_key:
+    secure: oMyaHQ/XXAEomhVUroYiNEpXQjDEYEG03xvfMfc1vyp7TQW/82vsYS64X2e4Semwo/MR3TSWYXiqi2Ylg7tkUPwg2YYwk8Pbl5w/yXNVu0tlY11V/ZOnO2eIMnCUnsPOj5ndHXP/YZ7u+s+yR1XF3nz7N8Okqz90df0JkxfENQs=
   file: /target/qorderws-pr-SNAPSHOT.war
   skip_cleanup: true
   on:
