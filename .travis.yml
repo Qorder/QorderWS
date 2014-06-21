@@ -10,7 +10,8 @@ script:
 
 deploy:
   provider: releases
-  api-key: $ travis setup releases
+  api-key: 
+	secure: "Er37/mGvfNj2fNvJvAbIihDWra2L7du/VQ2GNXa6THgWQPIEwrtAqqr62lH61iHwhndLnujlWVOuF5t6R9+eFPdQPGKgQ7KTRGIxHG5oCkFVHflj9qfvgPrXCGZEMbKvQRJwIEKwOsI6V2EYTu8Th5MWZVAHYV7JUvdTStuBp4I="
   file: /target/qorderws-pr-SNAPSHOT.war
   skip_cleanup: true
   on:
