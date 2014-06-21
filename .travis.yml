@@ -10,7 +10,7 @@ deploy:
   provider: releases
   api_key:
     secure: oMyaHQ/XXAEomhVUroYiNEpXQjDEYEG03xvfMfc1vyp7TQW/82vsYS64X2e4Semwo/MR3TSWYXiqi2Ylg7tkUPwg2YYwk8Pbl5w/yXNVu0tlY11V/ZOnO2eIMnCUnsPOj5ndHXP/YZ7u+s+yR1XF3nz7N8Okqz90df0JkxfENQs=
-  file: /target/qorderws-pr-SNAPSHOT.war
+  file: /home/travis/build/Qorder/QorderWS/QorderWS/target/qorderws-pr-SNAPSHOT.war
   skip_cleanup: true
   on:
     tags: true
