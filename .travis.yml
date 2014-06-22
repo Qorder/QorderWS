@@ -1,8 +1,19 @@
 language: java
-jdk: 
+jdk:
 - oraclejdk8
-
 before_install:
 - cd QorderWS
-
-travis setup releases
+after_success:
+- mvn compile war:war
+deploy:
+  provider: releases
+  api_key:
+    secure: sfh9bMrFaBm8t3OGkTwRIOLbdlaF1XtxqN9sRRaMMJ5sqEvZ1urxWAUMY7EZ4eXlhAKXGBGi3HSHSXaMPm6dVvLLmDYAsO8N22DEUAgdX6tIecZrPnEJJJC0aD7MHwFAH6JySI8SGqyYX6qdx8idg5+v6mXkBeAxVvp1vlYiV4s=
+  file: /home/travis/build/Qorder/QorderWS/QorderWS/target/qorderws-pr-SNAPSHOT.war
+  skip_cleanup: true
+  on:
+    tags: true
+    all_branches: true
+env:
+  global:
+    secure: sfh9bMrFaBm8t3OGkTwRIOLbdlaF1XtxqN9sRRaMMJ5sqEvZ1urxWAUMY7EZ4eXlhAKXGBGi3HSHSXaMPm6dVvLLmDYAsO8N22DEUAgdX6tIecZrPnEJJJC0aD7MHwFAH6JySI8SGqyYX6qdx8idg5+v6mXkBeAxVvp1vlYiV4s=

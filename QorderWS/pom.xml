@@ -88,7 +88,7 @@
 			<artifactId>spring-framework-bom</artifactId>
 			<version>${org.springframework-version}</version>
 			<type>pom</type>
-			<scope>import</scope>
+			<scope>provided</scope>
 		</dependency>
 
 		<!-- Spring mock -->
