@@ -26,4 +26,4 @@ We believe in simplicity and the ease of use. We want to make ordering easy, fas
 
 -------------------------
 ## Continuous integration
-Project build status: [![Build Status](https://api.travis-ci.org/repositories/Qorder/QorderWs.png?branch=dev)](https://travis-ci.org/Qorder/QorderWs)
+Project build status: [![Build Status](https://api.travis-ci.org/repositories/Qorder/QorderWS.png?branch=dev)](https://travis-ci.org/Qorder/QorderWS)
