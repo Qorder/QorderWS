@@ -13,6 +13,7 @@ import com.qorder.qorderws.dto.order.OrderDTO;
 import com.qorder.qorderws.dto.product.DetailedProductDTO;
 import com.qorder.qorderws.dto.product.ProductDTO;
 import com.qorder.qorderws.mapper.CategoryToCategoryDTOMapper;
+import com.qorder.qorderws.model.EEntity;
 import com.qorder.qorderws.model.category.Category;
 import com.qorder.qorderws.utils.providers.ReferenceProvider;
 
@@ -38,8 +39,10 @@ public class AppClient {
 		restTemplate.put(refProvider.getHost() + url + businessId, new CategoryToCategoryDTOMapper().map(category, new CategoryDTO()));
 	}
 	
-	public void putNewBusiness(String url, Long ownerId, BusinessDTO business) throws HttpClientErrorException {
-		restTemplate.put(refProvider.getHost() + url + ownerId, business);
+	public void putNewBusiness(long ownerId, BusinessDTO business) throws HttpClientErrorException {
+		//restTemplate.postForEntity(refProvider.getHttpPathFor(EEntity.BUSINESS) + "/owner/" + ownerId, business, Void.class);
+		//restTemplate.postForLocation(refProvider.getHttpPathFor(EEntity.BUSINESS) + "/owner/" + ownerId, business);
+		restTemplate.put(refProvider.getHttpPathFor(EEntity.BUSINESS) + "/owner/" + ownerId, business);
 	}
 	
 	public void postNewProducts(String url, Long categoryId, List<DetailedProductDTO> products) throws HttpClientErrorException {

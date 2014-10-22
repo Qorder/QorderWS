@@ -10,6 +10,7 @@ public class BusinessToBusinessDTOMapper implements IMapper<Business, BusinessDT
 		target.setId(source.getId());
 		target.setName(source.getName());
 		target.setMenuId(source.getMenu().getId());
+		
 		return target;
 	}
 

@@ -2,6 +2,7 @@ package com.qorder.qorderws.dto.product;
 
 import java.math.BigDecimal;
 
+import com.qorder.qorderws.model.EEntity;
 import com.qorder.qorderws.utils.providers.ReferenceProvider;
 
 public class DetailedProductDTO {
@@ -11,7 +12,7 @@ public class DetailedProductDTO {
 	private BigDecimal price;
 	private String details; //seperator - 
 	private String description;
-	private final String imageRequestURI = ReferenceProvider.INSTANCE.getPathFor("image");
+	private final String imageRequestURI = ReferenceProvider.INSTANCE.getHttpPathFor(EEntity.IMAGE);
 	
 	public long getId() {
 		return id;

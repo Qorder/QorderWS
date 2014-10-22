@@ -1,5 +1,7 @@
 package com.qorder.qorderws.utils.providers;
 
+import com.qorder.qorderws.model.EEntity;
+
 
 
 public enum ReferenceProvider {
@@ -7,12 +9,12 @@ public enum ReferenceProvider {
 
 	private final PropertyHandler propHandler = new PropertyHandler("references.properties");
 
-	public String getPathFor(String entityName) {
-		return propHandler.getProperty("host") + propHandler.getProperty(entityName);
+	public String getHttpPathFor(EEntity entity) {
+		return propHandler.getProperty("host") + propHandler.getProperty(entity.getName());
 	}
 	
-	public String getLocationFor(String entityName) {
-		return propHandler.getProperty(entityName);
+	public String getLocationFor(EEntity entity) {
+		return propHandler.getProperty(entity.getName());
 	}
 	
 	public String getHost() {

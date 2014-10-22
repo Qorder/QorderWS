@@ -8,9 +8,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.qorder.qorderws.dto.MenuDTO;
@@ -29,14 +29,15 @@ public class MenuController {
 	
 	/**
 	 * 
-	 * @param id
+	 * @param menuID
 	 * @return menu transfer object to client 
 	 */
 	@Transactional(readOnly = true)
-	@RequestMapping(value = "/menu", params = "id", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<MenuDTO> getMenuById(@RequestParam Long id) throws ResourceNotFoundException {
-		LOGGER.info("Request for menu with id parameter equal " + id.toString(), id);
-		MenuDTO menuDto = menuService.fetchMenuById(id);
+	@RequestMapping(value = "/{menuID}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<MenuDTO> getMenuById(@PathVariable Long menuID) throws ResourceNotFoundException {
+		LOGGER.info("Request for menu with id parameter equal " + menuID.toString(), menuID);
+		
+		MenuDTO menuDto = menuService.fetchMenuById(menuID);
 		return new ResponseEntity<>(menuDto, HttpStatus.OK);
 	}
 

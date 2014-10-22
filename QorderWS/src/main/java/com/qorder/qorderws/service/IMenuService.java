@@ -5,6 +5,6 @@ import com.qorder.qorderws.exception.ResourceNotFoundException;
 
 public interface IMenuService {
 	
-	MenuDTO fetchMenuById(Long menuId) throws ResourceNotFoundException;
+	MenuDTO fetchMenuById(long menuId) throws ResourceNotFoundException;
 
 }

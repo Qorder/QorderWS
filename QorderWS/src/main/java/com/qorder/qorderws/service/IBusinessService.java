@@ -5,10 +5,10 @@ import com.qorder.qorderws.exception.ResourceNotFoundException;
 
 public interface IBusinessService {
 	
-	void createBusiness(BusinessDTO businessDTO);
+	long createBusiness(BusinessDTO businessDTO);
 	
-	BusinessDTO fetchBusinessByID(Long businessId) throws ResourceNotFoundException;
+	BusinessDTO fetchBusinessByID(long businessId) throws ResourceNotFoundException;
 	
-	BusinessDTO[] fetchBusinessesByUser(Long userId) throws ResourceNotFoundException;
+	BusinessDTO[] fetchBusinessesByUser(long userId) throws ResourceNotFoundException;
 	
 }

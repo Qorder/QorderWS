@@ -23,11 +23,11 @@ public class OrderService implements IOrderService {
 	private IBusinessDAO businessDAO;
 	
 	@Override
-	public OrderViewDTO submitOrder(long businessId, OrderDTO orderDTO) throws ResourceNotFoundException {
+	public long submitOrder(long businessId, OrderDTO orderDTO) throws ResourceNotFoundException {
 		Order order = new  OrderDTOtoOrderMapper().map(orderDTO, new Order());
 		order.setBusiness(businessDAO.findById(businessId));
 		orderDAO.save(order);
-		return new OrderToOrderViewDTOMapper().map(order, new OrderViewDTO());
+		return order.getId();
 	}
 
 	@Transactional(readOnly = true)
@@ -59,14 +59,14 @@ public class OrderService implements IOrderService {
 	}
 
 	@Override
-	public void changeOrderStatus(Long orderId, EOrderStatus orderStatus) throws ResourceNotFoundException {
+	public void changeOrderStatus(long orderId, EOrderStatus orderStatus) throws ResourceNotFoundException {
 		Order order = orderDAO.findById(orderId);
 		order.setStatus(orderStatus);
 		orderDAO.save(order);
 	}
 	
 	@Override
-	public OrderViewDTO fetchOrderById(Long orderId) throws ResourceNotFoundException {
+	public OrderViewDTO fetchOrderById(long orderId) throws ResourceNotFoundException {
 		Order order = orderDAO.findById(orderId);
 		return new OrderToOrderViewDTOMapper().map(order, new OrderViewDTO());
 	}

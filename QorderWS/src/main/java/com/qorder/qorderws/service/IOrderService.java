@@ -7,14 +7,14 @@ import com.qorder.qorderws.model.order.EOrderStatus;
 
 public interface IOrderService {
     
-	OrderViewDTO submitOrder(long businessId, OrderDTO order) throws ResourceNotFoundException;
+	long submitOrder(long businessId, OrderDTO order) throws ResourceNotFoundException;
     
 	OrderViewDTO[] fetchOrdersByBusinessID(long businessId) throws ResourceNotFoundException;
 
 	OrderViewDTO[] fetchOrdersByStatus(long businessId, EOrderStatus orderStatus) throws ResourceNotFoundException;
 
-	void changeOrderStatus(Long orderId, EOrderStatus orderStatus) throws ResourceNotFoundException;
+	void changeOrderStatus(long orderId, EOrderStatus orderStatus) throws ResourceNotFoundException;
 
-	OrderViewDTO fetchOrderById(Long orderId) throws ResourceNotFoundException;
+	OrderViewDTO fetchOrderById(long orderId) throws ResourceNotFoundException;
 	
 }

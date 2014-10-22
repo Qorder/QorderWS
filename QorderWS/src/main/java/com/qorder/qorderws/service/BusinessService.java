@@ -12,20 +12,10 @@ import com.qorder.qorderws.mapper.BusinessDTOtoBusinessMapper;
 import com.qorder.qorderws.mapper.BusinessToBusinessDTOMapper;
 import com.qorder.qorderws.model.business.Business;
 
-
-
-
 @Transactional
 public class BusinessService implements IBusinessService {
 
 	private IBusinessDAO businessDAO;
-
-	@Override
-	public void createBusiness(BusinessDTO businessDTO) {
-		Business business = new BusinessDTOtoBusinessMapper().map(businessDTO, new Business());
-		businessDAO.save(business);
-	}
-	
 
 	public IBusinessDAO getBusinessDAO() {
 		return businessDAO;
@@ -34,19 +24,29 @@ public class BusinessService implements IBusinessService {
 	public void setBusinessDAO(IBusinessDAO businessDAO) {
 		this.businessDAO = businessDAO;
 	}
+	
+	@Override
+	public long createBusiness(BusinessDTO businessDTO) {
+		Business business = new BusinessDTOtoBusinessMapper().map(businessDTO, new Business());
+		businessDAO.save(business);
+		
+		return business.getId();
+	}
+	
 
 	@Transactional(readOnly=true)
 	@Override
-	public BusinessDTO fetchBusinessByID(Long businessId) throws ResourceNotFoundException {
+	public BusinessDTO fetchBusinessByID(long businessId) throws ResourceNotFoundException {
 		Business business = businessDAO.findById(businessId);
 		return new BusinessToBusinessDTOMapper().map(business, new BusinessDTO());
 	}
 
 	@Transactional(readOnly=true)
 	@Override
-	public BusinessDTO[] fetchBusinessesByUser(Long userId) throws ResourceNotFoundException {
+	public BusinessDTO[] fetchBusinessesByUser(long userId) throws ResourceNotFoundException {
 		List<Business> businessList = businessDAO.fetchUserBusinesses(userId);
 		List<BusinessDTO> userBusinesses = new ArrayList<BusinessDTO>();
+		
 		BusinessToBusinessDTOMapper mapper = new BusinessToBusinessDTOMapper();
 		businessList.forEach((business)-> {
 			userBusinesses.add(mapper.map(business, new BusinessDTO()));

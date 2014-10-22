@@ -6,7 +6,7 @@ import com.qorder.qorderws.exception.ResourceNotFoundException;
 
 public interface ICategoryService {
 	
-	void createCategory(long menuId, CategoryDTO categoryDTO) throws ResourceNotFoundException;
+	long createCategory(long menuId, CategoryDTO categoryDTO) throws ResourceNotFoundException;
 	
 	ProductDTO[] fetchCategoryByID(long categoryId) throws ResourceNotFoundException;
 	

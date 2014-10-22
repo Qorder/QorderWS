@@ -1,7 +1,6 @@
 package com.qorder.qorderws.controller;
 
 import java.net.URI;
-import java.util.UUID;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.qorder.qorderws.dto.BusinessDTO;
 import com.qorder.qorderws.exception.ResourceNotFoundException;
+import com.qorder.qorderws.model.EEntity;
 import com.qorder.qorderws.service.IBusinessService;
 import com.qorder.qorderws.utils.providers.ReferenceProvider;
 
@@ -30,19 +30,19 @@ public class BusinessController {
 	@Autowired
 	private IBusinessService businessService;
 	
-	@RequestMapping(value = "/business/owner/{ownerId}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Void> createBusiness(@PathVariable UUID ownerId, @RequestBody BusinessDTO businessDTO) {
+	@RequestMapping(value = "/owner/{ownerId}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Void> createBusiness(@PathVariable Long ownerId, @RequestBody BusinessDTO businessDTO) {
 		LOGGER.info("Request for business creation");
 		
-		businessService.createBusiness(businessDTO);
+		long businessID = businessService.createBusiness(businessDTO);
 		
+		URI location = URI.create(ReferenceProvider.INSTANCE.getLocationFor(EEntity.BUSINESS) + businessID);
 		HttpHeaders headers = new HttpHeaders();
-		URI location = URI.create(ReferenceProvider.INSTANCE.getLocationFor("business") + businessDTO.getId()); 
 		headers.setLocation(location);
 		return new ResponseEntity<>(headers, HttpStatus.CREATED);
 	}
 	
-	@RequestMapping(value = "/business/{businessId}", method = RequestMethod.GET , produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/{businessId}", method = RequestMethod.GET , produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<BusinessDTO> getBusiness(@PathVariable Long businessId)  throws ResourceNotFoundException {
 		LOGGER.info("Request for business");
 		

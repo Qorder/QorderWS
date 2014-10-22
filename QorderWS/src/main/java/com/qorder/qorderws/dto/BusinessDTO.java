@@ -1,20 +1,21 @@
 package com.qorder.qorderws.dto;
 
+import com.qorder.qorderws.model.EEntity;
 import com.qorder.qorderws.utils.providers.ReferenceProvider;
 
 public class BusinessDTO {
 	
-	private Long id;
+	private long id;
 	private String name;
 	
 	private Long menuId;
-	private final String menuURI = ReferenceProvider.INSTANCE.getPathFor("menu");
+	private final String menuURI = ReferenceProvider.INSTANCE.getHttpPathFor(EEntity.MENU);
 	
 	public Long getId() {
 		return id;
 	}
 	
-	public void setId(Long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 	
@@ -35,6 +36,6 @@ public class BusinessDTO {
 	}
 
 	public String getMenuURI() {
-		return menuURI;
+		return menuURI + id;
 	}
 }

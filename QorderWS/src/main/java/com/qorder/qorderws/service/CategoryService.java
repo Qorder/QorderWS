@@ -35,13 +35,14 @@ public class CategoryService implements ICategoryService {
 	}
 
 	@Override
-	public void createCategory(long menuId, CategoryDTO categoryDTO) throws ResourceNotFoundException {
-		Menu menu = menuDAO.findById(menuId);
-		
+	public long createCategory(long menuId, CategoryDTO categoryDTO) throws ResourceNotFoundException {
 		Category category = new CategoryDTOtoCategoryMapper().map(categoryDTO, new Category());
 		
+		Menu menu = menuDAO.findById(menuId);
 		menu.getCategoryList().add(category);
 		menuDAO.update(menu);
+		
+		return category.getId();
 	}
 
 

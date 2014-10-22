@@ -15,7 +15,7 @@ public class MenuService implements IMenuService {
 	private IMenuDAO menuDAO;
 	
 	@Override
-	public MenuDTO fetchMenuById(Long menuId) throws ResourceNotFoundException {
+	public MenuDTO fetchMenuById(long menuId) throws ResourceNotFoundException {
 		Menu menu = menuDAO.findById(menuId);
 		return new MenuToMenuDTOMapper().map(menu, new MenuDTO());
 	}

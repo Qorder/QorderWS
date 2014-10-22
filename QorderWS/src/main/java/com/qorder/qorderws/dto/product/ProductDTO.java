@@ -2,6 +2,7 @@ package com.qorder.qorderws.dto.product;
 
 import java.math.BigDecimal;
 
+import com.qorder.qorderws.model.EEntity;
 import com.qorder.qorderws.utils.providers.ReferenceProvider;
 
 public class ProductDTO {
@@ -9,7 +10,7 @@ public class ProductDTO {
 	private Long id;
 	private String name;
 	private BigDecimal price;
-	private final String uri = ReferenceProvider.INSTANCE.getPathFor("product");
+	private final String uri = ReferenceProvider.INSTANCE.getHttpPathFor(EEntity.PRODUCT);
 	
 	public Long getId() {
 		return id;
