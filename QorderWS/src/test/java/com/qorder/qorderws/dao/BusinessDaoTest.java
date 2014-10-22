@@ -68,7 +68,7 @@ public class BusinessDaoTest extends DBTestCase {
 	}
 
 	@Test(expected = ResourceNotFoundException.class)
-	public void testCategoryNotFoundByID() throws ResourceNotFoundException {
+	public void testBusinessNotFoundByID() throws ResourceNotFoundException {
 		Business someBusiness = businessDAO.findById(1337);
 		assertNull(someBusiness);
 	}

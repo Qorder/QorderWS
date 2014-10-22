@@ -10,7 +10,6 @@ import com.qorder.qorderws.dto.BusinessDTO;
 import com.qorder.qorderws.exception.ResourceNotFoundException;
 import com.qorder.qorderws.mapper.BusinessDTOtoBusinessMapper;
 import com.qorder.qorderws.mapper.BusinessToBusinessDTOMapper;
-import com.qorder.qorderws.model.business.ABusiness;
 import com.qorder.qorderws.model.business.Business;
 
 
@@ -39,14 +38,14 @@ public class BusinessService implements IBusinessService {
 	@Transactional(readOnly=true)
 	@Override
 	public BusinessDTO fetchBusinessByID(Long businessId) throws ResourceNotFoundException {
-		ABusiness business = businessDAO.findById(businessId);
+		Business business = businessDAO.findById(businessId);
 		return new BusinessToBusinessDTOMapper().map(business, new BusinessDTO());
 	}
 
 	@Transactional(readOnly=true)
 	@Override
 	public BusinessDTO[] fetchBusinessesByUser(Long userId) throws ResourceNotFoundException {
-		List<ABusiness> businessList = businessDAO.fetchUserBusinesses(userId);
+		List<Business> businessList = businessDAO.fetchUserBusinesses(userId);
 		List<BusinessDTO> userBusinesses = new ArrayList<BusinessDTO>();
 		BusinessToBusinessDTOMapper mapper = new BusinessToBusinessDTOMapper();
 		businessList.forEach((business)-> {

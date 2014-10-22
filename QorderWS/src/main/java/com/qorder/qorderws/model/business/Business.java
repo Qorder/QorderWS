@@ -1,30 +1,50 @@
 package com.qorder.qorderws.model.business;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.qorder.qorderws.model.menu.Menu;
 
 @Entity
 @Table(name = "BUSINESSES")
-public class Business extends ABusiness {
+public class Business {
 
-	@ManyToOne(fetch=FetchType.LAZY, optional=false) 
+	@Id
+	@GeneratedValue
+	@Column(name = "BUSINESS_ID")
+	protected Long id;
+
+	@Column(name = "NAME")
+	protected String name;
+	
+	@OneToOne(targetEntity = Menu.class, fetch = FetchType.LAZY, cascade=CascadeType.ALL, orphanRemoval=true)
 	@JoinColumn(name = "FK_MENU_ID", nullable=false, updatable=false)
 	private Menu menu;
+	
+	public Long getId() {
+		return id;
+	}
 
-	@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY, mappedBy = "parentBusiness")
-	private Set<BranchBusiness> branchBusinesses = new HashSet<BranchBusiness>();
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-	@Override
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+
 	public Menu getMenu() {
 		return menu;
 	}
@@ -32,25 +52,5 @@ public class Business extends ABusiness {
 	public void setMenu(Menu menu) {
 		this.menu = menu;
 	}
-
-	public Set<BranchBusiness> getBranchBusinesses() {
-		return branchBusinesses;
-	}
-
-	public void setBranchBusinesses(Set<BranchBusiness> childBusinesses) {
-		this.branchBusinesses = childBusinesses;
-	}
-
-	public boolean addBranch(BranchBusiness business) {
-		if (branchBusinesses.add(business)) {
-			business.setParent(this);
-			return true;
-		}
-		return false;
-	}
-
-	public boolean removeChild(BranchBusiness business) {
-		return branchBusinesses.remove(business);
-	}
-
+	
 }

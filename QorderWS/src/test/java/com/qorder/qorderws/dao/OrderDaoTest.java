@@ -22,7 +22,6 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.qorder.qorderws.exception.ResourceNotFoundException;
-import com.qorder.qorderws.model.business.ABusiness;
 import com.qorder.qorderws.model.business.Business;
 import com.qorder.qorderws.model.order.EOrderStatus;
 import com.qorder.qorderws.model.order.Order;
@@ -73,7 +72,7 @@ public class OrderDaoTest extends DBTestCase {
 
 	@Test
 	public void testSave() throws ResourceNotFoundException {
-		ABusiness someBusiness = new Business();
+		Business someBusiness = new Business();
 		someBusiness.setId(1L);
 		
 		Order someorder = new Order();

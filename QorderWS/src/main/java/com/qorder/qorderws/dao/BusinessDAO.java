@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.qorder.qorderws.exception.PersistanceLayerException;
 import com.qorder.qorderws.exception.ResourceNotFoundException;
-import com.qorder.qorderws.model.business.ABusiness;
 import com.qorder.qorderws.model.business.Business;
 
 @Transactional
@@ -94,7 +93,7 @@ public class BusinessDAO implements IBusinessDAO {
 
 	//TODO: Implementation to return all registered businesses that user has
 	@Override
-	public List<ABusiness> fetchUserBusinesses(Long userId) throws PersistanceLayerException, ResourceNotFoundException {
+	public List<Business> fetchUserBusinesses(Long userId) throws PersistanceLayerException, ResourceNotFoundException {
 		//Not implemented yer!!!!
 		throw new ResourceNotFoundException("Businesses not found!");
 	}

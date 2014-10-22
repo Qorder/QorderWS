@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.qorder.qorderws.exception.PersistanceLayerException;
 import com.qorder.qorderws.exception.ResourceNotFoundException;
-import com.qorder.qorderws.model.business.ABusiness;
 import com.qorder.qorderws.model.business.Business;
 
 public interface IBusinessDAO {
@@ -17,5 +16,5 @@ public interface IBusinessDAO {
 	
 	Business findById(long businessId) throws PersistanceLayerException, ResourceNotFoundException;
 
-	List<ABusiness> fetchUserBusinesses(Long userId) throws PersistanceLayerException, ResourceNotFoundException;
+	List<Business> fetchUserBusinesses(Long userId) throws PersistanceLayerException, ResourceNotFoundException;
 }

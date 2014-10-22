@@ -17,7 +17,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.qorder.qorderws.model.business.ABusiness;
+import com.qorder.qorderws.model.business.Business;
 
 @Entity
 @Table(name = "ORDERS")
@@ -38,9 +38,9 @@ public class Order {
 	@JoinColumn(name = "FK_ORDER_ID")
 	private List<ProductHolder> orderList = new ArrayList<ProductHolder>();
 
-	@ManyToOne(targetEntity = ABusiness.class,fetch = FetchType.LAZY, optional = false)
+	@ManyToOne(targetEntity = Business.class,fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "FK_BUSINESS_ID", nullable = false, updatable = false)
-	private ABusiness business;
+	private Business business;
 
 	@Column(name = "TOTAL_PRICE")
 	private BigDecimal totalPrice;
@@ -84,11 +84,11 @@ public class Order {
 		this.orderList = orderList;
 	}
 
-	public ABusiness getBusiness() {
+	public Business getBusiness() {
 		return business;
 	}
 
-	public void setBusiness(ABusiness business) {
+	public void setBusiness(Business business) {
 		this.business = business;
 	}
 
