@@ -27,14 +27,15 @@ public class ProductService implements IProductService {
 	}
 
 	@Override
-	public void storeProducts(long categoryId, DetailedProductDTO[] productsDTO) throws ResourceNotFoundException, IOException {
+	public long storeProduct(long categoryId, DetailedProductDTO productDTO) throws ResourceNotFoundException, IOException {
+		Product product = new DetailedProductDTOtoProductMapper().map(productDTO,new Product());
+		productDAO.save(product);
+		
 		Category category = categoryDAO.findById(categoryId);
-		for(DetailedProductDTO productDTO : productsDTO)
-		{
-			Product product = new DetailedProductDTOtoProductMapper().map(productDTO,new Product());
-			category.addProduct(product);
-		}
+		category.addProduct(product);
 		categoryDAO.update(category);
+		
+		return product.getId();
 	}
 	
 

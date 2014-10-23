@@ -8,6 +8,8 @@ import javax.servlet.ServletContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -31,22 +33,29 @@ public class ImageController {
 	@RequestMapping(value = "/product", params = "id", method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE )
 	public ResponseEntity<byte[]> getProductImage(@RequestParam Long id) throws IOException, NullPointerException {
 		LOGGER.info("Request for menu with id parameter equal " + id.toString(), id);
-		InputStream imageStream = context.getResourceAsStream("WEB-INF/resources/images/products/" + id.toString() + ".JPG");
-		byte[] imageByteArray = ByteStreams.toByteArray(imageStream);
 		
-		return new ResponseEntity<>(imageByteArray, HttpStatus.OK);
+		Resource image = new ClassPathResource("images/products/" + id.toString() + ".JPG");
+		if( ! image.exists() ) {
+			image = new ClassPathResource("images/products/defaultProduct.png"); //load default image
+		}
+		
+		try(InputStream imageStream = image.getInputStream()) 
+		{
+			byte[] imageByteArray = ByteStreams.toByteArray(imageStream);
+			return new ResponseEntity<>(imageByteArray, HttpStatus.OK);
+		}
 	}
 	
 	@ExceptionHandler(IOException.class)
 	public ResponseEntity<String> sendException(Exception ex) {
 		LOGGER.warn("Exception was thrown, with cause " + ex.getCause() + "\nMessage: " + ex.getLocalizedMessage(), ex );
-		return new ResponseEntity<>("An IOException was raised", HttpStatus.FAILED_DEPENDENCY);
+		return new ResponseEntity<>("An IOException was raised", HttpStatus.OK);
 	}
 	
 	@ExceptionHandler(NullPointerException.class)
 	public ResponseEntity<String> sendBadRequestException(Exception ex) {
 		LOGGER.warn("Exception was thrown, with cause " + ex.getCause() + "\nMessage: " + ex.getLocalizedMessage(), ex );
-		return new ResponseEntity<>("An IOException was raised", HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<>("An Exception was raised", HttpStatus.BAD_REQUEST);
 	}
 
 }

@@ -9,9 +9,9 @@ public class ProductToDetailedProductDTOMapper implements IMapper<Product, Detai
 
 	@Override
 	public DetailedProductDTO map(Product source, DetailedProductDTO target) {
-		target.setId(source.getId());
+		target.setId(String.valueOf(source.getId()));
 		target.setName(source.getName());
-		target.setPrice(source.getPrice());
+		target.setPrice(source.getPrice().toPlainString());
 		
 		String details = StringUtils.collectionToDelimitedString(source.getDetails(), "-");
 		target.setDetails(details);

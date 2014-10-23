@@ -34,7 +34,7 @@ public class OrderController {
 	@Autowired
 	private IOrderService orderService;
 
-	@RequestMapping(value = "/business/{businessID}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/business/{businessID}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	ResponseEntity<Void> createOrder(@PathVariable Long businessID, @RequestBody OrderDTO orderDTO) throws ResourceNotFoundException {
 		LOGGER.info("Request for order submit");
 		long orderID = orderService.submitOrder(businessID, orderDTO);

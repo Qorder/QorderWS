@@ -10,6 +10,7 @@ import org.dbunit.database.IDatabaseConnection;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
 import org.dbunit.operation.DatabaseOperation;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,8 +20,10 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.qorder.qorderws.exception.PersistanceLayerException;
 import com.qorder.qorderws.exception.ResourceNotFoundException;
 import com.qorder.qorderws.model.business.Business;
+import com.qorder.qorderws.model.menu.Menu;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "/test-context.xml" })
@@ -60,6 +63,7 @@ public class BusinessDaoTest extends DBTestCase {
 		IDatabaseConnection connection = new DatabaseDataSourceConnection(dataSource);
 		DatabaseOperation.CLEAN_INSERT.execute(connection, getDataSet());
 	}
+	
 
 	@Test
 	public void testExistsFindById() throws ResourceNotFoundException {
@@ -71,6 +75,20 @@ public class BusinessDaoTest extends DBTestCase {
 	public void testBusinessNotFoundByID() throws ResourceNotFoundException {
 		Business someBusiness = businessDAO.findById(1337);
 		assertNull(someBusiness);
+	}
+	
+	@Test
+	public void testBusinessCreation() {
+		System.out.println("Testing Business creation: ");
+		Business newBusiness = new Business();
+		try {
+		Business persistedBusiness = businessDAO.save(newBusiness);
+		Assert.assertNotNull(persistedBusiness.getMenu().getId());
+		Assert.assertNotNull("Business Pesisted",persistedBusiness);
+		}
+		catch (PersistanceLayerException ex) {
+			fail("Business has not persisted!");
+		}
 	}
 
 }

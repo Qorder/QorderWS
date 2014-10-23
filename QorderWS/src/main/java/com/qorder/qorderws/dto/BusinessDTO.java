@@ -5,17 +5,17 @@ import com.qorder.qorderws.utils.providers.ReferenceProvider;
 
 public class BusinessDTO {
 	
-	private long id;
+	private String id;
 	private String name;
 	
-	private Long menuId;
+	private String menuId;
 	private final String menuURI = ReferenceProvider.INSTANCE.getHttpPathFor(EEntity.MENU);
 	
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 	
-	public void setId(long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 	
@@ -27,11 +27,11 @@ public class BusinessDTO {
 		this.name = name;
 	}
 	
-	public Long getMenuId() {
+	public String getMenuId() {
 		return menuId;
 	}
 	
-	public void setMenuId(Long menuId) {
+	public void setMenuId(String menuId) {
 		this.menuId = menuId;
 	}
 

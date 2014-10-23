@@ -39,10 +39,8 @@ public class AppClient {
 		restTemplate.put(refProvider.getHost() + url + businessId, new CategoryToCategoryDTOMapper().map(category, new CategoryDTO()));
 	}
 	
-	public void putNewBusiness(long ownerId, BusinessDTO business) throws HttpClientErrorException {
-		//restTemplate.postForEntity(refProvider.getHttpPathFor(EEntity.BUSINESS) + "/owner/" + ownerId, business, Void.class);
-		//restTemplate.postForLocation(refProvider.getHttpPathFor(EEntity.BUSINESS) + "/owner/" + ownerId, business);
-		restTemplate.put(refProvider.getHttpPathFor(EEntity.BUSINESS) + "/owner/" + ownerId, business);
+	public void postNewBusiness(long ownerId, BusinessDTO business) throws HttpClientErrorException {
+		restTemplate.postForLocation(refProvider.getHttpPathFor(EEntity.BUSINESS) + "owner/" + ownerId, business);
 	}
 	
 	public void postNewProducts(String url, Long categoryId, List<DetailedProductDTO> products) throws HttpClientErrorException {

@@ -36,7 +36,7 @@ public class Order {
 
 	@OneToMany(targetEntity = ProductHolder.class,fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name = "FK_ORDER_ID")
-	private List<ProductHolder> orderList = new ArrayList<ProductHolder>();
+	private List<ProductHolder> orderList = new ArrayList<>();
 
 	@ManyToOne(targetEntity = Business.class,fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "FK_BUSINESS_ID", nullable = false, updatable = false)

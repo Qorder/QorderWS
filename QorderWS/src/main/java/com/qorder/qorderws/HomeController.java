@@ -24,8 +24,12 @@ public class HomeController {
 	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
-		logger.info("Welcome to Qorder Web Service! The server locale is {}.",
-				locale);
+		logger.info("\n===========================================================\n"
+				     +"||                                                       ||\n"
+				     +"||            Welcome to Qorder Web Service!             ||\n"
+				     +"||                                                       ||\n"
+				     +"===========================================================\n"
+				     +"The server locale is {}.", locale);
 
 		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG,
 				DateFormat.LONG, locale);

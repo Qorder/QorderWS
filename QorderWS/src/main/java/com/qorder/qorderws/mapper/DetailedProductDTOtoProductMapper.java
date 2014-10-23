@@ -1,5 +1,6 @@
 package com.qorder.qorderws.mapper;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 
@@ -17,7 +18,7 @@ public class DetailedProductDTOtoProductMapper implements IMapper<DetailedProduc
 			target.setDetails(details);
 		}
 		target.setDescription(source.getDescription());
-		target.setPrice(source.getPrice());
+		target.setPrice(new BigDecimal(source.getPrice()));
 		return target;
 	}
 

@@ -11,6 +11,7 @@ import com.qorder.qorderws.exception.ResourceNotFoundException;
 import com.qorder.qorderws.mapper.BusinessDTOtoBusinessMapper;
 import com.qorder.qorderws.mapper.BusinessToBusinessDTOMapper;
 import com.qorder.qorderws.model.business.Business;
+import com.qorder.qorderws.model.menu.Menu;
 
 @Transactional
 public class BusinessService implements IBusinessService {
@@ -28,6 +29,7 @@ public class BusinessService implements IBusinessService {
 	@Override
 	public long createBusiness(BusinessDTO businessDTO) {
 		Business business = new BusinessDTOtoBusinessMapper().map(businessDTO, new Business());
+		business.setMenu(new Menu());
 		businessDAO.save(business);
 		
 		return business.getId();

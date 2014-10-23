@@ -26,7 +26,7 @@ public class Business {
 	
 	@OneToOne(targetEntity = Menu.class, fetch = FetchType.LAZY, cascade=CascadeType.ALL, orphanRemoval=true)
 	@JoinColumn(name = "FK_MENU_ID", nullable=false, updatable=false)
-	private Menu menu;
+	private Menu menu = new Menu();
 	
 	public Long getId() {
 		return id;

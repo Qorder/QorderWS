@@ -5,9 +5,9 @@ import com.qorder.qorderws.utils.providers.ReferenceProvider;
 
 public class CategoryDTO {
 	
-	private Long id;
+	private String id;
 	private String name;
-	private final String uri = ReferenceProvider.INSTANCE.getHttpPathFor(EEntity.CATEGORY);
+	private final String categoryURI = ReferenceProvider.INSTANCE.getHttpPathFor(EEntity.CATEGORY);
 	
 	public String getName() {
 		return name;
@@ -23,14 +23,14 @@ public class CategoryDTO {
 	}
 	
 	public String getUri() {
-		return uri + id;
+		return categoryURI + id;
 	}
 	
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 	
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 }

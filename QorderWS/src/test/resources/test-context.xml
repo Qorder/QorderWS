@@ -52,4 +52,9 @@
 	<bean id="testOrderDAO" class="com.qorder.qorderws.dao.OrderDAO">
 		<property name="sessionFactory" ref="testSessionFactory"></property>
 	</bean>
-</beans>
+	
+	<bean id="testMenuDAO" class="com.qorder.qorderws.dao.MenuDAO">
+		<property name="sessionFactory" ref="testSessionFactory"></property>
+	</bean>
+		
+	</beans>
