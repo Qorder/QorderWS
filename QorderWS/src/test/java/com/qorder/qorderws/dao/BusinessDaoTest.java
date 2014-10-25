@@ -23,7 +23,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.qorder.qorderws.exception.PersistanceLayerException;
 import com.qorder.qorderws.exception.ResourceNotFoundException;
 import com.qorder.qorderws.model.business.Business;
-import com.qorder.qorderws.model.menu.Menu;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "/test-context.xml" })
