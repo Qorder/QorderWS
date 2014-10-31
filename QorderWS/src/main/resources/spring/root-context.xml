@@ -41,7 +41,7 @@
 	</bean>
 
 
-	<!-- Service bean declerations here -->
+<!-- Service bean declerations here -->
 
 	<bean id="businessService" class="com.qorder.qorderws.service.BusinessService">
 		<property name="businessDAO" ref="businessDAO" />
@@ -66,10 +66,14 @@
 		<property name="orderDAO" ref="orderDAO" />
 	</bean>
 	
-	<bean id="imageService" class="com.qorder.qorderws.service.ImageService"/>
+	<bean id="imageService" class="com.qorder.qorderws.service.ImageService">
+		<property name="imageFAO" ref="imageFAO"/>
+	</bean>
+	
+<!-- End: Service bean declerations -->	
 
 
-	<!-- DAO bean declerations here -->
+<!-- DAO bean declerations here -->
 
 	<bean id="categoryDAO" class="com.qorder.qorderws.dao.CategoryDAO"
 		autowire="byName" />
@@ -85,5 +89,14 @@
 
 	<bean id="menuDAO" class="com.qorder.qorderws.dao.MenuDAO"
 		autowire="byName" />
+	
+<!-- End: DAO bean decleration here -->
+
+
+<!-- FAO bean declerations here -->
+	
+	<bean id="imageFAO" class="com.qorder.qorderws.fao.ImageFAO" />
+	
+<!-- Endl FAO bean declerations -->
 
 </beans>

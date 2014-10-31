@@ -16,8 +16,7 @@ import com.qorder.qorderws.model.business.Business;
 public class BusinessDAO implements IBusinessDAO {
 
 	private SessionFactory sessionFactory;
-	private static final Logger LOGGER = LoggerFactory
-			.getLogger(BusinessDAO.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(BusinessDAO.class);
 
 	public SessionFactory getSessionFactory() {
 		return sessionFactory;

@@ -1,13 +1,16 @@
 package com.qorder.qorderws.utils.providers;
 
 import java.io.IOException;
-import java.util.Objects;
 import java.util.Properties;
+
+import javax.el.PropertyNotFoundException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.support.PropertiesLoaderUtils;
+
+import com.google.common.base.Strings;
 
 public final class PropertyHandler {
 
@@ -19,9 +22,12 @@ public final class PropertyHandler {
 		loadProperties(propertyPath);
 	}
 	
-	public String getProperty(String key) {
+	public String getProperty(String key) throws PropertyNotFoundException {
 		String value = propertiesFile.getProperty(key);
-		return Objects.isNull(value) ? "property not found" : value;
+		if(Strings.isNullOrEmpty(value)) {
+			throw new PropertyNotFoundException("No bound property to key: " + key);
+		}
+		return value;
 	}
 	
 	public Properties getPropertiesFile() {
