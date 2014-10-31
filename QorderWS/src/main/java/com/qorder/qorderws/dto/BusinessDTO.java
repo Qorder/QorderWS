@@ -1,7 +1,7 @@
 package com.qorder.qorderws.dto;
 
 import com.qorder.qorderws.model.EEntity;
-import com.qorder.qorderws.utils.providers.ReferenceProvider;
+import com.qorder.qorderws.utils.providers.EDomainLinkProvider;
 
 public class BusinessDTO {
 	
@@ -9,7 +9,7 @@ public class BusinessDTO {
 	private String name;
 	
 	private String menuId;
-	private final String menuURI = ReferenceProvider.INSTANCE.getHttpPathFor(EEntity.MENU);
+	private final String menuURI = EDomainLinkProvider.INSTANCE.getHttpPathFor(EEntity.MENU);
 	
 	public String getId() {
 		return id;

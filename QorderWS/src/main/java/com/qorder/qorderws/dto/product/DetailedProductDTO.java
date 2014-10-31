@@ -1,7 +1,7 @@
 package com.qorder.qorderws.dto.product;
 
 import com.qorder.qorderws.model.EEntity;
-import com.qorder.qorderws.utils.providers.ReferenceProvider;
+import com.qorder.qorderws.utils.providers.EDomainLinkProvider;
 
 public class DetailedProductDTO {
 
@@ -10,7 +10,7 @@ public class DetailedProductDTO {
 	private String price;
 	private String details; //seperator - 
 	private String description;
-	private final String imageRequestURI = ReferenceProvider.INSTANCE.getHttpPathFor(EEntity.IMAGE);
+	private final String imageRequestURI = EDomainLinkProvider.INSTANCE.getHttpPathFor(EEntity.PRODUCT_IMAGE);
 	
 	public String getId() {
 		return id;

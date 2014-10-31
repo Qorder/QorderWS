@@ -65,6 +65,8 @@
 		<property name="businessDAO" ref="businessDAO" />
 		<property name="orderDAO" ref="orderDAO" />
 	</bean>
+	
+	<bean id="imageService" class="com.qorder.qorderws.service.ImageService"/>
 
 
 	<!-- DAO bean declerations here -->

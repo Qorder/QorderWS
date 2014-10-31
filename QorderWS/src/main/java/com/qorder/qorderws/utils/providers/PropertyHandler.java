@@ -1,6 +1,7 @@
 package com.qorder.qorderws.utils.providers;
 
 import java.io.IOException;
+import java.util.Objects;
 import java.util.Properties;
 
 import org.slf4j.Logger;
@@ -20,7 +21,7 @@ public final class PropertyHandler {
 	
 	public String getProperty(String key) {
 		String value = propertiesFile.getProperty(key);
-		return value.equals(null) ? "property not found " : value;
+		return Objects.isNull(value) ? "property not found" : value;
 	}
 	
 	public Properties getPropertiesFile() {

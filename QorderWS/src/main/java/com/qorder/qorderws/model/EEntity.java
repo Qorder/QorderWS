@@ -6,7 +6,7 @@ public enum EEntity {
 	CATEGORY("category"),
 	PRODUCT("product"),
 	ORDER("order"),
-	IMAGE("image");
+	PRODUCT_IMAGE("image.product");
 	
 	private final String entityName;
 	

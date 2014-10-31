@@ -23,7 +23,7 @@ import com.qorder.qorderws.exception.ResourceNotFoundException;
 import com.qorder.qorderws.model.EEntity;
 import com.qorder.qorderws.model.order.EOrderStatus;
 import com.qorder.qorderws.service.IOrderService;
-import com.qorder.qorderws.utils.providers.ReferenceProvider;
+import com.qorder.qorderws.utils.providers.EDomainLinkProvider;
 
 @RestController
 @RequestMapping(value = "/orders")
@@ -39,7 +39,7 @@ public class OrderController {
 		LOGGER.info("Request for order submit");
 		long orderID = orderService.submitOrder(businessID, orderDTO);
 		
-		URI location = URI.create(ReferenceProvider.INSTANCE.getLocationFor(EEntity.ORDER) + orderID);
+		URI location = URI.create(EDomainLinkProvider.INSTANCE.getLocationFor(EEntity.ORDER) + orderID);
 		HttpHeaders headers = new HttpHeaders();
 		headers.setLocation(location);
 		

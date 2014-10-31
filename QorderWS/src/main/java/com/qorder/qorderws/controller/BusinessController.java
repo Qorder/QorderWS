@@ -19,7 +19,7 @@ import com.qorder.qorderws.dto.BusinessDTO;
 import com.qorder.qorderws.exception.ResourceNotFoundException;
 import com.qorder.qorderws.model.EEntity;
 import com.qorder.qorderws.service.IBusinessService;
-import com.qorder.qorderws.utils.providers.ReferenceProvider;
+import com.qorder.qorderws.utils.providers.EDomainLinkProvider;
 
 @RestController
 @RequestMapping(value = "/businesses")
@@ -36,7 +36,7 @@ public class BusinessController {
 		
 		long businessID = businessService.createBusiness(businessDTO);
 		
-		URI location = URI.create(ReferenceProvider.INSTANCE.getLocationFor(EEntity.BUSINESS) + businessID);
+		URI location = URI.create(EDomainLinkProvider.INSTANCE.getLocationFor(EEntity.BUSINESS) + businessID);
 		HttpHeaders headers = new HttpHeaders();
 		headers.setLocation(location);
 		return new ResponseEntity<>(headers, HttpStatus.CREATED);

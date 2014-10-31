@@ -21,7 +21,7 @@ import com.qorder.qorderws.dto.product.DetailedProductDTO;
 import com.qorder.qorderws.exception.ResourceNotFoundException;
 import com.qorder.qorderws.model.EEntity;
 import com.qorder.qorderws.service.IProductService;
-import com.qorder.qorderws.utils.providers.ReferenceProvider;
+import com.qorder.qorderws.utils.providers.EDomainLinkProvider;
 
 @RestController
 @RequestMapping(value = "/products")
@@ -38,7 +38,7 @@ public class ProductController {
 		
 		long productID = productService.storeProduct(categoryID, productDTO);
 		
-		URI location = URI.create(ReferenceProvider.INSTANCE.getLocationFor(EEntity.PRODUCT) + productID);
+		URI location = URI.create(EDomainLinkProvider.INSTANCE.getLocationFor(EEntity.PRODUCT) + productID);
 		HttpHeaders headers = new HttpHeaders();
 		headers.setLocation(location);
 		return new ResponseEntity<>(headers,HttpStatus.OK);

@@ -1,13 +1,13 @@
 package com.qorder.qorderws.dto;
 
 import com.qorder.qorderws.model.EEntity;
-import com.qorder.qorderws.utils.providers.ReferenceProvider;
+import com.qorder.qorderws.utils.providers.EDomainLinkProvider;
 
 public class CategoryDTO {
 	
 	private String id;
 	private String name;
-	private final String categoryURI = ReferenceProvider.INSTANCE.getHttpPathFor(EEntity.CATEGORY);
+	private final String categoryURI = EDomainLinkProvider.INSTANCE.getHttpPathFor(EEntity.CATEGORY);
 	
 	public String getName() {
 		return name;

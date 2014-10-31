@@ -15,12 +15,12 @@ import com.qorder.qorderws.dto.product.ProductDTO;
 import com.qorder.qorderws.mapper.CategoryToCategoryDTOMapper;
 import com.qorder.qorderws.model.EEntity;
 import com.qorder.qorderws.model.category.Category;
-import com.qorder.qorderws.utils.providers.ReferenceProvider;
+import com.qorder.qorderws.utils.providers.EDomainLinkProvider;
 
 public class AppClient {
 	
 	private RestTemplate restTemplate = new RestTemplate();
-	private ReferenceProvider refProvider = ReferenceProvider.INSTANCE;
+	private EDomainLinkProvider refProvider = EDomainLinkProvider.INSTANCE;
 	
 	public MenuDTO requestForMenu(String uri, Long menuId) {
 		ResponseEntity<MenuDTO> response = restTemplate.getForEntity(refProvider.getHost() + uri + menuId, MenuDTO.class);

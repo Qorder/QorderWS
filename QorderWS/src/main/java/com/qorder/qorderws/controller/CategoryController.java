@@ -22,14 +22,13 @@ import com.qorder.qorderws.dto.product.ProductDTO;
 import com.qorder.qorderws.exception.ResourceNotFoundException;
 import com.qorder.qorderws.model.EEntity;
 import com.qorder.qorderws.service.ICategoryService;
-import com.qorder.qorderws.utils.providers.ReferenceProvider;
+import com.qorder.qorderws.utils.providers.EDomainLinkProvider;
 
 @RestController
 @RequestMapping(value = "/categories")
 public class CategoryController {
 
-	private static final Logger LOGGER = LoggerFactory
-			.getLogger(CategoryController.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(CategoryController.class);
 
 	@Autowired
 	private ICategoryService categoryService;
@@ -40,7 +39,7 @@ public class CategoryController {
 		
 		long categoryID = categoryService.createCategory(menuID, categoryDTO);
 		
-		URI location = URI.create(ReferenceProvider.INSTANCE.getLocationFor(EEntity.CATEGORY) + categoryID);
+		URI location = URI.create(EDomainLinkProvider.INSTANCE.getLocationFor(EEntity.CATEGORY) + categoryID);
 		HttpHeaders headers = new HttpHeaders();
 		headers.setLocation(location);
 		return new ResponseEntity<>(headers,HttpStatus.CREATED);

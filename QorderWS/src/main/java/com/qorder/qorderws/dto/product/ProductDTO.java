@@ -3,14 +3,14 @@ package com.qorder.qorderws.dto.product;
 import java.math.BigDecimal;
 
 import com.qorder.qorderws.model.EEntity;
-import com.qorder.qorderws.utils.providers.ReferenceProvider;
+import com.qorder.qorderws.utils.providers.EDomainLinkProvider;
 
 public class ProductDTO {
 	
 	private Long id;
 	private String name;
 	private BigDecimal price;
-	private final String uri = ReferenceProvider.INSTANCE.getHttpPathFor(EEntity.PRODUCT);
+	private final String uri = EDomainLinkProvider.INSTANCE.getHttpPathFor(EEntity.PRODUCT);
 	
 	public Long getId() {
 		return id;
