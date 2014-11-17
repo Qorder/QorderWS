@@ -4,6 +4,7 @@ package com.qorder.qorderws.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.qorder.qorderws.dao.IBusinessDAO;
@@ -22,6 +23,7 @@ public class OrderService implements IOrderService {
 	private IOrderDAO orderDAO;
 	private IBusinessDAO businessDAO;
 	
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
 	@Override
 	public long submitOrder(long businessId, OrderDTO orderDTO) throws ResourceNotFoundException {
 		Order order = new  OrderDTOtoOrderMapper().map(orderDTO, new Order());
@@ -58,6 +60,7 @@ public class OrderService implements IOrderService {
 		return businessOrders.toArray(new OrderViewDTO[businessOrders.size()]);
 	}
 
+	@Transactional(readOnly = false)
 	@Override
 	public void changeOrderStatus(long orderId, EOrderStatus orderStatus) throws ResourceNotFoundException {
 		Order order = orderDAO.findById(orderId);
@@ -65,6 +68,7 @@ public class OrderService implements IOrderService {
 		orderDAO.save(order);
 	}
 	
+	@Transactional(readOnly = true)
 	@Override
 	public OrderViewDTO fetchOrderById(long orderId) throws ResourceNotFoundException {
 		Order order = orderDAO.findById(orderId);

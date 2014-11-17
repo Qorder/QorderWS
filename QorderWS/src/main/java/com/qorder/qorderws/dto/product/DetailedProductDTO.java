@@ -45,7 +45,7 @@ public class DetailedProductDTO {
 	}
 
 	public String getImageRequestURI() {
-		return imageRequestURI + String.valueOf(id);
+		return imageRequestURI + id;
 	}
 
 	public String getDescription() {

@@ -10,7 +10,7 @@ public class ProductDTO {
 	private Long id;
 	private String name;
 	private BigDecimal price;
-	private final String uri = EDomainLinkProvider.INSTANCE.getHttpPathFor(EEntity.PRODUCT);
+	private final String productRequestURI = EDomainLinkProvider.INSTANCE.getHttpPathFor(EEntity.PRODUCT);
 	
 	public Long getId() {
 		return id;
@@ -36,8 +36,8 @@ public class ProductDTO {
 		this.price = bigDecimal;
 	}
 
-	public String getUri() {
-		return uri + id;
+	public String getProductRequestUri() {
+		return productRequestURI + id;
 	}
 	
 	@Override

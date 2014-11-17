@@ -3,24 +3,26 @@ package com.qorder.qorderws.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.qorder.qorderws.dao.ICategoryDAO;
-import com.qorder.qorderws.dao.IMenuDAO;
-import com.qorder.qorderws.dto.CategoryDTO;
+import com.qorder.qorderws.dao.IProductDAO;
+import com.qorder.qorderws.dto.product.DetailedProductDTO;
 import com.qorder.qorderws.dto.product.ProductDTO;
 import com.qorder.qorderws.exception.ResourceNotFoundException;
-import com.qorder.qorderws.mapper.CategoryDTOtoCategoryMapper;
+import com.qorder.qorderws.mapper.DetailedProductDTOtoProductMapper;
 import com.qorder.qorderws.mapper.ProductToProductDTOMapper;
 import com.qorder.qorderws.model.category.Category;
-import com.qorder.qorderws.model.menu.Menu;
+import com.qorder.qorderws.model.product.Product;
 
 @Transactional
 public class CategoryService implements ICategoryService {
 
 	private ICategoryDAO categoryDAO;
-	private IMenuDAO menuDAO;
+	private IProductDAO productDAO;
 
+	
 	@Transactional(readOnly = true)
 	@Override
 	public ProductDTO[] fetchCategoryByID(long categoryId) throws ResourceNotFoundException {
@@ -33,35 +35,36 @@ public class CategoryService implements ICategoryService {
 		} );
 		return productList.toArray(new ProductDTO[productList.size()]);
 	}
-
+	
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
 	@Override
-	public long createCategory(long menuId, CategoryDTO categoryDTO) throws ResourceNotFoundException {
-		Category category = new CategoryDTOtoCategoryMapper().map(categoryDTO, new Category());
-		categoryDAO.save(category);
+	public long addProduct(long categoryID, DetailedProductDTO productDTO) throws ResourceNotFoundException {
+		Product product = new DetailedProductDTOtoProductMapper().map(productDTO,new Product());
 		
-		Menu menu = menuDAO.findById(menuId);
-		menu.getCategoryList().add(category);
-		menuDAO.update(menu);
+		Category category = categoryDAO.findById(categoryID);
+		category.addProduct(product);
 		
-		return category.getId();
+		productDAO.save(product);
+		categoryDAO.update(category);
+		
+		return product.getId();
 	}
-
+	
 
 	public ICategoryDAO getCategoryDAO() {
 		return categoryDAO;
 	}
 
-
 	public void setCategoryDAO(ICategoryDAO categoryDAO) {
 		this.categoryDAO = categoryDAO;
 	}
 
-	public IMenuDAO getMenuDAO() {
-		return menuDAO;
+	public IProductDAO getProductDAO() {
+		return productDAO;
 	}
 
-	public void setMenuDAO(IMenuDAO menuDAO) {
-		this.menuDAO = menuDAO;
+	public void setProductDAO(IProductDAO productDAO) {
+		this.productDAO = productDAO;
 	}
-	
+
 }

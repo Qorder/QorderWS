@@ -7,7 +7,7 @@ import java.util.List;
 public class MenuDTO {
 	
 	private Long id;
-	private List<CategoryDTO> categoryInfoList = new ArrayList<CategoryDTO>();
+	private List<CategoryDTO> categoryInfoList = new ArrayList<>();
 	
 	public Long getId() {
 		return id;

@@ -47,18 +47,18 @@
 		<property name="businessDAO" ref="businessDAO" />
 	</bean>
 
-	<bean id="categoryService" class="com.qorder.qorderws.service.CategoryService">
-		<property name="categoryDAO" ref="categoryDAO" />
-		<property name="menuDAO" ref="menuDAO" />
-	</bean>
-
 	<bean id="menuService" class="com.qorder.qorderws.service.MenuService">
 		<property name="menuDAO" ref="menuDAO" />
+		<property name="categoryDAO" ref="categoryDAO" />
+	</bean>
+	
+	<bean id="categoryService" class="com.qorder.qorderws.service.CategoryService">
+		<property name="categoryDAO" ref="categoryDAO" />
+		<property name="productDAO" ref="productDAO" />
 	</bean>
 
 	<bean id="productService" class="com.qorder.qorderws.service.ProductService">
 		<property name="productDAO" ref="productDAO" />
-		<property name="categoryDAO" ref="categoryDAO" />
 	</bean>
 
 	<bean id="orderService" class="com.qorder.qorderws.service.OrderService">

@@ -1,7 +1,8 @@
 package com.qorder.qorderws;
 
-import java.text.DateFormat;
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.Locale;
 
 import org.slf4j.Logger;
@@ -24,17 +25,15 @@ public class HomeController {
 	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
-		logger.info("\n===========================================================\n"
-				     +"||                                                       ||\n"
-				     +"||            Welcome to Qorder Web Service!             ||\n"
-				     +"||                                                       ||\n"
-				     +"===========================================================\n"
+		logger.info("\n\t\t ===========================================================\n"
+				     +"\t\t ||                                                       ||\n"
+				     +"\t\t ||            Welcome to Qorder Web Service!             ||\n"
+				     +"\t\t ||                                                       ||\n"
+				     +"\t\t ===========================================================\n"
 				     +"The server locale is {}.", locale);
 
-		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG,
-				DateFormat.LONG, locale);
-
-		String formattedDate = dateFormat.format(new Date());
+		DateTimeFormatter dateFormat = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM);
+		String formattedDate = LocalDateTime.now().format(dateFormat);
 
 		model.addAttribute("serverTime", formattedDate);
 		return "home";

@@ -3,6 +3,7 @@ package com.qorder.qorderws.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.qorder.qorderws.dao.IBusinessDAO;
@@ -26,6 +27,7 @@ public class BusinessService implements IBusinessService {
 		this.businessDAO = businessDAO;
 	}
 	
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
 	@Override
 	public long createBusiness(BusinessDTO businessDTO) {
 		Business business = new BusinessDTOtoBusinessMapper().map(businessDTO, new Business());
@@ -36,14 +38,14 @@ public class BusinessService implements IBusinessService {
 	}
 	
 
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	@Override
 	public BusinessDTO fetchBusinessByID(long businessId) throws ResourceNotFoundException {
 		Business business = businessDAO.findById(businessId);
 		return new BusinessToBusinessDTOMapper().map(business, new BusinessDTO());
 	}
 
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	@Override
 	public BusinessDTO[] fetchBusinessesByUser(long userId) throws ResourceNotFoundException {
 		List<Business> businessList = businessDAO.fetchUserBusinesses(userId);

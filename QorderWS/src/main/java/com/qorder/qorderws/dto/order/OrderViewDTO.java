@@ -17,7 +17,7 @@ public class OrderViewDTO {
 	
 	private String status;
 	
-	private List<ProductHolderDTO> orderedProducts = new ArrayList<ProductHolderDTO>();
+	private List<ProductHolderDTO> orderedProducts = new ArrayList<>();
 	
 	public void setId(Long id) {
 		this.id = id;

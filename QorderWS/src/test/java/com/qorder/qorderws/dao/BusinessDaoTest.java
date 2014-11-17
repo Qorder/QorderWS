@@ -78,15 +78,27 @@ public class BusinessDaoTest extends DBTestCase {
 	
 	@Test
 	public void testBusinessCreation() {
-		System.out.println("Testing Business creation: ");
+		System.out.println("Testing Business creation:");
 		Business newBusiness = new Business();
 		try {
-		Business persistedBusiness = businessDAO.save(newBusiness);
-		Assert.assertNotNull(persistedBusiness.getMenu().getId());
-		Assert.assertNotNull("Business Pesisted",persistedBusiness);
+			Business persistedBusiness = businessDAO.save(newBusiness);
+			Assert.assertNotNull(persistedBusiness.getId());
 		}
 		catch (PersistanceLayerException ex) {
 			fail("Business has not persisted!");
+		}
+	}
+	
+	@Test
+	public void testMenuCreationAfterBusiness() {
+		System.out.println("Testing Menu creation non null field of Business:");
+		Business newBusiness = new Business();
+		try {
+			Business persistedBusiness = businessDAO.save(newBusiness);
+			Assert.assertNotNull(persistedBusiness.getMenu().getId());
+		}
+		catch(PersistanceLayerException ex) {
+			fail("Persisted Business is not associated with any Menu instances!");
 		}
 	}
 

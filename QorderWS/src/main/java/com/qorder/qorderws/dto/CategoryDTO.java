@@ -6,8 +6,10 @@ import com.qorder.qorderws.utils.providers.EDomainLinkProvider;
 public class CategoryDTO {
 	
 	private String id;
+	
 	private String name;
-	private final String categoryURI = EDomainLinkProvider.INSTANCE.getHttpPathFor(EEntity.CATEGORY);
+	
+	private final String categoryRequestURI = EDomainLinkProvider.INSTANCE.getHttpPathFor(EEntity.CATEGORY);
 	
 	public String getName() {
 		return name;
@@ -22,8 +24,8 @@ public class CategoryDTO {
 		return name + " id " + id;
 	}
 	
-	public String getUri() {
-		return categoryURI + id;
+	public String getCategoryRequestUri() {
+		return categoryRequestURI + id;
 	}
 	
 	public void setId(String id) {

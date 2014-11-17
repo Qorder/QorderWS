@@ -1,9 +1,10 @@
 package com.qorder.qorderws.model.order;
 
 import java.math.BigDecimal;
-import java.text.DateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -31,9 +32,6 @@ public class Order {
 	@Column(name = "TABLE_NUMBER")
 	private String tableNumber;
 
-	@Column(name = "DATE_TIME")
-	private String dateTime = DateFormat.getDateTimeInstance().format(new Date());
-
 	@OneToMany(targetEntity = ProductHolder.class,fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name = "FK_ORDER_ID")
 	private List<ProductHolder> orderList = new ArrayList<>();
@@ -47,9 +45,13 @@ public class Order {
 
 	@Column(name = "ORDER_STATUS")
 	private EOrderStatus status = EOrderStatus.PENDING;
+	
+	@Column(name = "DATE_TIME")
+	private String dateTime;
 
 	public Order() {
-
+		DateTimeFormatter simpleDateFormat  = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM);
+		dateTime = LocalDateTime.now().format(simpleDateFormat); //like: Nov 16, 2014 11:03:40 PM
 	}
 
 	public long getId() {

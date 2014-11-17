@@ -35,6 +35,14 @@ public class Menu {
 	public void setId(Long id) {
 		this.id = id;
 	}
+	
+	public boolean addCategory(Category category) {
+		return categoryList.add(category);
+	}
+	
+	public void removeCategory(Category category) {
+		categoryList.remove(category);
+	}
 
 	public List<Category> getCategoryList() {
 		return categoryList;

@@ -6,10 +6,12 @@ import com.qorder.qorderws.utils.providers.EDomainLinkProvider;
 public class BusinessDTO {
 	
 	private String id;
+	
 	private String name;
 	
 	private String menuId;
-	private final String menuURI = EDomainLinkProvider.INSTANCE.getHttpPathFor(EEntity.MENU);
+	
+	private final String menuRequestURI = EDomainLinkProvider.INSTANCE.getHttpPathFor(EEntity.MENU);
 	
 	public String getId() {
 		return id;
@@ -35,7 +37,7 @@ public class BusinessDTO {
 		this.menuId = menuId;
 	}
 
-	public String getMenuURI() {
-		return menuURI + id;
+	public String getMenuRequestURI() {
+		return menuRequestURI + id;
 	}
 }

@@ -1,5 +1,6 @@
 package com.qorder.qorderws.dto.order;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.qorder.qorderws.dto.product.BasketProductDTO;
@@ -8,7 +9,7 @@ public class OrderDTO {
 	
 	private String tableNumber;
 	
-	private List<BasketProductDTO> orders;
+	private List<BasketProductDTO> orders = new ArrayList<>();
 
 	public String getTableNumber() {
 		return tableNumber;
