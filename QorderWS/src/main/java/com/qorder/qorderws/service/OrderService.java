@@ -1,14 +1,6 @@
 
 package com.qorder.qorderws.service;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
-
-import com.qorder.qorderws.dao.IBusinessDAO;
-import com.qorder.qorderws.dao.IOrderDAO;
 import com.qorder.qorderws.dto.order.OrderDTO;
 import com.qorder.qorderws.dto.order.OrderViewDTO;
 import com.qorder.qorderws.exception.ResourceNotFoundException;
@@ -16,7 +8,16 @@ import com.qorder.qorderws.mapper.OrderDTOtoOrderMapper;
 import com.qorder.qorderws.mapper.OrderToOrderViewDTOMapper;
 import com.qorder.qorderws.model.order.EOrderStatus;
 import com.qorder.qorderws.model.order.Order;
+import com.qorder.qorderws.repository.IBusinessDAO;
+import com.qorder.qorderws.repository.IOrderDAO;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+
+@Service
 @Transactional
 public class OrderService implements IOrderService {
 	

@@ -1,12 +1,12 @@
-package com.qorder.qorderws.fao;
+package com.qorder.qorderws.provider;
+
+import com.qorder.qorderws.model.EEntity;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import com.qorder.qorderws.model.EEntity;
-
-public interface IFileAccessObject {
+public interface IFileProvider {
 	
 	File getFile(String path) throws FileNotFoundException;
 	

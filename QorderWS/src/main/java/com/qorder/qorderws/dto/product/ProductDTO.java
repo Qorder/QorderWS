@@ -1,9 +1,9 @@
 package com.qorder.qorderws.dto.product;
 
-import java.math.BigDecimal;
-
 import com.qorder.qorderws.model.EEntity;
 import com.qorder.qorderws.utils.providers.EDomainLinkProvider;
+
+import java.math.BigDecimal;
 
 public class ProductDTO {
 	

@@ -5,6 +5,8 @@ import java.io.IOException;
 
 import javax.sql.DataSource;
 
+import com.qorder.qorderws.repository.CategoryDAO;
+import com.qorder.qorderws.repository.ICategoryDAO;
 import org.dbunit.DBTestCase;
 import org.dbunit.database.DatabaseDataSourceConnection;
 import org.dbunit.database.IDatabaseConnection;

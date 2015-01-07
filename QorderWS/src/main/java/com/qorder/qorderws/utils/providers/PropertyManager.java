@@ -1,24 +1,22 @@
 package com.qorder.qorderws.utils.providers;
 
-import java.io.IOException;
-import java.util.Properties;
-
-import javax.el.PropertyNotFoundException;
-
+import com.google.common.base.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.support.PropertiesLoaderUtils;
 
-import com.google.common.base.Strings;
+import javax.el.PropertyNotFoundException;
+import java.io.IOException;
+import java.util.Properties;
 
-public final class PropertyHandler {
+public final class PropertyManager {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(PropertyHandler.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(PropertyManager.class);
 
 	private Properties propertiesFile = null;
 	
-	public PropertyHandler(String propertyPath) {
+	public PropertyManager(String propertyPath) {
 		loadProperties(propertyPath);
 	}
 	

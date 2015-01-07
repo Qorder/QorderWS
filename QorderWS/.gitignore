@@ -1,1 +1,27 @@
-/target
+# Maven
+log/
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.next
+release.properties
+/build.xml
+
+# Netbeans
+/nbproject
+/dist
+/build
+/test
+nb-configuration.xml
+nbactions.xml
+nbactions-release-profile.xml
+dependency-reduced-pom.xml
+
+# Intellij
+.idea/
+*.iml
+
+# Eclipse
+/.classpath
+/.project
+/.settings

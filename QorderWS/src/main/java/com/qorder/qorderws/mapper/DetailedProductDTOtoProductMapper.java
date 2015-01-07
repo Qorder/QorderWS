@@ -1,11 +1,11 @@
 package com.qorder.qorderws.mapper;
 
+import com.qorder.qorderws.dto.product.DetailedProductDTO;
+import com.qorder.qorderws.model.product.Product;
+
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
-
-import com.qorder.qorderws.dto.product.DetailedProductDTO;
-import com.qorder.qorderws.model.product.Product;
 
 public class DetailedProductDTOtoProductMapper implements IMapper<DetailedProductDTO, Product> {
 

@@ -1,11 +1,6 @@
 package com.qorder.qorderws.service;
 
 
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
-
-import com.qorder.qorderws.dao.ICategoryDAO;
-import com.qorder.qorderws.dao.IMenuDAO;
 import com.qorder.qorderws.dto.CategoryDTO;
 import com.qorder.qorderws.dto.MenuDTO;
 import com.qorder.qorderws.exception.ResourceNotFoundException;
@@ -13,7 +8,13 @@ import com.qorder.qorderws.mapper.CategoryDTOtoCategoryMapper;
 import com.qorder.qorderws.mapper.MenuToMenuDTOMapper;
 import com.qorder.qorderws.model.category.Category;
 import com.qorder.qorderws.model.menu.Menu;
+import com.qorder.qorderws.repository.ICategoryDAO;
+import com.qorder.qorderws.repository.IMenuDAO;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
+@Service
 public class MenuService implements IMenuService {
 
 	private IMenuDAO menuDAO;

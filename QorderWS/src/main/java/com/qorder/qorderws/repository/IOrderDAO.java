@@ -1,11 +1,11 @@
-package com.qorder.qorderws.dao;
-
-import java.util.List;
+package com.qorder.qorderws.repository;
 
 import com.qorder.qorderws.exception.PersistanceLayerException;
 import com.qorder.qorderws.exception.ResourceNotFoundException;
 import com.qorder.qorderws.model.order.EOrderStatus;
 import com.qorder.qorderws.model.order.Order;
+
+import java.util.List;
 
 public interface IOrderDAO {
 

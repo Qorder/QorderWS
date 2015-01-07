@@ -37,23 +37,23 @@
 		<property name="password" value="${password}" />
 	</bean>
 
-	<bean id="testBusinessDAO" class="com.qorder.qorderws.dao.BusinessDAO">
+	<bean id="testBusinessDAO" class="com.qorder.qorderws.repository.BusinessDAO">
 		<property name="sessionFactory" ref="testSessionFactory"></property>
 	</bean>
 
-	<bean id="testCategoryDAO" class="com.qorder.qorderws.dao.CategoryDAO">
+	<bean id="testCategoryDAO" class="com.qorder.qorderws.repository.CategoryDAO">
 		<property name="sessionFactory" ref="testSessionFactory"></property>
 	</bean>
 
-	<bean id="testProductDAO" class="com.qorder.qorderws.dao.ProductDAO">
+	<bean id="testProductDAO" class="com.qorder.qorderws.repository.ProductDAO">
 		<property name="sessionFactory" ref="testSessionFactory"></property>
 	</bean>
 
-	<bean id="testOrderDAO" class="com.qorder.qorderws.dao.OrderDAO">
+	<bean id="testOrderDAO" class="com.qorder.qorderws.repository.OrderDAO">
 		<property name="sessionFactory" ref="testSessionFactory"></property>
 	</bean>
 	
-	<bean id="testMenuDAO" class="com.qorder.qorderws.dao.MenuDAO">
+	<bean id="testMenuDAO" class="com.qorder.qorderws.repository.MenuDAO">
 		<property name="sessionFactory" ref="testSessionFactory"></property>
 	</bean>
 		

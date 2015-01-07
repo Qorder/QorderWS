@@ -1,13 +1,5 @@
 package com.qorder.qorderws.service;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
-
-import com.qorder.qorderws.dao.ICategoryDAO;
-import com.qorder.qorderws.dao.IProductDAO;
 import com.qorder.qorderws.dto.product.DetailedProductDTO;
 import com.qorder.qorderws.dto.product.ProductDTO;
 import com.qorder.qorderws.exception.ResourceNotFoundException;
@@ -15,7 +7,16 @@ import com.qorder.qorderws.mapper.DetailedProductDTOtoProductMapper;
 import com.qorder.qorderws.mapper.ProductToProductDTOMapper;
 import com.qorder.qorderws.model.category.Category;
 import com.qorder.qorderws.model.product.Product;
+import com.qorder.qorderws.repository.ICategoryDAO;
+import com.qorder.qorderws.repository.IProductDAO;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+
+@Service
 @Transactional
 public class CategoryService implements ICategoryService {
 

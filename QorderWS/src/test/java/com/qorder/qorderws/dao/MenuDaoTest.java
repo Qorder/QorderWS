@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 
 import javax.sql.DataSource;
 
+import com.qorder.qorderws.repository.IMenuDAO;
 import org.dbunit.DBTestCase;
 import org.dbunit.database.DatabaseDataSourceConnection;
 import org.dbunit.database.IDatabaseConnection;

@@ -1,9 +1,8 @@
 package com.qorder.qorderws.mapper;
 
-import org.springframework.util.StringUtils;
-
 import com.qorder.qorderws.dto.product.DetailedProductDTO;
 import com.qorder.qorderws.model.product.Product;
+import org.springframework.util.StringUtils;
 
 public class ProductToDetailedProductDTOMapper implements IMapper<Product, DetailedProductDTO>{
 

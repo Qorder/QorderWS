@@ -1,8 +1,8 @@
 package com.qorder.qorderws.service;
 
-import java.io.IOException;
-
 import com.qorder.qorderws.model.EEntity;
+
+import java.io.IOException;
 
 public interface IImageService {
 	

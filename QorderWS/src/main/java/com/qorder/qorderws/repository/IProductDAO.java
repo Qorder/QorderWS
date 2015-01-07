@@ -1,4 +1,4 @@
-package com.qorder.qorderws.dao;
+package com.qorder.qorderws.repository;
 
 import com.qorder.qorderws.exception.PersistanceLayerException;
 import com.qorder.qorderws.exception.ResourceNotFoundException;

@@ -7,17 +7,17 @@ import com.qorder.qorderws.model.EEntity;
 public enum EDomainLinkProvider {
 	INSTANCE;
 
-	private final PropertyHandler propHandler = new PropertyHandler("references/domainReferences.properties");
+	private final PropertyManager propManager = new PropertyManager("references/domainReferences.properties");
 
 	public String getHttpPathFor(EEntity entity) {
-		return propHandler.getProperty("host") + propHandler.getProperty(entity.getName());
+		return propManager.getProperty("host") + propManager.getProperty(entity.getName());
 	}
 	
 	public String getLocationFor(EEntity entity) {
-		return propHandler.getProperty(entity.getName());
+		return propManager.getProperty(entity.getName());
 	}
 	
 	public String getHost() {
-		return propHandler.getProperty("host");
+		return propManager.getProperty("host");
 	}
 }

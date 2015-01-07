@@ -1,13 +1,14 @@
 package com.qorder.qorderws.service;
 
-import org.springframework.transaction.annotation.Transactional;
-
-import com.qorder.qorderws.dao.IProductDAO;
 import com.qorder.qorderws.dto.product.DetailedProductDTO;
 import com.qorder.qorderws.exception.ResourceNotFoundException;
 import com.qorder.qorderws.mapper.ProductToDetailedProductDTOMapper;
 import com.qorder.qorderws.model.product.Product;
+import com.qorder.qorderws.repository.IProductDAO;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+@Service
 @Transactional
 public class ProductService implements IProductService {
 	
