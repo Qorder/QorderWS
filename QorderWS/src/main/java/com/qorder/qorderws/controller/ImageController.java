@@ -17,11 +17,15 @@ import java.io.IOException;
 public class ImageController {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(ImageController.class);
-	
-	@Autowired
-	private IImageService imageService;
 
-	@RequestMapping(value = "/product/{productID}", method = RequestMethod.GET, 
+	private final IImageService imageService;
+
+	@Autowired
+	public ImageController(IImageService imageService) {
+		this.imageService = imageService;
+	}
+
+	@RequestMapping(value = "/product/{productID}", method = RequestMethod.GET,
 			produces = { MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE })
 	public ResponseEntity<byte[]> getProductImage(@PathVariable long productID) throws IOException, NullPointerException {
 		LOGGER.info("Request for menu with id parameter equal " + productID, productID);

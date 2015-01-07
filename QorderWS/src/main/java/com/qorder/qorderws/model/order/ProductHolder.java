@@ -3,11 +3,12 @@ package com.qorder.qorderws.model.order;
 import com.qorder.qorderws.model.product.Product;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 @Entity
 @Table(name="PRODUCT_HOLDERS")
-public class ProductHolder {
+public class ProductHolder implements Serializable {
 	
 	@Id
 	@GeneratedValue

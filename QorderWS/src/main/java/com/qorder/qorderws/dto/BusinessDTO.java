@@ -4,22 +4,13 @@ import com.qorder.qorderws.model.EEntity;
 import com.qorder.qorderws.utils.providers.EDomainLinkProvider;
 
 public class BusinessDTO {
-	
-	private String id;
-	
+
 	private String name;
 	
-	private String menuId;
+	private long menuId;
 	
-	private final String menuRequestURI = EDomainLinkProvider.INSTANCE.getHttpPathFor(EEntity.MENU);
-	
-	public String getId() {
-		return id;
-	}
-	
-	public void setId(String id) {
-		this.id = id;
-	}
+	private final String menuRef = EDomainLinkProvider.INSTANCE.getHttpPathFor(EEntity.MENU);
+
 	
 	public String getName() {
 		return name;
@@ -29,15 +20,11 @@ public class BusinessDTO {
 		this.name = name;
 	}
 	
-	public String getMenuId() {
-		return menuId;
-	}
-	
-	public void setMenuId(String menuId) {
+	public void setMenuId(long menuId) {
 		this.menuId = menuId;
 	}
 
-	public String getMenuRequestURI() {
-		return menuRequestURI + id;
+	public String getMenuRef() {
+		return menuRef + menuId;
 	}
 }

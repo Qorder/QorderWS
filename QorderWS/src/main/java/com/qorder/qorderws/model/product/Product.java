@@ -1,13 +1,14 @@
 package com.qorder.qorderws.model.product;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "PRODUCTS")
-public class Product {
+public class Product implements Serializable {
 
 	@Id
 	@GeneratedValue

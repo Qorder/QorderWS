@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.Collection;
 
 @RestController
 @RequestMapping(value = "/orders")
@@ -24,8 +25,12 @@ public class OrderController {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(OrderController.class);
 
+	private final IOrderService orderService;
+
 	@Autowired
-	private IOrderService orderService;
+	public OrderController(IOrderService orderService) {
+		this.orderService = orderService;
+	}
 
 	@RequestMapping(value = "/business/{businessID}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	ResponseEntity<Void> createOrder(@PathVariable Long businessID, @RequestBody OrderDTO orderDTO) throws ResourceNotFoundException {
@@ -40,9 +45,9 @@ public class OrderController {
 	}
 	
 	@RequestMapping(value = "/business/{businessID}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	ResponseEntity<OrderViewDTO[]> getOrdersByBusinessId(@PathVariable Long businessID) throws ResourceNotFoundException {
-		OrderViewDTO[] businessOrders = orderService.fetchOrdersByBusinessID(businessID);
-		LOGGER.info("Request for business orders.\nFetchedList size is " + businessOrders.length);
+	ResponseEntity<Collection<OrderViewDTO>> getOrdersByBusinessId(@PathVariable Long businessID) throws ResourceNotFoundException {
+		Collection<OrderViewDTO> businessOrders = orderService.fetchOrdersByBusinessID(businessID);
+		LOGGER.info("Request for business orders.\nFetchedList size is " + businessOrders.size());
 		
 		return new ResponseEntity<>(businessOrders, HttpStatus.OK);
 	}
@@ -57,15 +62,15 @@ public class OrderController {
 	}
 	
 	@RequestMapping(value ="/business/{businessID}/order", params = "status", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	ResponseEntity<OrderViewDTO[]> getOrdersByStatus(@PathVariable Long businessID, @RequestParam String status) throws ResourceNotFoundException, IllegalArgumentException {
+	ResponseEntity<Collection<OrderViewDTO>> getOrdersByStatus(@PathVariable Long businessID, @RequestParam String status) throws ResourceNotFoundException, IllegalArgumentException {
 		EOrderStatus orderStatus = EOrderStatus.valueOf(status);
-		OrderViewDTO[] businessOrders = orderService.fetchOrdersByStatus(businessID, orderStatus);
-		LOGGER.info("Request for business orders with status query.\nFetchedList size is " + businessOrders.length);
+		Collection<OrderViewDTO> businessOrders = orderService.fetchOrdersByStatus(businessID, orderStatus);
+		LOGGER.info("Request for business orders with status query.\nFetchedList size is " + businessOrders.size());
 		
 		return new ResponseEntity<>(businessOrders, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value ="/{orderID}/order", params = "status", method = RequestMethod.POST)
+	@RequestMapping(value ="/{orderId}/order", params = "status", method = RequestMethod.POST)
 	ResponseEntity<Void> changeOrderStatus(@PathVariable Long orderId, @RequestParam String status) throws ResourceNotFoundException, IllegalArgumentException {
 		LOGGER.info("Request to change status if order with id " + orderId);
 		

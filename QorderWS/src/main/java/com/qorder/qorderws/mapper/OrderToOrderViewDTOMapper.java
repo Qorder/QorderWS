@@ -9,13 +9,11 @@ public class OrderToOrderViewDTOMapper implements IMapper<Order, OrderViewDTO> {
 
 	@Override
 	public OrderViewDTO map(Order source, OrderViewDTO target) {
-		target.setId(source.getId());
 		target.setTableNumber(source.getTableNumber());
 		target.setDateTime(source.getDateTime());
 		target.setTotalPrice(source.getTotalPrice().toString());
 		target.setStatus(source.getStatus().toString());
-		for(ProductHolder productHolder : source.getOrderList())
-		{
+		for(ProductHolder productHolder : source.getOrderList()) {
 			ProductHolderDTO productHolderDTO = new ProductHolderToProductHolderDTOMapper().map(productHolder, new ProductHolderDTO());
 			target.add(productHolderDTO);
 		}

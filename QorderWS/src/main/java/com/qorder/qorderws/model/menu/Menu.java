@@ -3,12 +3,13 @@ package com.qorder.qorderws.model.menu;
 import com.qorder.qorderws.model.category.Category;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "MENUS")
-public class Menu {
+public class Menu implements Serializable {
 	
 	@Id
 	@GeneratedValue

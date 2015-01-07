@@ -11,7 +11,7 @@
 
     <properties>
         <java.version>1.8</java.version>
-        <start-class>com.qorder.qorderws.Application</start-class>
+        <start-class>com.qorder.qorderws.WebServiceApplication</start-class>
 
         <skipTests>false</skipTests>
         <junit-version>4.11</junit-version>

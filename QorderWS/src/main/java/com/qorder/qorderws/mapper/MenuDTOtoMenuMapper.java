@@ -12,11 +12,7 @@ public class MenuDTOtoMenuMapper implements IMapper<MenuDTO, Menu> {
 
 	@Override
 	public Menu map(MenuDTO source, Menu target) {
-		if(source.getId() != null)
-		{
-			target.setId(source.getId());
-		}
-		List<Category> categoryList = new ArrayList<Category>();
+		List<Category> categoryList = new ArrayList<>();
 		for(CategoryDTO categoryDTO : source.getCategoryInfoList()) {
 			categoryList.add(new CategoryDTOtoCategoryMapper().map(categoryDTO, new Category()));
 		}

@@ -12,7 +12,9 @@ import java.time.format.FormatStyle;
 import java.util.Locale;
 
 /**
- * Created by Grego on 7/1/2015.
+ * Displays in raw format, a greed massage and some info about the host.
+ *
+ * @author Grigorios
  */
 @RestController
 public class HomeController {

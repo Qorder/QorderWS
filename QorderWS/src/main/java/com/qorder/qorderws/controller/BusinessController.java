@@ -22,9 +22,13 @@ public class BusinessController {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(BusinessController.class);
 
+	private final IBusinessService businessService;
+
 	@Autowired
-	private IBusinessService businessService;
-	
+	public BusinessController(IBusinessService businessService) {
+		this.businessService = businessService;
+	}
+
 	@RequestMapping(value = "/owner/{ownerId}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Void> createBusiness(@PathVariable Long ownerId, @RequestBody BusinessDTO businessDTO) {
 		LOGGER.info("Request for business creation");

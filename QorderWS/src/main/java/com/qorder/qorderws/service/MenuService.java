@@ -8,8 +8,8 @@ import com.qorder.qorderws.mapper.CategoryDTOtoCategoryMapper;
 import com.qorder.qorderws.mapper.MenuToMenuDTOMapper;
 import com.qorder.qorderws.model.category.Category;
 import com.qorder.qorderws.model.menu.Menu;
-import com.qorder.qorderws.repository.ICategoryDAO;
-import com.qorder.qorderws.repository.IMenuDAO;
+import com.qorder.qorderws.repository.IMenuRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,13 +17,17 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class MenuService implements IMenuService {
 
-	private IMenuDAO menuDAO;
-	private ICategoryDAO categoryDAO;
-	
+	private final IMenuRepository menuRepository;
+
+	@Autowired
+	public MenuService(IMenuRepository menuRepository) {
+		this.menuRepository = menuRepository;
+	}
+
 	@Transactional(readOnly = true)
 	@Override
 	public MenuDTO fetchMenuById(long menuId) throws ResourceNotFoundException {
-		Menu menu = menuDAO.findById(menuId);
+		Menu menu = menuRepository.findOne(menuId);
 		return new MenuToMenuDTOMapper().map(menu, new MenuDTO());
 	}
 	
@@ -32,31 +36,11 @@ public class MenuService implements IMenuService {
 	public long addCategory(long menuID, CategoryDTO categoryDTO) {
 		Category category = new CategoryDTOtoCategoryMapper().map(categoryDTO, new Category());
 		
-		Menu menu = menuDAO.findById(menuID);
+		Menu menu = menuRepository.findOne(menuID);
 		menu.addCategory(category);
-		
-		categoryDAO.save(category);
-		menuDAO.update(menu);
+		menuRepository.save(menu);
 		
 		return category.getId();
 	}
-	
-
-	public IMenuDAO getMenuDAO() {
-		return menuDAO;
-	}
-
-	public void setMenuDAO(IMenuDAO menuDAO) {
-		this.menuDAO = menuDAO;
-	}
-
-	public ICategoryDAO getCategoryDAO() {
-		return categoryDAO;
-	}
-
-	public void setCategoryDAO(ICategoryDAO categoryDAO) {
-		this.categoryDAO = categoryDAO;
-	}
-	
 	
 }

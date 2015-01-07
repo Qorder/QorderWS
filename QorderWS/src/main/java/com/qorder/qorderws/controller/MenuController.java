@@ -23,10 +23,14 @@ public class MenuController {
 
 	private static final Logger LOGGER = LoggerFactory
 			.getLogger(MenuController.class);
-	
+
+	private final IMenuService menuService;
+
 	@Autowired
-	private IMenuService menuService;
-	
+	public MenuController(IMenuService menuService) {
+		this.menuService = menuService;
+	}
+
 	/**
 	 * 
 	 * @param menuID

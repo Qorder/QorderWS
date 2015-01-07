@@ -3,10 +3,11 @@ package com.qorder.qorderws.model.business;
 import com.qorder.qorderws.model.menu.Menu;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "BUSINESSES")
-public class Business {
+public class Business implements Serializable {
 
 	@Id
 	@GeneratedValue

@@ -3,6 +3,7 @@ package com.qorder.qorderws.model.order;
 import com.qorder.qorderws.model.business.Business;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -12,7 +13,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "ORDERS")
-public class Order {
+public class Order implements Serializable {
 
 	@Id
 	@GeneratedValue
@@ -33,6 +34,7 @@ public class Order {
 	@Column(name = "TOTAL_PRICE")
 	private BigDecimal totalPrice;
 
+	@Enumerated(EnumType.STRING)
 	@Column(name = "ORDER_STATUS")
 	private EOrderStatus status = EOrderStatus.PENDING;
 	

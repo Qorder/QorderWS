@@ -18,11 +18,14 @@ import java.io.IOException;
 public class ProductController {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(ProductController.class);
-	
+
+	private final IProductService productService;
+
 	@Autowired
-	private IProductService productService;
-	
-	
+	public ProductController(IProductService productService) {
+		this.productService = productService;
+	}
+
 	@RequestMapping(value = "/{productID}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	ResponseEntity<DetailedProductDTO> getProductById(@PathVariable Long productID) throws ResourceNotFoundException {
 		LOGGER.info("Request for product with id parameter equal " + productID.toString(), productID);

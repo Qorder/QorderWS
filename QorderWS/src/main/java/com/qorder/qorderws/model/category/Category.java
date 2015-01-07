@@ -3,12 +3,13 @@ package com.qorder.qorderws.model.category;
 import com.qorder.qorderws.model.product.Product;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "PRODUCT_CATEGORIES")
-public class Category {
+public class Category implements Serializable {
 
 	@Id
 	@GeneratedValue

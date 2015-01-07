@@ -8,6 +8,7 @@ import com.qorder.qorderws.service.ICategoryService;
 import com.qorder.qorderws.utils.providers.EDomainLinkProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.net.URI;
+import java.util.Collection;
 
 @RestController
 @RequestMapping(value = "/categories")
@@ -23,15 +25,18 @@ public class CategoryController {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(CategoryController.class);
 
+	private final ICategoryService categoryService;
 
-	private ICategoryService categoryService;
+	@Autowired
+	public CategoryController(ICategoryService categoryService) {
+		this.categoryService = categoryService;
+	}
 
-	
 	@RequestMapping(value = "/{categoryID}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	ResponseEntity<ProductDTO[]> getCategory(@PathVariable Long categoryID) throws ResourceNotFoundException {
+	ResponseEntity<Collection<ProductDTO>> getCategory(@PathVariable Long categoryID) throws ResourceNotFoundException {
 		LOGGER.info("Request for category with id equals "+ categoryID);
-		ProductDTO[] categoryProducts = categoryService.fetchCategoryByID(categoryID);
-		return new ResponseEntity<>( categoryProducts, HttpStatus.OK);
+		Collection<ProductDTO> categoryProducts = categoryService.fetchCategoryByID(categoryID);
+		return new ResponseEntity<>(categoryProducts, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "/{categoryID}/products", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)

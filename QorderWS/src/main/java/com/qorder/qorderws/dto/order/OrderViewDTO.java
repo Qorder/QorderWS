@@ -6,9 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OrderViewDTO {
-	
-	private Long id;
-	
+
 	private String tableNumber;
 	
 	private String dateTime;
@@ -16,16 +14,9 @@ public class OrderViewDTO {
 	private String totalPrice;
 	
 	private String status;
-	
+
 	private List<ProductHolderDTO> orderedProducts = new ArrayList<>();
-	
-	public void setId(Long id) {
-		this.id = id;
-	}
-	
-	public Long getId() {
-		return id;
-	}
+
 
 	public String getTableNumber() {
 		return tableNumber;
