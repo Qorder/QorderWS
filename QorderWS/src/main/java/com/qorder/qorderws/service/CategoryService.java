@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @Transactional
@@ -32,12 +33,14 @@ public class CategoryService implements ICategoryService {
 	@Override
 	public Collection<ProductDTO> fetchCategoryByID(long categoryId) throws ResourceNotFoundException {
 		Category fetchedCategory = categoryRepository.findOne(categoryId);
-		
-		ProductToProductDTOMapper mapper = new ProductToProductDTOMapper();
-		List<ProductDTO> productList = new ArrayList<ProductDTO>();
-		fetchedCategory.getProductList().forEach((product) -> {
-			productList.add(mapper.map(product, new ProductDTO()));
-		} );
+
+		List<ProductDTO> productList = new ArrayList<>();
+		if(Objects.nonNull(fetchedCategory)) {
+			ProductToProductDTOMapper mapper = new ProductToProductDTOMapper();
+			fetchedCategory.getProductList().forEach((product) -> {
+				productList.add(mapper.map(product, new ProductDTO()));
+			});
+		}
 		return productList;
 	}
 	

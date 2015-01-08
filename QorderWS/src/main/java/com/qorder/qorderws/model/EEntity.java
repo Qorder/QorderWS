@@ -1,5 +1,12 @@
 package com.qorder.qorderws.model;
 
+/**
+ * Enumeration of entities followed by their names.
+ * Useful when it comes to request links and paths from providers,
+ * for the above registered values.
+ *
+ * @author Grigoris
+ */
 public enum EEntity {
 
 	BUSINESS("business"),

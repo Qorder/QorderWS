@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Objects;
+
 @Service
 public class MenuService implements IMenuService {
 
@@ -28,7 +30,8 @@ public class MenuService implements IMenuService {
 	@Override
 	public MenuDTO fetchMenuById(long menuId) throws ResourceNotFoundException {
 		Menu menu = menuRepository.findOne(menuId);
-		return new MenuToMenuDTOMapper().map(menu, new MenuDTO());
+		return Objects.nonNull(menu) ?
+				new MenuToMenuDTOMapper().map(menu, new MenuDTO()) : new MenuDTO();
 	}
 	
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)

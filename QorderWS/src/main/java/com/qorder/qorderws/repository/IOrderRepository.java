@@ -13,7 +13,6 @@ import java.util.List;
  *
  * @author Grigorios
  */
-@Repository
 public interface IOrderRepository extends JpaRepository<Order, Long> {
 
     @Query("select ord from Order ord where ord.business = ?1")

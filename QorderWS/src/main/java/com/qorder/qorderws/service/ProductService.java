@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Objects;
+
 @Service
 @Transactional
 public class ProductService implements IProductService {
@@ -24,7 +26,9 @@ public class ProductService implements IProductService {
 	@Override
 	public DetailedProductDTO fetchProductById(long productId) throws ResourceNotFoundException {
 		Product product = productRepository.findOne(productId);
-		return new ProductToDetailedProductDTOMapper().map(product, new DetailedProductDTO());
+		return Objects.nonNull(product) ?
+				new ProductToDetailedProductDTOMapper()
+						.map(product, new DetailedProductDTO()) : new DetailedProductDTO();
 	}
 	
 }

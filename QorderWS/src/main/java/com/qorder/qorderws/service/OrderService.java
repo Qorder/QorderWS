@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @Transactional
@@ -83,7 +84,8 @@ public class OrderService implements IOrderService {
 	@Override
 	public OrderViewDTO fetchOrderById(long orderId) throws ResourceNotFoundException {
 		Order order = orderRepository.findOne(orderId);
-		return new OrderToOrderViewDTOMapper().map(order, new OrderViewDTO());
+		return Objects.nonNull(order) ?
+				new OrderToOrderViewDTOMapper().map(order, new OrderViewDTO()) : new OrderViewDTO();
 	}
 	
 }

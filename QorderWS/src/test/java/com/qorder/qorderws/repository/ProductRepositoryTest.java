@@ -3,66 +3,26 @@ package com.qorder.qorderws.repository;
 import com.qorder.qorderws.WebServiceApplication;
 import com.qorder.qorderws.model.category.Category;
 import com.qorder.qorderws.model.product.Product;
-import org.dbunit.DBTestCase;
-import org.dbunit.database.DatabaseDataSourceConnection;
-import org.dbunit.database.IDatabaseConnection;
-import org.dbunit.dataset.IDataSet;
-import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
-import org.dbunit.operation.DatabaseOperation;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.transaction.TransactionConfiguration;
-import org.springframework.transaction.annotation.Transactional;
 
-import javax.sql.DataSource;
-import java.io.FileInputStream;
 import java.math.BigDecimal;
 import java.util.List;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = WebServiceApplication.class)
-@ActiveProfiles("test")
-@Transactional
-@TransactionConfiguration(defaultRollback = true)
-public class ProductRepositoryTest extends DBTestCase {
+public class ProductRepositoryTest extends BaseDbUnitTestCase {
 
 	@Autowired
 	private IProductRepository productRepository;
 	
 	@Autowired
 	private ICategoryRepository categoryRepository;
-	
-	@Autowired
-	private DataSource dataSource;
 
 
-	@Override
-	protected IDataSet getDataSet() throws Exception {
-		return new FlatXmlDataSetBuilder().build(new FileInputStream("src/test/resources/Dbunit/DemoDatabase.xml"));
-	}
-
-	/*
-	 * Inserts XML dataset into the db before EACH test. if an item gets
-	 * deleted, it will be reinserted before running the next test. Although, if
-	 * an item is inserted manually, thus incrementing the id, the latter will
-	 * be "consumed.
-	 */
-	@Before
-	public void setUp() throws Exception {
-		IDatabaseConnection connection = new DatabaseDataSourceConnection(dataSource);
-		DatabaseOperation.CLEAN_INSERT.execute(connection, getDataSet());
-	}
-	
-	@After
-	public void restoreDB() {
-		//DatabaseOperation
-	}
 	
 	@Test
 	public void testProductExists() {

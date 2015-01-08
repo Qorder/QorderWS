@@ -6,8 +6,13 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-
+/**
+ * Spring boot Application initializer, that also serves as spring root context.
+ *
+ * @author Grigorios
+ */
 @SpringBootApplication
+@EnableJpaRepositories("com.qorder.qorderws.repository")
 public class WebServiceApplication {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(WebServiceApplication.class);

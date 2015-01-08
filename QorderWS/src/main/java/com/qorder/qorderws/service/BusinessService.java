@@ -4,6 +4,7 @@ import com.qorder.qorderws.dto.BusinessDTO;
 import com.qorder.qorderws.exception.ResourceNotFoundException;
 import com.qorder.qorderws.mapper.BusinessDTOtoBusinessMapper;
 import com.qorder.qorderws.mapper.BusinessToBusinessDTOMapper;
+import com.qorder.qorderws.mapper.IMapper;
 import com.qorder.qorderws.model.business.Business;
 import com.qorder.qorderws.model.menu.Menu;
 import com.qorder.qorderws.repository.IBusinessRepository;
@@ -15,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @Transactional
@@ -32,7 +34,7 @@ public class BusinessService implements IBusinessService {
 	public long createBusiness(BusinessDTO businessDTO) {
 		Business business = new BusinessDTOtoBusinessMapper().map(businessDTO, new Business());
 		business.setMenu(new Menu());
-		businessRepository.save(business);
+		business = businessRepository.save(business);
 
 		return business.getId();
 	}
@@ -42,7 +44,8 @@ public class BusinessService implements IBusinessService {
 	@Override
 	public BusinessDTO fetchBusinessByID(long businessId) throws ResourceNotFoundException {
 		Business business = businessRepository.findOne(businessId);
-		return new BusinessToBusinessDTOMapper().map(business, new BusinessDTO());
+		return Objects.nonNull(business) ?
+				new BusinessToBusinessDTOMapper().map(business, new BusinessDTO()) : new BusinessDTO();
 	}
 
 	//TODO: real implementation of this method
@@ -52,8 +55,8 @@ public class BusinessService implements IBusinessService {
 		List<Business> businessList = businessRepository.findAll();
 		List<BusinessDTO> userBusinesses = new ArrayList<>();
 		
-		BusinessToBusinessDTOMapper mapper = new BusinessToBusinessDTOMapper();
-		businessList.forEach((business)-> {
+		IMapper<Business, BusinessDTO> mapper = new BusinessToBusinessDTOMapper();
+		businessList.forEach((business) -> {
 			userBusinesses.add(mapper.map(business, new BusinessDTO()));
 		});
 		return userBusinesses;
