@@ -1,6 +1,9 @@
 language: java
 jdk:
 - oraclejdk8
+notifications:
+  # Disabled Email notifications.
+  email: false
 before_install:
 - cd QorderWS
 after_success:
@@ -9,7 +12,7 @@ deploy:
   provider: releases
   api_key:
     secure: cIt5U7nP/FJEIgAtQ4dR7jqleiKIf5LSzK74AEfxKjNH01SkWdRhiHR1eeJutkYYPgjgrpUSMH5kFXKZcnTNBUIhV8QGOFmnYPJqHRBHXJW3Y+tio3t+cIB3+XeSWb8RmvOpcYHCnVz2s86OuBmWhqTk0fvIygpGC7RVFZnhDzY=
-  file: /home/travis/build/Qorder/QorderWS/QorderWS/target/*.war
+  file: /home/travis/build/Qorder/QorderWS/QorderWS/target/qorderws-SNAPSHOT.war
   skip_cleanup: true
   on:
     repo: Qorder/QorderWS
