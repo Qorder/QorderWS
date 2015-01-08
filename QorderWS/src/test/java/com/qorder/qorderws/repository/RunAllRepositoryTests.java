@@ -6,6 +6,6 @@ import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
 @SuiteClasses({ BusinessRepositoryTest.class, MenuRepositoryTest.class, CategoryRepositoryTest.class, ProductRepositoryTest.class, OrderRepositoryTest.class })
-public class RunAllDAOTests {
+public class RunAllRepositoryTests {
 
 }
