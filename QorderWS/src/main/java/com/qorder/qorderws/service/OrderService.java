@@ -24,8 +24,8 @@ import java.util.List;
 @Transactional
 public class OrderService implements IOrderService {
 
-	private IOrderRepository orderRepository;
-	private IBusinessRepository businessRepository;
+	private final IOrderRepository orderRepository;
+	private final IBusinessRepository businessRepository;
 
 	@Autowired
 	public OrderService(IOrderRepository orderRepository, IBusinessRepository businessRepository) {

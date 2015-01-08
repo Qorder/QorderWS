@@ -21,8 +21,7 @@ import java.net.URI;
 @RequestMapping(value = "/menus")
 public class MenuController {
 
-	private static final Logger LOGGER = LoggerFactory
-			.getLogger(MenuController.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(MenuController.class);
 
 	private final IMenuService menuService;
 

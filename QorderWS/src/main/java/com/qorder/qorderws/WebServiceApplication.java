@@ -8,7 +8,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 
 @SpringBootApplication
-@EnableJpaRepositories
 public class WebServiceApplication {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(WebServiceApplication.class);
