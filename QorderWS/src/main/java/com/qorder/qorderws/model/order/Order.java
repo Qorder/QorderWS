@@ -1,5 +1,9 @@
 package com.qorder.qorderws.model.order;
 
+import com.qorder.qorderws.model.business.Business;
+
+import javax.persistence.*;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -7,22 +11,9 @@ import java.time.format.FormatStyle;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
-import com.qorder.qorderws.model.business.Business;
-
 @Entity
 @Table(name = "ORDERS")
-public class Order {
+public class Order implements Serializable {
 
 	@Id
 	@GeneratedValue
@@ -43,6 +34,7 @@ public class Order {
 	@Column(name = "TOTAL_PRICE")
 	private BigDecimal totalPrice;
 
+	@Enumerated(EnumType.STRING)
 	@Column(name = "ORDER_STATUS")
 	private EOrderStatus status = EOrderStatus.PENDING;
 	

@@ -1,8 +1,11 @@
 package com.qorder.qorderws.controller;
 
-import java.io.IOException;
-import java.net.URI;
-
+import com.qorder.qorderws.dto.product.DetailedProductDTO;
+import com.qorder.qorderws.dto.product.ProductDTO;
+import com.qorder.qorderws.exception.ResourceNotFoundException;
+import com.qorder.qorderws.model.EEntity;
+import com.qorder.qorderws.service.ICategoryService;
+import com.qorder.qorderws.utils.providers.EDomainLinkProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,19 +13,11 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.qorder.qorderws.dto.product.DetailedProductDTO;
-import com.qorder.qorderws.dto.product.ProductDTO;
-import com.qorder.qorderws.exception.ResourceNotFoundException;
-import com.qorder.qorderws.model.EEntity;
-import com.qorder.qorderws.service.ICategoryService;
-import com.qorder.qorderws.utils.providers.EDomainLinkProvider;
+import java.io.IOException;
+import java.net.URI;
+import java.util.Collection;
 
 @RestController
 @RequestMapping(value = "/categories")
@@ -30,15 +25,18 @@ public class CategoryController {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(CategoryController.class);
 
-	@Autowired
-	private ICategoryService categoryService;
+	private final ICategoryService categoryService;
 
-	
+	@Autowired
+	public CategoryController(ICategoryService categoryService) {
+		this.categoryService = categoryService;
+	}
+
 	@RequestMapping(value = "/{categoryID}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	ResponseEntity<ProductDTO[]> getCategory(@PathVariable Long categoryID) throws ResourceNotFoundException {
+	ResponseEntity<Collection<ProductDTO>> getCategory(@PathVariable Long categoryID) throws ResourceNotFoundException {
 		LOGGER.info("Request for category with id equals "+ categoryID);
-		ProductDTO[] categoryProducts = categoryService.fetchCategoryByID(categoryID);
-		return new ResponseEntity<>( categoryProducts, HttpStatus.OK);
+		Collection<ProductDTO> categoryProducts = categoryService.fetchCategoryByID(categoryID);
+		return new ResponseEntity<>(categoryProducts, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "/{categoryID}/products", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)

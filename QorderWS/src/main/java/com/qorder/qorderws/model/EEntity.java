@@ -1,6 +1,7 @@
 package com.qorder.qorderws.model;
 
 public enum EEntity {
+
 	BUSINESS("business"),
 	MENU("menu"),
 	CATEGORY("category"),

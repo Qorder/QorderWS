@@ -11,12 +11,7 @@ public final class MenuToMenuDTOMapper implements IMapper<Menu, MenuDTO> {
 
 	@Override
 	public MenuDTO map(Menu source, MenuDTO target) {
-		if(source.getId() != null)
-		{
-			target.setId(source.getId());
-		}
-		for(Category category : source.getCategoryList())
-		{
+		for(Category category : source.getCategoryList()) {
 			CategoryDTO categoryDTO = new CategoryToCategoryDTOMapper().map( category, new CategoryDTO() );
 			target.addCategoryInfo(categoryDTO);
 		}

@@ -1,16 +1,15 @@
 package com.qorder.qorderws.entities;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
-import java.math.BigDecimal;
-
+import com.qorder.qorderws.model.order.ProductHolder;
+import com.qorder.qorderws.model.product.Product;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.qorder.qorderws.model.order.ProductHolder;
-import com.qorder.qorderws.model.product.Product;
+import java.math.BigDecimal;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class ProductHolderEqualityTest {
 

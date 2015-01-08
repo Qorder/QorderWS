@@ -7,7 +7,7 @@ public class CategoryToCategoryDTOMapper implements IMapper<Category, CategoryDT
 
 	@Override
 	public CategoryDTO map(Category source, CategoryDTO target) {
-		target.setId(String.valueOf(source.getId()));
+		target.setId(source.getId());
 		target.setName(source.getName());
 		
 		return target;

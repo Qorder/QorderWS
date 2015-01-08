@@ -4,12 +4,13 @@ import com.qorder.qorderws.model.EEntity;
 import com.qorder.qorderws.utils.providers.EDomainLinkProvider;
 
 public class CategoryDTO {
-	
-	private String id;
-	
+
+	private long id;
+
 	private String name;
 	
-	private final String categoryRequestURI = EDomainLinkProvider.INSTANCE.getHttpPathFor(EEntity.CATEGORY);
+	private final String href = EDomainLinkProvider.INSTANCE.getHttpPathFor(EEntity.CATEGORY);
+
 	
 	public String getName() {
 		return name;
@@ -24,15 +25,12 @@ public class CategoryDTO {
 		return name + " id " + id;
 	}
 	
-	public String getCategoryRequestUri() {
-		return categoryRequestURI + id;
+	public String getHref() {
+		return href + id;
 	}
 	
-	public void setId(String id) {
+	public void setId(long id) {
 		this.id = id;
 	}
-	
-	public String getId() {
-		return id;
-	}
+
 }

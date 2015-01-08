@@ -1,39 +1,39 @@
 package com.qorder.qorderws.service;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
-
-import com.qorder.qorderws.dao.IBusinessDAO;
 import com.qorder.qorderws.dto.BusinessDTO;
 import com.qorder.qorderws.exception.ResourceNotFoundException;
 import com.qorder.qorderws.mapper.BusinessDTOtoBusinessMapper;
 import com.qorder.qorderws.mapper.BusinessToBusinessDTOMapper;
 import com.qorder.qorderws.model.business.Business;
 import com.qorder.qorderws.model.menu.Menu;
+import com.qorder.qorderws.repository.IBusinessRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+@Service
 @Transactional
 public class BusinessService implements IBusinessService {
 
-	private IBusinessDAO businessDAO;
+	private final IBusinessRepository businessRepository;
 
-	public IBusinessDAO getBusinessDAO() {
-		return businessDAO;
+	@Autowired
+	public BusinessService(IBusinessRepository businessRepository) {
+		this.businessRepository = businessRepository;
 	}
 
-	public void setBusinessDAO(IBusinessDAO businessDAO) {
-		this.businessDAO = businessDAO;
-	}
-	
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
 	@Override
 	public long createBusiness(BusinessDTO businessDTO) {
 		Business business = new BusinessDTOtoBusinessMapper().map(businessDTO, new Business());
 		business.setMenu(new Menu());
-		businessDAO.save(business);
-		
+		businessRepository.save(business);
+
 		return business.getId();
 	}
 	
@@ -41,21 +41,22 @@ public class BusinessService implements IBusinessService {
 	@Transactional(readOnly = true)
 	@Override
 	public BusinessDTO fetchBusinessByID(long businessId) throws ResourceNotFoundException {
-		Business business = businessDAO.findById(businessId);
+		Business business = businessRepository.findOne(businessId);
 		return new BusinessToBusinessDTOMapper().map(business, new BusinessDTO());
 	}
 
+	//TODO: real implementation of this method
 	@Transactional(readOnly = true)
 	@Override
-	public BusinessDTO[] fetchBusinessesByUser(long userId) throws ResourceNotFoundException {
-		List<Business> businessList = businessDAO.fetchUserBusinesses(userId);
-		List<BusinessDTO> userBusinesses = new ArrayList<BusinessDTO>();
+	public Collection<BusinessDTO> fetchBusinessesByUser(long userId) throws ResourceNotFoundException {
+		List<Business> businessList = businessRepository.findAll();
+		List<BusinessDTO> userBusinesses = new ArrayList<>();
 		
 		BusinessToBusinessDTOMapper mapper = new BusinessToBusinessDTOMapper();
 		businessList.forEach((business)-> {
 			userBusinesses.add(mapper.map(business, new BusinessDTO()));
 		});
-		return userBusinesses.toArray(new BusinessDTO[userBusinesses.size()]);
+		return userBusinesses;
 	}
 
 }

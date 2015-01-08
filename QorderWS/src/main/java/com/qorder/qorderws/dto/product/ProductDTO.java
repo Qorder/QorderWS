@@ -1,22 +1,22 @@
 package com.qorder.qorderws.dto.product;
 
-import java.math.BigDecimal;
-
 import com.qorder.qorderws.model.EEntity;
 import com.qorder.qorderws.utils.providers.EDomainLinkProvider;
 
-public class ProductDTO {
-	
-	private Long id;
-	private String name;
-	private BigDecimal price;
-	private final String productRequestURI = EDomainLinkProvider.INSTANCE.getHttpPathFor(EEntity.PRODUCT);
-	
-	public Long getId() {
-		return id;
-	}
+import java.math.BigDecimal;
 
-	public void setId(Long id) {
+public class ProductDTO {
+
+	private long id;
+
+	private String name;
+
+	private BigDecimal price;
+
+	private final String href = EDomainLinkProvider.INSTANCE.getHttpPathFor(EEntity.PRODUCT);
+
+
+	public void setId(long id) {
 		this.id = id;
 	}
 
@@ -36,8 +36,8 @@ public class ProductDTO {
 		this.price = bigDecimal;
 	}
 
-	public String getProductRequestUri() {
-		return productRequestURI + id;
+	public String getHref() {
+		return href + id;
 	}
 	
 	@Override

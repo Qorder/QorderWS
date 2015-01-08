@@ -1,25 +1,26 @@
 package com.qorder.qorderws.service;
 
+import com.qorder.qorderws.model.EEntity;
+import com.qorder.qorderws.provider.IFileProvider;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import java.io.IOException;
 
-import com.qorder.qorderws.fao.IFileAccessObject;
-import com.qorder.qorderws.model.EEntity;
-
+@Service
 public class ImageService implements IImageService {
-	
-	private IFileAccessObject imageFAO = null; 
+
+
+	private final IFileProvider imageProvider;
+
+	@Autowired
+	public ImageService(IFileProvider imageProvider) {
+		this.imageProvider = imageProvider;
+	}
 
 	@Override
 	public byte[] getImageFor(EEntity entity, long entityID) throws IOException {
-		return imageFAO.getResourceByteArrayFor(entity, entityID);
-	}
-
-	public IFileAccessObject getImageFAO() {
-		return imageFAO;
-	}
-
-	public void setImageFAO(IFileAccessObject imageFAO) {
-		this.imageFAO = imageFAO;
+		return imageProvider.getResourceByteArrayFor(entity, entityID);
 	}
 	
 }

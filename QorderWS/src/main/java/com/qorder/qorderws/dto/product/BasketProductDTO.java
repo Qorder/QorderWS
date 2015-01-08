@@ -17,6 +17,7 @@ public class BasketProductDTO {
 	
 	private String notes;
 
+
 	public long getProductId() {
 		return productId;
 	}

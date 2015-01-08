@@ -7,9 +7,9 @@ public class BusinessToBusinessDTOMapper implements IMapper<Business, BusinessDT
 
 	@Override
 	public BusinessDTO map(Business source, BusinessDTO target) {
-		target.setId(source.getId().toString());
+
 		target.setName(source.getName());
-		target.setMenuId(source.getMenu().getId().toString());
+		target.setMenuId(source.getMenu().getId());
 		
 		return target;
 	}

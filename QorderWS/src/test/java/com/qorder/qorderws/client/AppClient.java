@@ -1,11 +1,5 @@
 package com.qorder.qorderws.client;
 
-import java.util.List;
-
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.RestTemplate;
-
 import com.qorder.qorderws.dto.BusinessDTO;
 import com.qorder.qorderws.dto.CategoryDTO;
 import com.qorder.qorderws.dto.MenuDTO;
@@ -16,6 +10,11 @@ import com.qorder.qorderws.mapper.CategoryToCategoryDTOMapper;
 import com.qorder.qorderws.model.EEntity;
 import com.qorder.qorderws.model.category.Category;
 import com.qorder.qorderws.utils.providers.EDomainLinkProvider;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.RestTemplate;
+
+import java.util.List;
 
 public class AppClient {
 	

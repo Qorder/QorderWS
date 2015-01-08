@@ -1,32 +1,31 @@
 package com.qorder.qorderws.controller;
 
-import java.io.IOException;
-
+import com.qorder.qorderws.model.EEntity;
+import com.qorder.qorderws.service.IImageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.qorder.qorderws.model.EEntity;
-import com.qorder.qorderws.service.IImageService;
+import java.io.IOException;
 
 @RestController
 @RequestMapping(value ="/images")
 public class ImageController {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(ImageController.class);
-	
-	@Autowired
-	IImageService imageService;
 
-	@RequestMapping(value = "/product/{productID}", method = RequestMethod.GET, 
+	private final IImageService imageService;
+
+	@Autowired
+	public ImageController(IImageService imageService) {
+		this.imageService = imageService;
+	}
+
+	@RequestMapping(value = "/product/{productID}", method = RequestMethod.GET,
 			produces = { MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE })
 	public ResponseEntity<byte[]> getProductImage(@PathVariable long productID) throws IOException, NullPointerException {
 		LOGGER.info("Request for menu with id parameter equal " + productID, productID);

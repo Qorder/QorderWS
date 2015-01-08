@@ -5,18 +5,24 @@ import com.qorder.qorderws.utils.providers.EDomainLinkProvider;
 
 public class DetailedProductDTO {
 
-	private String id;
+	private long id;
+
 	private String name;
+
 	private String price;
-	private String details; //seperator - 
+
+	private String details; //seperator -
+
 	private String description;
-	private final String imageRequestURI = EDomainLinkProvider.INSTANCE.getHttpPathFor(EEntity.PRODUCT_IMAGE);
-	
-	public String getId() {
+
+	private final String imageURI = EDomainLinkProvider.INSTANCE.getHttpPathFor(EEntity.PRODUCT_IMAGE);
+
+
+	public long getId() {
 		return id;
 	}
-	
-	public void setId(String id) {
+
+	public void setId(long id) {
 		this.id = id;
 	}
 	
@@ -44,8 +50,8 @@ public class DetailedProductDTO {
 		this.details = details;
 	}
 
-	public String getImageRequestURI() {
-		return imageRequestURI + id;
+	public String getImageURI() {
+		return imageURI + id;
 	}
 
 	public String getDescription() {
