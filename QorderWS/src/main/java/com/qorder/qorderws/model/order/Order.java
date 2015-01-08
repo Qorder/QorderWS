@@ -1,29 +1,19 @@
 package com.qorder.qorderws.model.order;
 
+import com.qorder.qorderws.model.business.Business;
+
+import javax.persistence.*;
+import java.io.Serializable;
 import java.math.BigDecimal;
-import java.text.DateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
-
-import com.qorder.qorderws.model.business.ABusiness;
 
 @Entity
 @Table(name = "ORDERS")
-public class Order {
+public class Order implements Serializable {
 
 	@Id
 	@GeneratedValue
@@ -33,26 +23,27 @@ public class Order {
 	@Column(name = "TABLE_NUMBER")
 	private String tableNumber;
 
-	@Column(name = "DATE_TIME")
-	private String dateTime = DateFormat.getDateTimeInstance().format(new Date());
-
-	@OneToMany(targetEntity = ProductHolder.class, cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(targetEntity = ProductHolder.class,fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name = "FK_ORDER_ID")
-	@LazyCollection(LazyCollectionOption.FALSE)
-	private List<ProductHolder> orderList = new ArrayList<ProductHolder>();
+	private List<ProductHolder> orderList = new ArrayList<>();
 
-	@ManyToOne(targetEntity = ABusiness.class, optional = false)
+	@ManyToOne(targetEntity = Business.class,fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "FK_BUSINESS_ID", nullable = false, updatable = false)
-	private ABusiness business;
+	private Business business;
 
 	@Column(name = "TOTAL_PRICE")
 	private BigDecimal totalPrice;
 
+	@Enumerated(EnumType.STRING)
 	@Column(name = "ORDER_STATUS")
 	private EOrderStatus status = EOrderStatus.PENDING;
+	
+	@Column(name = "DATE_TIME")
+	private String dateTime;
 
 	public Order() {
-
+		DateTimeFormatter simpleDateFormat  = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM);
+		dateTime = LocalDateTime.now().format(simpleDateFormat); //like: Nov 16, 2014 11:03:40 PM
 	}
 
 	public long getId() {
@@ -87,11 +78,11 @@ public class Order {
 		this.orderList = orderList;
 	}
 
-	public ABusiness getBusiness() {
+	public Business getBusiness() {
 		return business;
 	}
 
-	public void setBusiness(ABusiness business) {
+	public void setBusiness(Business business) {
 		this.business = business;
 	}
 

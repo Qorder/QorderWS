@@ -12,6 +12,7 @@ public class ProductHolderDTO {
 	
 	private String notes;
 
+
 	public ProductDTO getProductDTO() {
 		return productDTO;
 	}

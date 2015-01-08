@@ -1,23 +1,14 @@
 package com.qorder.qorderws.model.order;
 
-import java.math.BigDecimal;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
-
 import com.qorder.qorderws.model.product.Product;
+
+import javax.persistence.*;
+import java.io.Serializable;
+import java.math.BigDecimal;
 
 @Entity
 @Table(name="PRODUCT_HOLDERS")
-public class ProductHolder {
+public class ProductHolder implements Serializable {
 	
 	@Id
 	@GeneratedValue
@@ -33,9 +24,8 @@ public class ProductHolder {
 	@Column(name="COMMENTS")
 	private String notes;
 	
-	@ManyToOne(targetEntity=Product.class)
-	@JoinColumn(name="PRODUCT_ID")
-	@LazyCollection(LazyCollectionOption.FALSE)
+	@ManyToOne(targetEntity=Product.class, fetch = FetchType.LAZY)
+	@JoinColumn(name="FK_PRODUCT_ID", nullable=false)
 	private Product product;
 
 	public long getId() {

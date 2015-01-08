@@ -1,19 +1,16 @@
 package com.qorder.qorderws.mapper;
 
 import com.qorder.qorderws.dto.BusinessDTO;
-import com.qorder.qorderws.dto.MenuDTO;
-import com.qorder.qorderws.model.business.ABusiness;
+import com.qorder.qorderws.model.business.Business;
 
-public class BusinessToBusinessDTOMapper implements IMapper<ABusiness, BusinessDTO> {
+public class BusinessToBusinessDTOMapper implements IMapper<Business, BusinessDTO> {
 
 	@Override
-	public BusinessDTO map(ABusiness source, BusinessDTO target) {
-		if(source.getId() != null)
-		{
-			target.setId(source.getId());
-		}
+	public BusinessDTO map(Business source, BusinessDTO target) {
+
 		target.setName(source.getName());
-		target.setMenu(new MenuToMenuDTOMapper().map(source.getMenu(), new MenuDTO()));
+		target.setMenuId(source.getMenu().getId());
+		
 		return target;
 	}
 

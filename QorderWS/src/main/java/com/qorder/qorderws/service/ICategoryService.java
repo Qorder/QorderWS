@@ -1,14 +1,15 @@
 package com.qorder.qorderws.service;
 
-import com.qorder.qorderws.dto.category.CategoryDTO;
-import com.qorder.qorderws.dto.category.DetailedCategoryDTO;
-import com.qorder.qorderws.exception.CategoryDoesNotExistException;
-import com.qorder.qorderws.exception.MenuDoesNotExistException;
+import com.qorder.qorderws.dto.product.DetailedProductDTO;
+import com.qorder.qorderws.dto.product.ProductDTO;
+import com.qorder.qorderws.exception.ResourceNotFoundException;
+
+import java.util.Collection;
 
 public interface ICategoryService {
 	
-	void createCategory(long menuId, CategoryDTO categoryDTO) throws MenuDoesNotExistException;
-	
-	DetailedCategoryDTO fetchCategoryByID(long categoryId) throws CategoryDoesNotExistException;
+	Collection<ProductDTO> fetchCategoryByID(long categoryId) throws ResourceNotFoundException;
+
+	long addProduct(long categoryID, DetailedProductDTO productDTO) throws ResourceNotFoundException;
 	
 }

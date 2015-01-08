@@ -2,20 +2,21 @@ package com.qorder.qorderws.service;
 
 import com.qorder.qorderws.dto.order.OrderDTO;
 import com.qorder.qorderws.dto.order.OrderViewDTO;
-import com.qorder.qorderws.exception.BusinessDoesNotExistException;
-import com.qorder.qorderws.exception.OrderDoesNotExistException;
+import com.qorder.qorderws.exception.ResourceNotFoundException;
 import com.qorder.qorderws.model.order.EOrderStatus;
+
+import java.util.Collection;
 
 public interface IOrderService {
     
-	OrderViewDTO submitOrder(long businessId, OrderDTO order) throws BusinessDoesNotExistException;
-    
-	OrderViewDTO[] fetchOrdersByBusinessID(long businessId) throws BusinessDoesNotExistException;
+	long submitOrder(long businessId, OrderDTO order) throws ResourceNotFoundException;
 
-	OrderViewDTO[] fetchOrdersByStatus(long businessId, EOrderStatus orderStatus) throws BusinessDoesNotExistException;
+	Collection<OrderViewDTO> fetchOrdersByBusinessID(long businessId) throws ResourceNotFoundException;
 
-	void changeOrderStatus(Long orderId, EOrderStatus orderStatus) throws OrderDoesNotExistException;
+	Collection<OrderViewDTO> fetchOrdersByStatus(long businessId, EOrderStatus orderStatus) throws ResourceNotFoundException;
 
-	OrderViewDTO fetchOrderById(Long orderId) throws OrderDoesNotExistException;
+	void changeOrderStatus(long orderId, EOrderStatus orderStatus) throws ResourceNotFoundException;
+
+	OrderViewDTO fetchOrderById(long orderId) throws ResourceNotFoundException;
 	
 }

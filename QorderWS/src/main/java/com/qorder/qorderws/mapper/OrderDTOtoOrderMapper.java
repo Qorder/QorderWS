@@ -1,11 +1,10 @@
 package com.qorder.qorderws.mapper;
 
-import org.springframework.transaction.annotation.Transactional;
-
 import com.qorder.qorderws.dto.order.OrderDTO;
 import com.qorder.qorderws.dto.product.BasketProductDTO;
 import com.qorder.qorderws.model.order.Order;
 import com.qorder.qorderws.model.order.ProductHolder;
+import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
 public class OrderDTOtoOrderMapper implements IMapper<OrderDTO, Order> {

@@ -23,3 +23,7 @@ We believe in simplicity and the ease of use. We want to make ordering easy, fas
 * **Keep an eye on demands for your products**<br>
   You can access your business statistics at any time and see important things like 
   what customers prefer the most and how they want it to be.
+
+-------------------------
+## Continuous integration
+Project build status: [![Build Status](https://api.travis-ci.org/repositories/Qorder/QorderWS.png?branch=dev)](https://travis-ci.org/Qorder/QorderWS)

@@ -1,25 +1,25 @@
 package com.qorder.qorderws.client;
 
-import java.util.List;
-
+import com.qorder.qorderws.dto.BusinessDTO;
+import com.qorder.qorderws.dto.CategoryDTO;
+import com.qorder.qorderws.dto.MenuDTO;
+import com.qorder.qorderws.dto.order.OrderDTO;
+import com.qorder.qorderws.dto.product.DetailedProductDTO;
+import com.qorder.qorderws.dto.product.ProductDTO;
+import com.qorder.qorderws.mapper.CategoryToCategoryDTOMapper;
+import com.qorder.qorderws.model.EEntity;
+import com.qorder.qorderws.model.category.Category;
+import com.qorder.qorderws.utils.providers.EDomainLinkProvider;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
-import com.qorder.qorderws.dto.BusinessDTO;
-import com.qorder.qorderws.dto.MenuDTO;
-import com.qorder.qorderws.dto.category.CategoryDTO;
-import com.qorder.qorderws.dto.category.DetailedCategoryDTO;
-import com.qorder.qorderws.dto.order.OrderDTO;
-import com.qorder.qorderws.dto.product.DetailedProductDTO;
-import com.qorder.qorderws.mapper.CategoryToCategoryDTOMapper;
-import com.qorder.qorderws.model.category.Category;
-import com.qorder.qorderws.utils.providers.ReferenceProvider;
+import java.util.List;
 
 public class AppClient {
 	
 	private RestTemplate restTemplate = new RestTemplate();
-	private ReferenceProvider refProvider = ReferenceProvider.INSTANCE;
+	private EDomainLinkProvider refProvider = EDomainLinkProvider.INSTANCE;
 	
 	public MenuDTO requestForMenu(String uri, Long menuId) {
 		ResponseEntity<MenuDTO> response = restTemplate.getForEntity(refProvider.getHost() + uri + menuId, MenuDTO.class);
@@ -27,9 +27,9 @@ public class AppClient {
 		return menuDTO;
 	}
 	
-	public DetailedCategoryDTO requestForCategory(String uri, Long categoryId) {
-		ResponseEntity<DetailedCategoryDTO> response = restTemplate.getForEntity(refProvider.getHost() + uri + categoryId, DetailedCategoryDTO.class);
-		DetailedCategoryDTO categoryDTO = response.getBody();
+	public ProductDTO[] requestForCategory(String uri, Long categoryId) {
+		ResponseEntity<ProductDTO[]> response = restTemplate.getForEntity(refProvider.getHost() + uri + categoryId, ProductDTO[].class);
+		ProductDTO[] categoryDTO = response.getBody();
 		return categoryDTO;
 	}
 	
@@ -38,8 +38,8 @@ public class AppClient {
 		restTemplate.put(refProvider.getHost() + url + businessId, new CategoryToCategoryDTOMapper().map(category, new CategoryDTO()));
 	}
 	
-	public void putNewBusiness(String url, Long ownerId, BusinessDTO business) throws HttpClientErrorException {
-		restTemplate.put(refProvider.getHost() + url + ownerId, business);
+	public void postNewBusiness(long ownerId, BusinessDTO business) throws HttpClientErrorException {
+		restTemplate.postForLocation(refProvider.getHttpPathFor(EEntity.BUSINESS) + "owner/" + ownerId, business);
 	}
 	
 	public void postNewProducts(String url, Long categoryId, List<DetailedProductDTO> products) throws HttpClientErrorException {

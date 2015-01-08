@@ -1,52 +1,43 @@
 package com.qorder.qorderws.controller;
 
-import java.io.IOException;
-import java.io.InputStream;
-
-import javax.servlet.ServletContext;
-
+import com.qorder.qorderws.model.EEntity;
+import com.qorder.qorderws.service.IImageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.google.common.io.ByteStreams;
+import java.io.IOException;
 
 @RestController
-@RequestMapping(value = "/images")
+@RequestMapping(value ="/images")
 public class ImageController {
-	
-	@Autowired
-    private ServletContext context;
-	
+
 	private static final Logger LOGGER = LoggerFactory.getLogger(ImageController.class);
-	
-	@RequestMapping(value = "/product", params = "id", method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE )
-	public ResponseEntity<byte[]> getProductImage(@RequestParam Long id) throws IOException, NullPointerException {
-		LOGGER.info("Request for menu with id parameter equal " + id.toString(), id);
-		InputStream imageStream = context.getResourceAsStream("WEB-INF/resources/images/products/" + id.toString() + ".JPG");
-		byte[] imageByteArray = ByteStreams.toByteArray(imageStream);
+
+	private final IImageService imageService;
+
+	@Autowired
+	public ImageController(IImageService imageService) {
+		this.imageService = imageService;
+	}
+
+	@RequestMapping(value = "/product/{productID}", method = RequestMethod.GET,
+			produces = { MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE })
+	public ResponseEntity<byte[]> getProductImage(@PathVariable long productID) throws IOException, NullPointerException {
+		LOGGER.info("Request for menu with id parameter equal " + productID, productID);
 		
-		return new ResponseEntity<byte[]>(imageByteArray, HttpStatus.OK);
+		byte[] imageByteArray = imageService.getImageFor(EEntity.PRODUCT_IMAGE, productID);
+		return new ResponseEntity<>(imageByteArray, HttpStatus.OK);
 	}
-	
-	@ExceptionHandler(IOException.class)
-	public ResponseEntity<String> sendException(Exception ex) {
-		LOGGER.warn("Exception was thrown, with cause " + ex.getCause() + "\nMessage: " + ex.getLocalizedMessage(), ex );
-		return new ResponseEntity<String>("An IOException was raised", HttpStatus.FAILED_DEPENDENCY);
-	}
-	
-	@ExceptionHandler(NullPointerException.class)
+
+	@ExceptionHandler({NullPointerException.class, IOException.class})
 	public ResponseEntity<String> sendBadRequestException(Exception ex) {
-		LOGGER.warn("Exception was thrown, with cause " + ex.getCause() + "\nMessage: " + ex.getLocalizedMessage(), ex );
-		return new ResponseEntity<String>("An IOException was raised", HttpStatus.BAD_REQUEST);
+		LOGGER.warn("Exception was thrown, with cause " + ex.getCause() + "\nMessage: " + ex.getLocalizedMessage(), ex);
+		return new ResponseEntity<>("An Exception was raised", HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
 }

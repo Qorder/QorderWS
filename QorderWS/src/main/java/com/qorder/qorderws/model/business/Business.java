@@ -1,30 +1,43 @@
 package com.qorder.qorderws.model.business;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-
 import com.qorder.qorderws.model.menu.Menu;
+
+import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "BUSINESSES")
-public class Business extends ABusiness {
+public class Business implements Serializable {
 
-	@OneToOne(optional = false, cascade = CascadeType.ALL)
-	@JoinColumn(name = "FK_MENU_ID")
-	private Menu menu;
+	@Id
+	@GeneratedValue
+	@Column(name = "BUSINESS_ID")
+	protected Long id;
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "parentBusiness")
-	private Set<ChildBusiness> childBusinesses = new HashSet<ChildBusiness>();
+	@Column(name = "NAME")
+	protected String name;
+	
+	@OneToOne(targetEntity = Menu.class, fetch = FetchType.LAZY, cascade=CascadeType.ALL, orphanRemoval=true)
+	@JoinColumn(name = "FK_MENU_ID", nullable=false, updatable=false)
+	private Menu menu = new Menu();
+	
+	public Long getId() {
+		return id;
+	}
 
-	@Override
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+
 	public Menu getMenu() {
 		return menu;
 	}
@@ -32,25 +45,5 @@ public class Business extends ABusiness {
 	public void setMenu(Menu menu) {
 		this.menu = menu;
 	}
-
-	public Set<ChildBusiness> getChildBusinesses() {
-		return childBusinesses;
-	}
-
-	public void setChildBusinesses(Set<ChildBusiness> childBusinesses) {
-		this.childBusinesses = childBusinesses;
-	}
-
-	public boolean addChild(ChildBusiness business) {
-		if (childBusinesses.add(business)) {
-			business.setParent(this);
-			return true;
-		}
-		return false;
-	}
-
-	public boolean removeChild(ChildBusiness business) {
-		return childBusinesses.remove(business);
-	}
-
+	
 }

@@ -1,22 +1,27 @@
 package com.qorder.qorderws.dto.product;
 
-import java.math.BigDecimal;
-
-import com.qorder.qorderws.utils.providers.ReferenceProvider;
+import com.qorder.qorderws.model.EEntity;
+import com.qorder.qorderws.utils.providers.EDomainLinkProvider;
 
 public class DetailedProductDTO {
 
 	private long id;
+
 	private String name;
-	private BigDecimal price;
-	private String details; //seperator - 
+
+	private String price;
+
+	private String details; //seperator -
+
 	private String description;
-	private final String imageRequestURI = ReferenceProvider.INSTANCE.getURIfor("image");
-	
+
+	private final String imageURI = EDomainLinkProvider.INSTANCE.getHttpPathFor(EEntity.PRODUCT_IMAGE);
+
+
 	public long getId() {
 		return id;
 	}
-	
+
 	public void setId(long id) {
 		this.id = id;
 	}
@@ -29,11 +34,11 @@ public class DetailedProductDTO {
 		this.name = name;
 	}
 	
-	public BigDecimal getPrice() {
+	public String getPrice() {
 		return price;
 	}
 	
-	public void setPrice(BigDecimal price) {
+	public void setPrice(String price) {
 		this.price = price;
 	}
 
@@ -45,8 +50,8 @@ public class DetailedProductDTO {
 		this.details = details;
 	}
 
-	public String getImageRequestURI() {
-		return imageRequestURI + String.valueOf(id);
+	public String getImageURI() {
+		return imageURI + id;
 	}
 
 	public String getDescription() {

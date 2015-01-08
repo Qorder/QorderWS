@@ -1,14 +1,12 @@
 package com.qorder.qorderws.dto.order;
 
+import com.qorder.qorderws.dto.product.ProductHolderDTO;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import com.qorder.qorderws.dto.product.ProductHolderDTO;
-
 public class OrderViewDTO {
-	
-	private Long id;
-	
+
 	private String tableNumber;
 	
 	private String dateTime;
@@ -16,16 +14,9 @@ public class OrderViewDTO {
 	private String totalPrice;
 	
 	private String status;
-	
-	private List<ProductHolderDTO> orderedProducts = new ArrayList<ProductHolderDTO>();
-	
-	public void setId(Long id) {
-		this.id = id;
-	}
-	
-	public Long getId() {
-		return id;
-	}
+
+	private List<ProductHolderDTO> orderedProducts = new ArrayList<>();
+
 
 	public String getTableNumber() {
 		return tableNumber;

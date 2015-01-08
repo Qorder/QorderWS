@@ -1,30 +1,22 @@
 package com.qorder.qorderws.model.menu;
 
+import com.qorder.qorderws.model.category.Category;
+
+import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
-import com.qorder.qorderws.model.category.Category;
-
 @Entity
 @Table(name = "MENUS")
-public class Menu {
+public class Menu implements Serializable {
 	
 	@Id
 	@GeneratedValue
 	@Column(name = "MENU_ID")
 	private Long id;
 	
-	@OneToMany(targetEntity = Category.class, cascade=CascadeType.ALL, fetch=FetchType.LAZY, orphanRemoval=true)
+	@OneToMany(targetEntity = Category.class, fetch = FetchType.LAZY, cascade=CascadeType.ALL, orphanRemoval=true)
 	@JoinColumn(name ="FK_MENU_ID")
 	private List<Category> categoryList = new ArrayList<Category>();
 
@@ -34,6 +26,14 @@ public class Menu {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+	
+	public boolean addCategory(Category category) {
+		return categoryList.add(category);
+	}
+	
+	public void removeCategory(Category category) {
+		categoryList.remove(category);
 	}
 
 	public List<Category> getCategoryList() {

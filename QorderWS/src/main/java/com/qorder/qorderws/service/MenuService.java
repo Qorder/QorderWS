@@ -1,30 +1,49 @@
 package com.qorder.qorderws.service;
 
 
+import com.qorder.qorderws.dto.CategoryDTO;
+import com.qorder.qorderws.dto.MenuDTO;
+import com.qorder.qorderws.exception.ResourceNotFoundException;
+import com.qorder.qorderws.mapper.CategoryDTOtoCategoryMapper;
+import com.qorder.qorderws.mapper.MenuToMenuDTOMapper;
+import com.qorder.qorderws.model.category.Category;
+import com.qorder.qorderws.model.menu.Menu;
+import com.qorder.qorderws.repository.IMenuRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.qorder.qorderws.dao.IMenuDAO;
-import com.qorder.qorderws.dto.MenuDTO;
-import com.qorder.qorderws.exception.MenuDoesNotExistException;
-import com.qorder.qorderws.mapper.MenuToMenuDTOMapper;
-import com.qorder.qorderws.model.menu.Menu;
+import java.util.Objects;
 
-@Transactional
+@Service
 public class MenuService implements IMenuService {
 
-	private IMenuDAO menuDAO;
-	
+	private final IMenuRepository menuRepository;
+
+	@Autowired
+	public MenuService(IMenuRepository menuRepository) {
+		this.menuRepository = menuRepository;
+	}
+
+	@Transactional(readOnly = true)
 	@Override
-	public MenuDTO fetchMenuById(Long menuId) throws MenuDoesNotExistException {
-		Menu menu = menuDAO.findById(menuId);
-		return new MenuToMenuDTOMapper().map(menu, new MenuDTO());
+	public MenuDTO fetchMenuById(long menuId) throws ResourceNotFoundException {
+		Menu menu = menuRepository.findOne(menuId);
+		return Objects.nonNull(menu) ?
+				new MenuToMenuDTOMapper().map(menu, new MenuDTO()) : new MenuDTO();
 	}
-
-	public IMenuDAO getMenuDAO() {
-		return menuDAO;
+	
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
+	@Override
+	public long addCategory(long menuID, CategoryDTO categoryDTO) {
+		Category category = new CategoryDTOtoCategoryMapper().map(categoryDTO, new Category());
+		
+		Menu menu = menuRepository.findOne(menuID);
+		menu.addCategory(category);
+		menuRepository.save(menu);
+		
+		return category.getId();
 	}
-
-	public void setMenuDAO(IMenuDAO menuDAO) {
-		this.menuDAO = menuDAO;
-	}
+	
 }

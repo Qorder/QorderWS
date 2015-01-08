@@ -1,22 +1,14 @@
 package com.qorder.qorderws.model.product;
 
+import javax.persistence.*;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CollectionTable;
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.Table;
-
 @Entity
 @Table(name = "PRODUCTS")
-public class Product {
+public class Product implements Serializable {
 
 	@Id
 	@GeneratedValue
@@ -32,9 +24,9 @@ public class Product {
 	@Column(name = "PRICE")
 	private BigDecimal price = new BigDecimal(0);
 
-	@ElementCollection(fetch = FetchType.EAGER)
-	@CollectionTable(name = "PRODUCT_DETAILS", joinColumns = @JoinColumn(name = "PRODUCT_ID"))
 	@Column(name = "DETAILS")
+	@CollectionTable(name = "PRODUCT_DETAILS", joinColumns = @JoinColumn(name = "FK_PRODUCT_ID"))
+	@ElementCollection(fetch = FetchType.EAGER)
 	private List<String> details = new ArrayList<String>();
 
 	public Product(String name, BigDecimal price) {

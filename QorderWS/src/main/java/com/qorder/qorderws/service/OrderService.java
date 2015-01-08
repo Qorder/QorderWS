@@ -1,95 +1,91 @@
 
 package com.qorder.qorderws.service;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.springframework.transaction.annotation.Transactional;
-
-import com.qorder.qorderws.dao.IBusinessDAO;
-import com.qorder.qorderws.dao.IOrderDAO;
 import com.qorder.qorderws.dto.order.OrderDTO;
 import com.qorder.qorderws.dto.order.OrderViewDTO;
-import com.qorder.qorderws.exception.BusinessDoesNotExistException;
-import com.qorder.qorderws.exception.OrderDoesNotExistException;
+import com.qorder.qorderws.exception.ResourceNotFoundException;
 import com.qorder.qorderws.mapper.OrderDTOtoOrderMapper;
 import com.qorder.qorderws.mapper.OrderToOrderViewDTOMapper;
+import com.qorder.qorderws.model.business.Business;
 import com.qorder.qorderws.model.order.EOrderStatus;
 import com.qorder.qorderws.model.order.Order;
+import com.qorder.qorderws.repository.IBusinessRepository;
+import com.qorder.qorderws.repository.IOrderRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Objects;
+
+@Service
 @Transactional
 public class OrderService implements IOrderService {
-	
-	private IOrderDAO orderDAO;
-	private IBusinessDAO businessDAO;
-	
+
+	private final IOrderRepository orderRepository;
+	private final IBusinessRepository businessRepository;
+
+	@Autowired
+	public OrderService(IOrderRepository orderRepository, IBusinessRepository businessRepository) {
+		this.orderRepository = orderRepository;
+		this.businessRepository = businessRepository;
+	}
+
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
 	@Override
-	public OrderViewDTO submitOrder(long businessId, OrderDTO orderDTO) throws BusinessDoesNotExistException {
+	public long submitOrder(long businessId, OrderDTO orderDTO) throws ResourceNotFoundException {
 		Order order = new  OrderDTOtoOrderMapper().map(orderDTO, new Order());
-		order.setBusiness(businessDAO.findById(businessId));
-		orderDAO.save(order);
-		return new OrderToOrderViewDTOMapper().map(order, new OrderViewDTO());
+		order.setBusiness(businessRepository.findOne(businessId));
+		orderRepository.save(order);
+		return order.getId();
 	}
 
 	@Transactional(readOnly = true)
 	@Override
-	public OrderViewDTO[] fetchOrdersByBusinessID(long businessId) throws BusinessDoesNotExistException {
-		List<Order> orderList = orderDAO.fetchOrdersForBusiness(businessId);
-		List<OrderViewDTO> businessOrders = new ArrayList<OrderViewDTO>();
-		for(Order order : orderList)
-		{
+	public Collection<OrderViewDTO> fetchOrdersByBusinessID(long businessId) throws ResourceNotFoundException {
+		Business business = businessRepository.findOne(businessId);
+		List<Order> orders = orderRepository.findOrdersByBusiness(business);
+		List<OrderViewDTO> businessOrders = new ArrayList<>();
+
+		orders.forEach((order) -> {
 			OrderViewDTO orderView = new OrderToOrderViewDTOMapper().map(order, new OrderViewDTO());
 			businessOrders.add(orderView);
-		}
-		return businessOrders.toArray(new OrderViewDTO[businessOrders.size()]);
+		});
+		return businessOrders;
 		
 	}
 
 	@Transactional(readOnly = true)
 	@Override
-	public OrderViewDTO[] fetchOrdersByStatus(long businessId, EOrderStatus orderStatus) throws BusinessDoesNotExistException {
-		
-		List<Order> orderList = orderDAO.fetchOrdersByStatus(businessId, orderStatus);
-		List<OrderViewDTO> businessOrders = new ArrayList<OrderViewDTO>();
-		for(Order order : orderList)
-		{
+	public Collection<OrderViewDTO> fetchOrdersByStatus(long businessId, EOrderStatus orderStatus) throws ResourceNotFoundException {
+		Business business = businessRepository.findOne(businessId);
+		List<Order> orders = orderRepository.findOrdersByStatus(business, orderStatus);
+		List<OrderViewDTO> businessOrders = new ArrayList<>();
+
+		orders.forEach((order) -> {
 			OrderViewDTO orderView = new OrderToOrderViewDTOMapper().map(order, new OrderViewDTO());
 			businessOrders.add(orderView);
-		}
-		return businessOrders.toArray(new OrderViewDTO[businessOrders.size()]);
+		});
+		return businessOrders;
 	}
 
+	@Transactional(readOnly = false)
 	@Override
-	public void changeOrderStatus(Long orderId, EOrderStatus orderStatus) throws OrderDoesNotExistException {
-		Order order = orderDAO.findById(orderId);
+	public void changeOrderStatus(long orderId, EOrderStatus orderStatus) throws ResourceNotFoundException {
+		Order order = orderRepository.findOne(orderId);
 		order.setStatus(orderStatus);
-		orderDAO.save(order);
+		orderRepository.save(order);
 	}
 	
+	@Transactional(readOnly = true)
 	@Override
-	public OrderViewDTO fetchOrderById(Long orderId) throws OrderDoesNotExistException {
-		Order order = orderDAO.findById(orderId);
-		return new OrderToOrderViewDTOMapper().map(order, new OrderViewDTO());
-	}
-
-	
-	public IBusinessDAO getBusinessDAO() {
-		return businessDAO;
-	}
-
-
-	public void setBusinessDAO(IBusinessDAO businessDAO) {
-		this.businessDAO = businessDAO;
-	}
-
-
-	public IOrderDAO getOrderDAO() {
-		return orderDAO;
-	}
-
-
-	public void setOrderDAO(IOrderDAO orderDAO) {
-		this.orderDAO = orderDAO;
+	public OrderViewDTO fetchOrderById(long orderId) throws ResourceNotFoundException {
+		Order order = orderRepository.findOne(orderId);
+		return Objects.nonNull(order) ?
+				new OrderToOrderViewDTOMapper().map(order, new OrderViewDTO()) : new OrderViewDTO();
 	}
 	
 }

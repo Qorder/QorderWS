@@ -1,57 +1,58 @@
 package com.qorder.qorderws.service;
 
+import com.qorder.qorderws.dto.product.DetailedProductDTO;
+import com.qorder.qorderws.dto.product.ProductDTO;
+import com.qorder.qorderws.exception.ResourceNotFoundException;
+import com.qorder.qorderws.mapper.DetailedProductDTOtoProductMapper;
+import com.qorder.qorderws.mapper.ProductToProductDTOMapper;
+import com.qorder.qorderws.model.category.Category;
+import com.qorder.qorderws.model.product.Product;
+import com.qorder.qorderws.repository.ICategoryRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.qorder.qorderws.dao.ICategoryDAO;
-import com.qorder.qorderws.dao.IMenuDAO;
-import com.qorder.qorderws.dto.category.CategoryDTO;
-import com.qorder.qorderws.dto.category.DetailedCategoryDTO;
-import com.qorder.qorderws.exception.CategoryDoesNotExistException;
-import com.qorder.qorderws.exception.MenuDoesNotExistException;
-import com.qorder.qorderws.mapper.CategoryDTOtoCategoryMapper;
-import com.qorder.qorderws.mapper.CategoryToDetailedCategoryDtoMapper;
-import com.qorder.qorderws.model.category.Category;
-import com.qorder.qorderws.model.menu.Menu;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Objects;
 
+@Service
 @Transactional
 public class CategoryService implements ICategoryService {
 
-	private ICategoryDAO categoryDAO;
-	private IMenuDAO menuDAO;
+	private final ICategoryRepository categoryRepository;
+
+	@Autowired
+	public CategoryService(ICategoryRepository categoryRepository) {
+		this.categoryRepository = categoryRepository;
+	}
 
 	@Transactional(readOnly = true)
 	@Override
-	public DetailedCategoryDTO fetchCategoryByID(long categoryId) throws CategoryDoesNotExistException {
-		Category fetchedCategory = categoryDAO.findById(categoryId);
-		return new CategoryToDetailedCategoryDtoMapper().map(fetchedCategory, new DetailedCategoryDTO());
-	}
+	public Collection<ProductDTO> fetchCategoryByID(long categoryId) throws ResourceNotFoundException {
+		Category fetchedCategory = categoryRepository.findOne(categoryId);
 
-	@Override
-	public void createCategory(long menuId, CategoryDTO categoryDTO) throws MenuDoesNotExistException {
-		Menu menu = menuDAO.findById(menuId); 
-		
-		Category category = new CategoryDTOtoCategoryMapper().map(categoryDTO, new Category());
-		
-		menu.getCategoryList().add(category);
-		menuDAO.update(menu);
-	}
-
-
-	public ICategoryDAO getCategoryDAO() {
-		return categoryDAO;
-	}
-
-
-	public void setCategoryDAO(ICategoryDAO categoryDAO) {
-		this.categoryDAO = categoryDAO;
-	}
-
-	public IMenuDAO getMenuDAO() {
-		return menuDAO;
-	}
-
-	public void setMenuDAO(IMenuDAO menuDAO) {
-		this.menuDAO = menuDAO;
+		List<ProductDTO> productList = new ArrayList<>();
+		if(Objects.nonNull(fetchedCategory)) {
+			ProductToProductDTOMapper mapper = new ProductToProductDTOMapper();
+			fetchedCategory.getProductList().forEach((product) -> {
+				productList.add(mapper.map(product, new ProductDTO()));
+			});
+		}
+		return productList;
 	}
 	
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
+	@Override
+	public long addProduct(long categoryID, DetailedProductDTO productDTO) throws ResourceNotFoundException {
+		Product product = new DetailedProductDTOtoProductMapper().map(productDTO,new Product());
+		
+		Category category = categoryRepository.findOne(categoryID);
+		category.addProduct(product);
+
+		categoryRepository.save(category);
+		return product.getId();
+	}
 }

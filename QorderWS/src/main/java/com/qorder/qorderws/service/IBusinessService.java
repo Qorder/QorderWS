@@ -1,11 +1,16 @@
 package com.qorder.qorderws.service;
 
-import com.qorder.qorderws.exception.BusinessDoesNotExistException;
-import com.qorder.qorderws.model.business.Business;
+import com.qorder.qorderws.dto.BusinessDTO;
+import com.qorder.qorderws.exception.ResourceNotFoundException;
+
+import java.util.Collection;
 
 public interface IBusinessService {
 	
-	Business fetchBusinessById(long businessId) throws BusinessDoesNotExistException;
+	long createBusiness(BusinessDTO businessDTO);
 	
-	void createBusiness(Business business);
+	BusinessDTO fetchBusinessByID(long businessId) throws ResourceNotFoundException;
+	
+	Collection<BusinessDTO> fetchBusinessesByUser(long userId) throws ResourceNotFoundException;
+	
 }
