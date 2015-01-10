@@ -3,7 +3,6 @@ package com.qorder.qorderws.service;
 
 import com.qorder.qorderws.dto.order.OrderDTO;
 import com.qorder.qorderws.dto.order.OrderViewDTO;
-import com.qorder.qorderws.exception.ResourceNotFoundException;
 import com.qorder.qorderws.mapper.OrderDTOtoOrderMapper;
 import com.qorder.qorderws.mapper.OrderToOrderViewDTOMapper;
 import com.qorder.qorderws.model.business.Business;
@@ -16,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -36,7 +36,7 @@ public class OrderService implements IOrderService {
 
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
 	@Override
-	public long submitOrder(long businessId, OrderDTO orderDTO) throws ResourceNotFoundException {
+	public long submitOrder(long businessId, @NotNull OrderDTO orderDTO) {
 		Order order = new  OrderDTOtoOrderMapper().map(orderDTO, new Order());
 		order.setBusiness(businessRepository.findOne(businessId));
 		orderRepository.save(order);
@@ -45,7 +45,7 @@ public class OrderService implements IOrderService {
 
 	@Transactional(readOnly = true)
 	@Override
-	public Collection<OrderViewDTO> fetchOrdersByBusinessID(long businessId) throws ResourceNotFoundException {
+	public Collection<OrderViewDTO> fetchOrdersByBusinessID(long businessId) {
 		Business business = businessRepository.findOne(businessId);
 		List<Order> orders = orderRepository.findOrdersByBusiness(business);
 		List<OrderViewDTO> businessOrders = new ArrayList<>();
@@ -60,7 +60,7 @@ public class OrderService implements IOrderService {
 
 	@Transactional(readOnly = true)
 	@Override
-	public Collection<OrderViewDTO> fetchOrdersByStatus(long businessId, EOrderStatus orderStatus) throws ResourceNotFoundException {
+	public Collection<OrderViewDTO> fetchOrdersByStatus(long businessId, @NotNull EOrderStatus orderStatus) {
 		Business business = businessRepository.findOne(businessId);
 		List<Order> orders = orderRepository.findOrdersByStatus(business, orderStatus);
 		List<OrderViewDTO> businessOrders = new ArrayList<>();
@@ -74,7 +74,7 @@ public class OrderService implements IOrderService {
 
 	@Transactional(readOnly = false)
 	@Override
-	public void changeOrderStatus(long orderId, EOrderStatus orderStatus) throws ResourceNotFoundException {
+	public void changeOrderStatus(long orderId, @NotNull EOrderStatus orderStatus) {
 		Order order = orderRepository.findOne(orderId);
 		order.setStatus(orderStatus);
 		orderRepository.save(order);
@@ -82,7 +82,7 @@ public class OrderService implements IOrderService {
 	
 	@Transactional(readOnly = true)
 	@Override
-	public OrderViewDTO fetchOrderById(long orderId) throws ResourceNotFoundException {
+	public OrderViewDTO fetchOrderById(long orderId) {
 		Order order = orderRepository.findOne(orderId);
 		return Objects.nonNull(order) ?
 				new OrderToOrderViewDTOMapper().map(order, new OrderViewDTO()) : new OrderViewDTO();

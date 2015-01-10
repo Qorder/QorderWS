@@ -5,10 +5,12 @@ import com.qorder.qorderws.dto.product.ProductHolderDTO;
 import com.qorder.qorderws.model.order.Order;
 import com.qorder.qorderws.model.order.ProductHolder;
 
+import javax.validation.constraints.NotNull;
+
 public class OrderToOrderViewDTOMapper implements IMapper<Order, OrderViewDTO> {
 
 	@Override
-	public OrderViewDTO map(Order source, OrderViewDTO target) {
+	public OrderViewDTO map(@NotNull Order source, @NotNull OrderViewDTO target) {
 		target.setTableNumber(source.getTableNumber());
 		target.setDateTime(source.getDateTime());
 		target.setTotalPrice(source.getTotalPrice().toString());

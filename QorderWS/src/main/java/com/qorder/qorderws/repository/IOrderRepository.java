@@ -5,8 +5,8 @@ import com.qorder.qorderws.model.order.EOrderStatus;
 import com.qorder.qorderws.model.order.Order;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.stereotype.Repository;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -16,8 +16,8 @@ import java.util.List;
 public interface IOrderRepository extends JpaRepository<Order, Long> {
 
     @Query("select ord from Order ord where ord.business = ?1")
-    List<Order> findOrdersByBusiness(Business business);
+    List<Order> findOrdersByBusiness(@NotNull Business business);
 
     @Query("select ord from Order ord where ord.business = ?1 and ord.status = ?2")
-    List<Order> findOrdersByStatus(Business business, EOrderStatus orderStatus);
+    List<Order> findOrdersByStatus(@NotNull Business business, @NotNull EOrderStatus orderStatus);
 }

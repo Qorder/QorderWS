@@ -37,7 +37,7 @@ public class Order implements Serializable {
 	@Enumerated(EnumType.STRING)
 	@Column(name = "ORDER_STATUS")
 	private EOrderStatus status = EOrderStatus.PENDING;
-	
+
 	@Column(name = "DATE_TIME")
 	private String dateTime;
 
@@ -91,7 +91,7 @@ public class Order implements Serializable {
 	}
 
 	public BigDecimal getTotalPrice() {
-		totalPrice = new BigDecimal(0);
+		totalPrice = new BigDecimal("0");
 		for (ProductHolder productHolder : orderList) {
 			totalPrice = totalPrice.add(productHolder.getHoldingProductsPrice());
 		}

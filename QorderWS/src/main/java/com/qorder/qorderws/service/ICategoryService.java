@@ -2,14 +2,14 @@ package com.qorder.qorderws.service;
 
 import com.qorder.qorderws.dto.product.DetailedProductDTO;
 import com.qorder.qorderws.dto.product.ProductDTO;
-import com.qorder.qorderws.exception.ResourceNotFoundException;
 
+import javax.validation.constraints.NotNull;
 import java.util.Collection;
 
 public interface ICategoryService {
 	
-	Collection<ProductDTO> fetchCategoryByID(long categoryId) throws ResourceNotFoundException;
+	Collection<ProductDTO> fetchCategoryByID(long categoryId);
 
-	long addProduct(long categoryID, DetailedProductDTO productDTO) throws ResourceNotFoundException;
-	
+	long addProduct(long categoryID, @NotNull DetailedProductDTO productDTO);
+
 }

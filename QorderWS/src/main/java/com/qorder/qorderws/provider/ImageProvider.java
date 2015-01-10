@@ -9,6 +9,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 
 import javax.el.PropertyNotFoundException;
+import javax.validation.constraints.NotNull;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -20,31 +21,28 @@ public final class ImageProvider implements IFileProvider {
 	private final ESystemPathProvider pathProvider = ESystemPathProvider.INSTANCE;
 
 	@Override
-	public File getFile(String path) {
+	public File getFile(@NotNull String path) {
 		throw new UnsupportedOperationException("Not implemented");
 	}
 
 	@Override
-	public byte[] getResourceByteArray(String path) {
+	public byte[] getResourceByteArray(@NotNull String path) {
 		throw new UnsupportedOperationException("Not implemented");
 	}
 
 	@Override
-	public byte[] getResourceByteArrayFor(EEntity entity, long id) throws IOException {
-		byte[] imageByteArray = null;
-		try{
+	public byte[] getResourceByteArrayFor(@NotNull EEntity entity, long id) {
+		try {
 			final String imageName = id + ".png";
 			Resource image = new ClassPathResource(pathProvider.getDirectoryPathFor(entity) + imageName);
 			if (!image.exists()) {
 				image = new ClassPathResource(pathProvider.getDefaultPathFor(entity)); // load default image
 			}
-			imageByteArray = Files.readAllBytes(image.getFile().toPath());
-		}
-		catch(PropertyNotFoundException ex) {
+			return Files.readAllBytes(image.getFile().toPath());
+		} catch (PropertyNotFoundException | IOException ex) {
+			ex.printStackTrace();
 			LOGGER.warn(ex.getMessage());
-			imageByteArray = new byte[0];
+			return new byte[0];
 		}
-		return imageByteArray;
 	}
-
 }

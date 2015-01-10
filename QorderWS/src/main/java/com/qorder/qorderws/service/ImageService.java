@@ -5,7 +5,7 @@ import com.qorder.qorderws.provider.IFileProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
+import javax.validation.constraints.NotNull;
 
 @Service
 public class ImageService implements IImageService {
@@ -19,7 +19,7 @@ public class ImageService implements IImageService {
 	}
 
 	@Override
-	public byte[] getImageFor(EEntity entity, long entityID) throws IOException {
+	public byte[] getImageFor(@NotNull EEntity entity, long entityID) {
 		return imageProvider.getResourceByteArrayFor(entity, entityID);
 	}
 	

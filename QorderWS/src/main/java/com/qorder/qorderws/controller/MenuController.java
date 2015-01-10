@@ -2,7 +2,6 @@ package com.qorder.qorderws.controller;
 
 import com.qorder.qorderws.dto.CategoryDTO;
 import com.qorder.qorderws.dto.MenuDTO;
-import com.qorder.qorderws.exception.ResourceNotFoundException;
 import com.qorder.qorderws.model.EEntity;
 import com.qorder.qorderws.service.IMenuService;
 import com.qorder.qorderws.utils.providers.EDomainLinkProvider;
@@ -36,7 +35,7 @@ public class MenuController {
 	 * @return menu transfer object to client 
 	 */
 	@RequestMapping(value = "/{menuID}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<MenuDTO> getMenuById(@PathVariable Long menuID) throws ResourceNotFoundException {
+	public ResponseEntity<MenuDTO> getMenuById(@PathVariable Long menuID) {
 		LOGGER.info("Request for menu with id parameter equal " + menuID.toString(), menuID);
 		
 		MenuDTO menuDto = menuService.fetchMenuById(menuID);
@@ -45,7 +44,7 @@ public class MenuController {
 	
 	
 	@RequestMapping(value="/{menuID}/categories", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-	ResponseEntity<Void> crateCategory(@PathVariable Long menuID, @RequestBody CategoryDTO categoryDTO) throws ResourceNotFoundException {
+	ResponseEntity<Void> crateCategory(@PathVariable Long menuID, @RequestBody CategoryDTO categoryDTO) {
 		LOGGER.info("Request for category creation with menu id equals :" + menuID);
 		
 		long categoryID = menuService.addCategory(menuID, categoryDTO);

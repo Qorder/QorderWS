@@ -3,7 +3,6 @@ package com.qorder.qorderws.service;
 
 import com.qorder.qorderws.dto.CategoryDTO;
 import com.qorder.qorderws.dto.MenuDTO;
-import com.qorder.qorderws.exception.ResourceNotFoundException;
 import com.qorder.qorderws.mapper.CategoryDTOtoCategoryMapper;
 import com.qorder.qorderws.mapper.MenuToMenuDTOMapper;
 import com.qorder.qorderws.model.category.Category;
@@ -14,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 @Service
@@ -28,7 +28,7 @@ public class MenuService implements IMenuService {
 
 	@Transactional(readOnly = true)
 	@Override
-	public MenuDTO fetchMenuById(long menuId) throws ResourceNotFoundException {
+	public MenuDTO fetchMenuById(long menuId) {
 		Menu menu = menuRepository.findOne(menuId);
 		return Objects.nonNull(menu) ?
 				new MenuToMenuDTOMapper().map(menu, new MenuDTO()) : new MenuDTO();
@@ -36,7 +36,7 @@ public class MenuService implements IMenuService {
 	
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
 	@Override
-	public long addCategory(long menuID, CategoryDTO categoryDTO) {
+	public long addCategory(long menuID, @NotNull CategoryDTO categoryDTO) {
 		Category category = new CategoryDTOtoCategoryMapper().map(categoryDTO, new Category());
 		
 		Menu menu = menuRepository.findOne(menuID);

@@ -1,7 +1,6 @@
 package com.qorder.qorderws.service;
 
 import com.qorder.qorderws.dto.product.DetailedProductDTO;
-import com.qorder.qorderws.exception.ResourceNotFoundException;
 import com.qorder.qorderws.mapper.ProductToDetailedProductDTOMapper;
 import com.qorder.qorderws.model.product.Product;
 import com.qorder.qorderws.repository.IProductRepository;
@@ -24,7 +23,7 @@ public class ProductService implements IProductService {
 
 	@Transactional(readOnly = true)
 	@Override
-	public DetailedProductDTO fetchProductById(long productId) throws ResourceNotFoundException {
+	public DetailedProductDTO fetchProductById(long productId) {
 		Product product = productRepository.findOne(productId);
 		return Objects.nonNull(product) ?
 				new ProductToDetailedProductDTOMapper()

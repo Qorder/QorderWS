@@ -1,18 +1,17 @@
 package com.qorder.qorderws.service;
 
 import com.qorder.qorderws.dto.BusinessDTO;
-import com.qorder.qorderws.exception.ResourceNotFoundException;
 import com.qorder.qorderws.mapper.BusinessDTOtoBusinessMapper;
 import com.qorder.qorderws.mapper.BusinessToBusinessDTOMapper;
 import com.qorder.qorderws.mapper.IMapper;
 import com.qorder.qorderws.model.business.Business;
-import com.qorder.qorderws.model.menu.Menu;
 import com.qorder.qorderws.repository.IBusinessRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -31,9 +30,8 @@ public class BusinessService implements IBusinessService {
 
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
 	@Override
-	public long createBusiness(BusinessDTO businessDTO) {
+	public long createBusiness(@NotNull BusinessDTO businessDTO) {
 		Business business = new BusinessDTOtoBusinessMapper().map(businessDTO, new Business());
-		business.setMenu(new Menu());
 		business = businessRepository.save(business);
 
 		return business.getId();
@@ -42,7 +40,7 @@ public class BusinessService implements IBusinessService {
 
 	@Transactional(readOnly = true)
 	@Override
-	public BusinessDTO fetchBusinessByID(long businessId) throws ResourceNotFoundException {
+	public BusinessDTO fetchBusinessByID(long businessId) {
 		Business business = businessRepository.findOne(businessId);
 		return Objects.nonNull(business) ?
 				new BusinessToBusinessDTOMapper().map(business, new BusinessDTO()) : new BusinessDTO();
@@ -51,7 +49,7 @@ public class BusinessService implements IBusinessService {
 	//TODO: real implementation of this method
 	@Transactional(readOnly = true)
 	@Override
-	public Collection<BusinessDTO> fetchBusinessesByUser(long userId) throws ResourceNotFoundException {
+	public Collection<BusinessDTO> fetchBusinessesByUser(long userId) {
 		List<Business> businessList = businessRepository.findAll();
 		List<BusinessDTO> userBusinesses = new ArrayList<>();
 		

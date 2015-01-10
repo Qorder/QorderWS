@@ -2,7 +2,6 @@ package com.qorder.qorderws.controller;
 
 import com.qorder.qorderws.dto.product.DetailedProductDTO;
 import com.qorder.qorderws.dto.product.ProductDTO;
-import com.qorder.qorderws.exception.ResourceNotFoundException;
 import com.qorder.qorderws.model.EEntity;
 import com.qorder.qorderws.service.ICategoryService;
 import com.qorder.qorderws.utils.providers.EDomainLinkProvider;
@@ -33,14 +32,14 @@ public class CategoryController {
 	}
 
 	@RequestMapping(value = "/{categoryID}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	ResponseEntity<Collection<ProductDTO>> getCategory(@PathVariable Long categoryID) throws ResourceNotFoundException {
+	ResponseEntity<Collection<ProductDTO>> getCategory(@PathVariable Long categoryID) {
 		LOGGER.info("Request for category with id equals "+ categoryID);
 		Collection<ProductDTO> categoryProducts = categoryService.fetchCategoryByID(categoryID);
 		return new ResponseEntity<>(categoryProducts, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "/{categoryID}/products", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-	ResponseEntity<Void> storeProducts(@PathVariable Long categoryID, @RequestBody DetailedProductDTO productDTO) throws ResourceNotFoundException {
+	ResponseEntity<Void> storeProducts(@PathVariable Long categoryID, @RequestBody DetailedProductDTO productDTO) {
 		LOGGER.info("Request to store products save with category id equals :" + categoryID);
 		
 		long productID = categoryService.addProduct(categoryID, productDTO);
@@ -54,6 +53,6 @@ public class CategoryController {
 	@ExceptionHandler( IOException.class )
 	ResponseEntity<String> sendIOException(Exception ex) {
 		LOGGER.warn("Exception was thrown, with cause " + ex.getCause() + "\nMessage: " + ex.getLocalizedMessage(), ex );
-		return new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+		return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 }

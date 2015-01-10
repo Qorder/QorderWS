@@ -2,10 +2,10 @@ package com.qorder.qorderws.service;
 
 import com.qorder.qorderws.model.EEntity;
 
-import java.io.IOException;
+import javax.validation.constraints.NotNull;
 
 public interface IImageService {
 	
-	byte[] getImageFor(EEntity entity, long entityID) throws IOException;	
+	byte[] getImageFor(@NotNull EEntity entity, long entityID);
 
 }

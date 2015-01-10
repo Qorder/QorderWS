@@ -6,11 +6,13 @@ import com.qorder.qorderws.model.order.Order;
 import com.qorder.qorderws.model.order.ProductHolder;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.validation.constraints.NotNull;
+
 @Transactional
 public class OrderDTOtoOrderMapper implements IMapper<OrderDTO, Order> {
 
 	@Override
-	public Order map(OrderDTO source, Order target) {
+	public Order map(@NotNull OrderDTO source, @NotNull Order target) {
 		target.setTableNumber(source.getTableNumber());
 		for (BasketProductDTO basketProductDTO : source.getOrders()) {
 			ProductHolder productHolder = new BasketProductDTOtoProductHolderMapper()

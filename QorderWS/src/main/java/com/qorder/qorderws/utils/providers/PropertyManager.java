@@ -6,7 +6,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.support.PropertiesLoaderUtils;
 
-import javax.el.PropertyNotFoundException;
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.util.Objects;

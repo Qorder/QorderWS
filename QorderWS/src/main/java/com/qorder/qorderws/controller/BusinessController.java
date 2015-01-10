@@ -1,7 +1,6 @@
 package com.qorder.qorderws.controller;
 
 import com.qorder.qorderws.dto.BusinessDTO;
-import com.qorder.qorderws.exception.ResourceNotFoundException;
 import com.qorder.qorderws.model.EEntity;
 import com.qorder.qorderws.service.IBusinessService;
 import com.qorder.qorderws.utils.providers.EDomainLinkProvider;
@@ -42,7 +41,7 @@ public class BusinessController {
 	}
 	
 	@RequestMapping(value = "/{businessId}", method = RequestMethod.GET , produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<BusinessDTO> getBusiness(@PathVariable Long businessId)  throws ResourceNotFoundException {
+	public ResponseEntity<BusinessDTO> getBusiness(@PathVariable Long businessId) {
 		LOGGER.info("Request for business");
 		
 		BusinessDTO business = businessService.fetchBusinessByID(businessId);

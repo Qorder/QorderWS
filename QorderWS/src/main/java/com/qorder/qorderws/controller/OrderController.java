@@ -2,7 +2,6 @@ package com.qorder.qorderws.controller;
 
 import com.qorder.qorderws.dto.order.OrderDTO;
 import com.qorder.qorderws.dto.order.OrderViewDTO;
-import com.qorder.qorderws.exception.ResourceNotFoundException;
 import com.qorder.qorderws.model.EEntity;
 import com.qorder.qorderws.model.order.EOrderStatus;
 import com.qorder.qorderws.service.IOrderService;
@@ -33,7 +32,7 @@ public class OrderController {
 	}
 
 	@RequestMapping(value = "/business/{businessID}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-	ResponseEntity<Void> createOrder(@PathVariable Long businessID, @RequestBody OrderDTO orderDTO) throws ResourceNotFoundException {
+	ResponseEntity<Void> createOrder(@PathVariable Long businessID, @RequestBody OrderDTO orderDTO) {
 		LOGGER.info("Request for order submit");
 		long orderID = orderService.submitOrder(businessID, orderDTO);
 		
@@ -45,7 +44,7 @@ public class OrderController {
 	}
 	
 	@RequestMapping(value = "/business/{businessID}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	ResponseEntity<Collection<OrderViewDTO>> getOrdersByBusinessId(@PathVariable Long businessID) throws ResourceNotFoundException {
+	ResponseEntity<Collection<OrderViewDTO>> getOrdersByBusinessId(@PathVariable Long businessID) {
 		Collection<OrderViewDTO> businessOrders = orderService.fetchOrdersByBusinessID(businessID);
 		LOGGER.info("Request for business orders.\nFetchedList size is " + businessOrders.size());
 		
@@ -53,7 +52,7 @@ public class OrderController {
 	}
 
 	@RequestMapping(value ="/{orderID}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	ResponseEntity<OrderViewDTO> getOrdersById(@PathVariable Long orderID) throws ResourceNotFoundException {
+	ResponseEntity<OrderViewDTO> getOrdersById(@PathVariable Long orderID) {
 		LOGGER.info("Request for order with id " + orderID);
 		
 		OrderViewDTO orderView = orderService.fetchOrderById(orderID);
@@ -62,7 +61,7 @@ public class OrderController {
 	}
 	
 	@RequestMapping(value ="/business/{businessID}/order", params = "status", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	ResponseEntity<Collection<OrderViewDTO>> getOrdersByStatus(@PathVariable Long businessID, @RequestParam String status) throws ResourceNotFoundException, IllegalArgumentException {
+	ResponseEntity<Collection<OrderViewDTO>> getOrdersByStatus(@PathVariable Long businessID, @RequestParam String status) {
 		EOrderStatus orderStatus = EOrderStatus.valueOf(status);
 		Collection<OrderViewDTO> businessOrders = orderService.fetchOrdersByStatus(businessID, orderStatus);
 		LOGGER.info("Request for business orders with status query.\nFetchedList size is " + businessOrders.size());
@@ -71,7 +70,7 @@ public class OrderController {
 	}
 	
 	@RequestMapping(value ="/{orderId}/order", params = "status", method = RequestMethod.POST)
-	ResponseEntity<Void> changeOrderStatus(@PathVariable Long orderId, @RequestParam String status) throws ResourceNotFoundException, IllegalArgumentException {
+	ResponseEntity<Void> changeOrderStatus(@PathVariable Long orderId, @RequestParam String status) {
 		LOGGER.info("Request to change status if order with id " + orderId);
 		
 		EOrderStatus orderStatus = EOrderStatus.valueOf(status);

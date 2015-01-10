@@ -14,7 +14,7 @@ public class ProductHolder implements Serializable {
 	@GeneratedValue
 	@Column(name="PRODUCT_HOLDER_ID")
 	private long id;
-	
+
 	@Column(name="PRODUCT_QUANTITY")
 	private int quantity;
 	
@@ -23,7 +23,7 @@ public class ProductHolder implements Serializable {
 	
 	@Column(name="COMMENTS")
 	private String notes;
-	
+
 	@ManyToOne(targetEntity=Product.class, fetch = FetchType.LAZY)
 	@JoinColumn(name="FK_PRODUCT_ID", nullable=false)
 	private Product product;

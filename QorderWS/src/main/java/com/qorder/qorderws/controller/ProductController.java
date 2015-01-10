@@ -1,7 +1,6 @@
 package com.qorder.qorderws.controller;
 
 import com.qorder.qorderws.dto.product.DetailedProductDTO;
-import com.qorder.qorderws.exception.ResourceNotFoundException;
 import com.qorder.qorderws.service.IProductService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,7 +26,7 @@ public class ProductController {
 	}
 
 	@RequestMapping(value = "/{productID}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	ResponseEntity<DetailedProductDTO> getProductById(@PathVariable Long productID) throws ResourceNotFoundException {
+	ResponseEntity<DetailedProductDTO> getProductById(@PathVariable Long productID) {
 		LOGGER.info("Request for product with id parameter equal " + productID.toString(), productID);
 		
 		return new ResponseEntity<>(productService.fetchProductById(productID), HttpStatus.OK); 

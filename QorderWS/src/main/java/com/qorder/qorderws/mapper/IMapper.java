@@ -1,5 +1,7 @@
 package com.qorder.qorderws.mapper;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * Represents a knowledge transporter, between two instances.
  * The flow of information goes from source instance to target.
@@ -19,5 +21,5 @@ public interface IMapper<S, T> {
 	 * @param target
 	 * @return T target instance
 	 */
-	T map(S source, T target);
+	T map(@NotNull S source, @NotNull T target);
 }

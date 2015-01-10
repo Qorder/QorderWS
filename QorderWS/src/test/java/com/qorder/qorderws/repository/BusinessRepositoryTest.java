@@ -1,7 +1,6 @@
 package com.qorder.qorderws.repository;
 
 import com.qorder.qorderws.WebServiceApplication;
-import com.qorder.qorderws.exception.ResourceNotFoundException;
 import com.qorder.qorderws.model.business.Business;
 import org.junit.Assert;
 import org.junit.Test;
@@ -19,13 +18,13 @@ public class BusinessRepositoryTest extends BaseDbUnitTestCase {
 
 
 	@Test
-	public void testExistsFindById() throws ResourceNotFoundException {
+	public void testExistsFindById() {
 		boolean businessExists = businessRepository.exists(1L);
 		assertTrue(businessExists);
 	}
 
 	@Test
-	public void testBusinessNotFoundByID() throws ResourceNotFoundException {
+	public void testBusinessNotFoundByID() {
 		boolean businessExists = businessRepository.exists(1337L);
 		assertFalse(businessExists);
 	}

@@ -17,17 +17,17 @@ public class Product implements Serializable {
 
 	@Column(name = "NAME")
 	private String name;
-	
+
 	@Column(name = "DESCRIPTION")
 	private String description;
 
 	@Column(name = "PRICE")
-	private BigDecimal price = new BigDecimal(0);
+	private BigDecimal price = new BigDecimal("0");
 
 	@Column(name = "DETAILS")
 	@CollectionTable(name = "PRODUCT_DETAILS", joinColumns = @JoinColumn(name = "FK_PRODUCT_ID"))
 	@ElementCollection(fetch = FetchType.EAGER)
-	private List<String> details = new ArrayList<String>();
+	private List<String> details = new ArrayList<>();
 
 	public Product(String name, BigDecimal price) {
 		this.name = name;
