@@ -3,8 +3,7 @@ package com.qorder.qorderws.service;
 
 import com.qorder.qorderws.dto.order.OrderDTO;
 import com.qorder.qorderws.dto.order.OrderViewDTO;
-import com.qorder.qorderws.mapper.OrderDTOtoOrderMapper;
-import com.qorder.qorderws.mapper.OrderToOrderViewDTOMapper;
+import com.qorder.qorderws.mapper.IMapper;
 import com.qorder.qorderws.model.business.Business;
 import com.qorder.qorderws.model.order.EOrderStatus;
 import com.qorder.qorderws.model.order.Order;
@@ -28,16 +27,19 @@ public class OrderService implements IOrderService {
 	private final IOrderRepository orderRepository;
 	private final IBusinessRepository businessRepository;
 
+	private final IMapper mapper;
+
 	@Autowired
-	public OrderService(IOrderRepository orderRepository, IBusinessRepository businessRepository) {
+	public OrderService(IOrderRepository orderRepository, IBusinessRepository businessRepository, IMapper mapper) {
 		this.orderRepository = orderRepository;
 		this.businessRepository = businessRepository;
+		this.mapper = mapper;
 	}
 
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
 	@Override
 	public long submitOrder(long businessId, @NotNull OrderDTO orderDTO) {
-		Order order = new  OrderDTOtoOrderMapper().map(orderDTO, new Order());
+		Order order = mapper.map(orderDTO, new Order());
 		order.setBusiness(businessRepository.findOne(businessId));
 		orderRepository.save(order);
 		return order.getId();
@@ -51,7 +53,7 @@ public class OrderService implements IOrderService {
 		List<OrderViewDTO> businessOrders = new ArrayList<>();
 
 		orders.forEach((order) -> {
-			OrderViewDTO orderView = new OrderToOrderViewDTOMapper().map(order, new OrderViewDTO());
+			OrderViewDTO orderView = mapper.map(order, new OrderViewDTO());
 			businessOrders.add(orderView);
 		});
 		return businessOrders;
@@ -66,7 +68,7 @@ public class OrderService implements IOrderService {
 		List<OrderViewDTO> businessOrders = new ArrayList<>();
 
 		orders.forEach((order) -> {
-			OrderViewDTO orderView = new OrderToOrderViewDTOMapper().map(order, new OrderViewDTO());
+			OrderViewDTO orderView = mapper.map(order, new OrderViewDTO());
 			businessOrders.add(orderView);
 		});
 		return businessOrders;
@@ -84,8 +86,7 @@ public class OrderService implements IOrderService {
 	@Override
 	public OrderViewDTO fetchOrderById(long orderId) {
 		Order order = orderRepository.findOne(orderId);
-		return Objects.nonNull(order) ?
-				new OrderToOrderViewDTOMapper().map(order, new OrderViewDTO()) : new OrderViewDTO();
+		return Objects.nonNull(order) ? mapper.map(order, new OrderViewDTO()) : new OrderViewDTO();
 	}
 	
 }

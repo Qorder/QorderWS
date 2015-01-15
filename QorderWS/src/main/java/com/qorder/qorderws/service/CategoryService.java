@@ -2,8 +2,7 @@ package com.qorder.qorderws.service;
 
 import com.qorder.qorderws.dto.product.DetailedProductDTO;
 import com.qorder.qorderws.dto.product.ProductDTO;
-import com.qorder.qorderws.mapper.DetailedProductDTOtoProductMapper;
-import com.qorder.qorderws.mapper.ProductToProductDTOMapper;
+import com.qorder.qorderws.mapper.IMapper;
 import com.qorder.qorderws.model.category.Category;
 import com.qorder.qorderws.model.product.Product;
 import com.qorder.qorderws.repository.ICategoryRepository;
@@ -24,9 +23,12 @@ public class CategoryService implements ICategoryService {
 
 	private final ICategoryRepository categoryRepository;
 
+	private final IMapper mapper;
+
 	@Autowired
-	public CategoryService(ICategoryRepository categoryRepository) {
+	public CategoryService(ICategoryRepository categoryRepository, IMapper mapper) {
 		this.categoryRepository = categoryRepository;
+		this.mapper = mapper;
 	}
 
 	@Transactional(readOnly = true)
@@ -36,7 +38,6 @@ public class CategoryService implements ICategoryService {
 
 		List<ProductDTO> productList = new ArrayList<>();
 		if(Objects.nonNull(fetchedCategory)) {
-			ProductToProductDTOMapper mapper = new ProductToProductDTOMapper();
 			fetchedCategory.getProductList().forEach((product) -> {
 				productList.add(mapper.map(product, new ProductDTO()));
 			});
@@ -47,7 +48,7 @@ public class CategoryService implements ICategoryService {
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
 	@Override
 	public long addProduct(long categoryID, @NotNull DetailedProductDTO productDTO) {
-		Product product = new DetailedProductDTOtoProductMapper().map(productDTO,new Product());
+		Product product = mapper.map(productDTO,new Product());
 		
 		Category category = categoryRepository.findOne(categoryID);
 		category.addProduct(product);

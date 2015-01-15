@@ -1,6 +1,7 @@
 package com.qorder.qorderws.repository;
 
 import com.qorder.qorderws.WebServiceApplication;
+import com.qorder.qorderws.configuration.BaseDbUnitTestCase;
 import com.qorder.qorderws.model.category.Category;
 import com.qorder.qorderws.model.product.Product;
 import org.junit.Test;

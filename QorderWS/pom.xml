@@ -47,12 +47,12 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-rest</artifactId>
+            <artifactId>spring-boot-starter-batch</artifactId>
         </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-batch</artifactId>
+            <artifactId>spring-boot-starter-data-rest</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -79,24 +79,12 @@
             <artifactId>spring-test-dbunit</artifactId>
             <version>${com.github.springtestdbunit}</version>
         </dependency>
+
         <dependency>
             <groupId>org.dbunit</groupId>
             <artifactId>dbunit</artifactId>
             <version>${org.dbunit-version}</version>
             <scope>test</scope>
-        </dependency>
-
-        <!-- Hibernate -->
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-core</artifactId>
-            <version>${org.hibernate-version}</version>
-        </dependency>
-        <dependency>
-            <!-- will come with Hibernate core -->
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-entitymanager</artifactId>
-            <version>${org.hibernate-version}</version>
         </dependency>
 
         <!-- Mysql -->
@@ -120,18 +108,13 @@
             <version>2.0.8</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.modelmapper</groupId>
+            <artifactId>modelmapper</artifactId>
+            <version>0.7.3</version>
+        </dependency>
 
     </dependencies>
-
-
-    <repositories>
-        <!-- ... possibly other repository elements ... -->
-        <repository>
-            <id>spring-snapshot</id>
-            <name>Spring Snapshot Repository</name>
-            <url>http://repo.springsource.org/snapshot</url>
-        </repository>
-    </repositories>
 
 
     <build>
@@ -144,20 +127,25 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>1.2.0.RELEASE</version>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.5.1</version>
-                <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
-                    <compilerArgument>-Xlint:all</compilerArgument>
-                    <showWarnings>true</showWarnings>
-                    <showDeprecation>true</showDeprecation>
-                </configuration>
-            </plugin>
         </plugins>
     </build>
+
+    <repositories>
+        <repository>
+            <id>spring-releases</id>
+            <name>Spring Releases</name>
+            <url>http://repo.spring.io/libs-release</url>
+        </repository>
+    </repositories>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>spring-releases</id>
+            <name>Spring Releases</name>
+            <url>http://repo.spring.io/libs-release</url>
+        </pluginRepository>
+    </pluginRepositories>
+
 
 
     <organization>

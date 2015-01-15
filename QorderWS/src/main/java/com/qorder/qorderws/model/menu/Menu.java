@@ -18,7 +18,7 @@ public class Menu implements Serializable {
 	
 	@OneToMany(targetEntity = Category.class, fetch = FetchType.LAZY, cascade=CascadeType.ALL, orphanRemoval=true)
 	@JoinColumn(name ="FK_MENU_ID")
-	private List<Category> categoryList = new ArrayList<Category>();
+	private List<Category> categoryList = new ArrayList<>();
 
 	public Long getId() {
 		return id;

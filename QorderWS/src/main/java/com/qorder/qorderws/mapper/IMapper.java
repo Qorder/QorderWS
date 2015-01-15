@@ -6,20 +6,18 @@ import javax.validation.constraints.NotNull;
  * Represents a knowledge transporter, between two instances.
  * The flow of information goes from source instance to target.
  *
- * @param <S> type of source instance
- * @param <T> type of target instance
  * @author Grigorios
  */
 @FunctionalInterface
-public interface IMapper<S, T> {
+public interface IMapper {
 
 	/**
 	 * Passes information from source instance to target
 	 * and returns the target
 	 *
-	 * @param source
-	 * @param target
+	 * @param source the instance used to get info from.
+	 * @param target the instance used to set info to.
 	 * @return T target instance
 	 */
-	T map(@NotNull S source, @NotNull T target);
+	<S, T> T map(@NotNull S source, @NotNull T target);
 }

@@ -1,6 +1,7 @@
 package com.qorder.qorderws.repository;
 
 import com.qorder.qorderws.WebServiceApplication;
+import com.qorder.qorderws.configuration.BaseDbUnitTestCase;
 import com.qorder.qorderws.model.business.Business;
 import org.junit.Assert;
 import org.junit.Test;

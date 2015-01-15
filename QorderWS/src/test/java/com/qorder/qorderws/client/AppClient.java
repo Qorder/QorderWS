@@ -6,9 +6,7 @@ import com.qorder.qorderws.dto.MenuDTO;
 import com.qorder.qorderws.dto.order.OrderDTO;
 import com.qorder.qorderws.dto.product.DetailedProductDTO;
 import com.qorder.qorderws.dto.product.ProductDTO;
-import com.qorder.qorderws.mapper.CategoryToCategoryDTOMapper;
 import com.qorder.qorderws.model.EEntity;
-import com.qorder.qorderws.model.category.Category;
 import com.qorder.qorderws.utils.providers.EDomainLinkProvider;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpClientErrorException;
@@ -34,8 +32,8 @@ public class AppClient {
 	}
 	
 	//FIXME: rest request not working error 405
-	public void putNewCategory(String url, Long businessId, Category category) throws HttpClientErrorException {
-		restTemplate.put(refProvider.getHost() + url + businessId, new CategoryToCategoryDTOMapper().map(category, new CategoryDTO()));
+	public void putNewCategory(String url, Long businessId, CategoryDTO category) throws HttpClientErrorException {
+		restTemplate.put(refProvider.getHost() + url + businessId, category);
 	}
 	
 	public void postNewBusiness(long ownerId, BusinessDTO business) throws HttpClientErrorException {

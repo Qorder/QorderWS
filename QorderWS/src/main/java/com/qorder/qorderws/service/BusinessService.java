@@ -1,8 +1,6 @@
 package com.qorder.qorderws.service;
 
 import com.qorder.qorderws.dto.BusinessDTO;
-import com.qorder.qorderws.mapper.BusinessDTOtoBusinessMapper;
-import com.qorder.qorderws.mapper.BusinessToBusinessDTOMapper;
 import com.qorder.qorderws.mapper.IMapper;
 import com.qorder.qorderws.model.business.Business;
 import com.qorder.qorderws.repository.IBusinessRepository;
@@ -23,15 +21,18 @@ public class BusinessService implements IBusinessService {
 
 	private final IBusinessRepository businessRepository;
 
+	private final IMapper mapper;
+
 	@Autowired
-	public BusinessService(IBusinessRepository businessRepository) {
+	public BusinessService(IBusinessRepository businessRepository, IMapper mapper) {
 		this.businessRepository = businessRepository;
+		this.mapper = mapper;
 	}
 
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
 	@Override
 	public long createBusiness(@NotNull BusinessDTO businessDTO) {
-		Business business = new BusinessDTOtoBusinessMapper().map(businessDTO, new Business());
+		Business business = mapper.map(businessDTO, new Business());
 		business = businessRepository.save(business);
 
 		return business.getId();
@@ -43,7 +44,7 @@ public class BusinessService implements IBusinessService {
 	public BusinessDTO fetchBusinessByID(long businessId) {
 		Business business = businessRepository.findOne(businessId);
 		return Objects.nonNull(business) ?
-				new BusinessToBusinessDTOMapper().map(business, new BusinessDTO()) : new BusinessDTO();
+				 mapper.map(business, new BusinessDTO()) : new BusinessDTO();
 	}
 
 	//TODO: real implementation of this method
@@ -52,8 +53,7 @@ public class BusinessService implements IBusinessService {
 	public Collection<BusinessDTO> fetchBusinessesByUser(long userId) {
 		List<Business> businessList = businessRepository.findAll();
 		List<BusinessDTO> userBusinesses = new ArrayList<>();
-		
-		IMapper<Business, BusinessDTO> mapper = new BusinessToBusinessDTOMapper();
+
 		businessList.forEach((business) -> {
 			userBusinesses.add(mapper.map(business, new BusinessDTO()));
 		});

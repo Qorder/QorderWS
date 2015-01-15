@@ -2,6 +2,8 @@ package com.qorder.qorderws.service;
 
 import com.qorder.qorderws.WebServiceApplication;
 import com.qorder.qorderws.dto.BusinessDTO;
+import com.qorder.qorderws.mapper.IMapper;
+import com.qorder.qorderws.mapper.ObjectMapWrapper;
 import com.qorder.qorderws.model.business.Business;
 import com.qorder.qorderws.model.menu.Menu;
 import com.qorder.qorderws.repository.IBusinessRepository;
@@ -33,6 +35,9 @@ public class BusinessServiceTest {
     @Mock
     private IBusinessRepository businessRepository;
 
+    @Mock
+    private IMapper objectMapperAdapter = new ObjectMapWrapper();
+
     public BusinessServiceTest() {
         MockitoAnnotations.initMocks(this);
     }
@@ -43,6 +48,7 @@ public class BusinessServiceTest {
         persistedBusiness.setId(100L);
         persistedBusiness.setName("Mock Business");
         final Menu persistedMenu = new Menu();
+        persistedMenu.setId(10L);
         persistedMenu.setCategoryList(new ArrayList<>());
         persistedMenu.setId(100L);
         persistedBusiness.setMenu(persistedMenu);
@@ -56,9 +62,9 @@ public class BusinessServiceTest {
 
     @Test
     public void testCreateBusiness() {
-        BusinessDTO business = new BusinessDTO();
-        business.setName("Fancy Business");
-        long businessId = businessService.createBusiness(business);
+        BusinessDTO businessDto = new BusinessDTO();
+        businessDto.setName("Fancy Business");
+        long businessId = businessService.createBusiness(businessDto);
         assertEquals(100L, businessId);
     }
 
@@ -66,5 +72,7 @@ public class BusinessServiceTest {
     public void testFetchBusinessByID() {
         BusinessDTO businessDTO = businessService.fetchBusinessByID(100);
         assertNotNull(businessDTO);
+        Business business = businessRepository.findOne(100L);
+        assertEquals(businessDTO.getName(), business.getName());
     }
 }

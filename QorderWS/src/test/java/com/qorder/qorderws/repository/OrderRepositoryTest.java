@@ -1,6 +1,7 @@
 package com.qorder.qorderws.repository;
 
 import com.qorder.qorderws.WebServiceApplication;
+import com.qorder.qorderws.configuration.BaseDbUnitTestCase;
 import com.qorder.qorderws.model.business.Business;
 import com.qorder.qorderws.model.order.EOrderStatus;
 import com.qorder.qorderws.model.order.Order;

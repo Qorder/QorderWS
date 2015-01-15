@@ -31,7 +31,7 @@ public class MenuController {
 
 	/**
 	 * 
-	 * @param menuID
+	 * @param menuID the unique id that represents a menu entity.
 	 * @return menu transfer object to client 
 	 */
 	@RequestMapping(value = "/{menuID}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
