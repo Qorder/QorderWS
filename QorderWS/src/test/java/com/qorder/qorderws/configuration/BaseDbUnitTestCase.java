@@ -8,14 +8,16 @@ import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
 import org.dbunit.operation.DatabaseOperation;
 import org.junit.Before;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.sql.DataSource;
 import javax.validation.constraints.NotNull;
-import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
 
@@ -36,8 +38,7 @@ public abstract class BaseDbUnitTestCase extends DBTestCase {
 
     @Override
     protected final IDataSet getDataSet() throws Exception {
-        File dataSetFile = defaultDataSetFile();
-        try(InputStream dataSetInputStream = new FileInputStream(dataSetFile)) {
+        try(InputStream dataSetInputStream = defaultDataSetAsStream()) {
             return new FlatXmlDataSetBuilder().build(dataSetInputStream);
         }
     }
@@ -48,8 +49,9 @@ public abstract class BaseDbUnitTestCase extends DBTestCase {
      * @return {@code File} the dataSet file.
      */
     @NotNull
-    protected File defaultDataSetFile() {
-        return new File("src/test/resources/dbunit/testdb.xml");
+    protected InputStream defaultDataSetAsStream() throws IOException {
+        Resource resource = new ClassPathResource("dbunit/testdb.xml");
+        return resource.getInputStream();
     }
 
     /**
