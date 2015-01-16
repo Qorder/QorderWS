@@ -8,8 +8,6 @@ import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
 import org.dbunit.operation.DatabaseOperation;
 import org.junit.Before;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
@@ -50,8 +48,7 @@ public abstract class BaseDbUnitTestCase extends DBTestCase {
      */
     @NotNull
     protected InputStream defaultDataSetAsStream() throws IOException {
-        Resource resource = new ClassPathResource("dbunit/testdb.xml");
-        return resource.getInputStream();
+        return new FileInputStream("src/test/resources/dbunit/testdb.xml");
     }
 
     /**
