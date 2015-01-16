@@ -48,7 +48,7 @@ public abstract class BaseDbUnitTestCase extends DBTestCase {
      */
     @NotNull
     protected InputStream defaultDataSetAsStream() throws IOException {
-        return new FileInputStream("src/test/resources/dbunit/testdb.xml");
+        return new FileInputStream("src/test/resources/Dbunit/testdb.xml");
     }
 
     /**
