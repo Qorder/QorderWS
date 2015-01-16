@@ -1,7 +1,8 @@
 package com.qorder.qorderws.service;
 
 import com.qorder.qorderws.dto.order.OrderDTO;
-import com.qorder.qorderws.dto.order.OrderViewDTO;
+import com.qorder.qorderws.dto.order.OrderInfoDTO;
+import com.qorder.qorderws.dto.product.ProductHolderDTO;
 import com.qorder.qorderws.model.order.EOrderStatus;
 
 import javax.validation.constraints.NotNull;
@@ -11,12 +12,13 @@ public interface IOrderService {
     
 	long submitOrder(long businessId, @NotNull OrderDTO order);
 
-	Collection<OrderViewDTO> fetchOrdersByBusinessID(long businessId);
+	Collection<OrderInfoDTO> fetchOrdersByBusinessID(long businessId);
 
-	Collection<OrderViewDTO> fetchOrdersByStatus(long businessId, @NotNull EOrderStatus orderStatus);
+	Collection<OrderInfoDTO> fetchOrdersByStatus(long businessId, @NotNull EOrderStatus orderStatus);
 
 	void changeOrderStatus(long orderId, @NotNull EOrderStatus orderStatus);
 
-	OrderViewDTO fetchOrderById(long orderId);
-	
+	OrderInfoDTO fetchOrderById(long orderId);
+
+	Collection<ProductHolderDTO> fetchOrderedProducts(long orderId);
 }

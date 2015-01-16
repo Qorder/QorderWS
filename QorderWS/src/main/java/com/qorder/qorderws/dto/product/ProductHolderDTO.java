@@ -1,10 +1,14 @@
 package com.qorder.qorderws.dto.product;
 
 
+import com.qorder.qorderws.model.EEntity;
+import com.qorder.qorderws.utils.providers.EDomainLinkProvider;
 
 public class ProductHolderDTO {
-	
-	private ProductDTO productDTO;
+
+	private long id;
+
+	private String name;
 	
 	private int quantity;
 	
@@ -12,14 +16,8 @@ public class ProductHolderDTO {
 	
 	private String notes;
 
+	private final String href = EDomainLinkProvider.INSTANCE.getHttpPathFor(EEntity.PRODUCT);
 
-	public ProductDTO getProductDTO() {
-		return productDTO;
-	}
-
-	public void setProductDTO(ProductDTO productDTO) {
-		this.productDTO = productDTO;
-	}
 
 	public String getNotes() {
 		return notes;
@@ -45,4 +43,19 @@ public class ProductHolderDTO {
 		this.attributes = attributes;
 	}
 
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getHref() {
+		return href + id;
+	}
 }

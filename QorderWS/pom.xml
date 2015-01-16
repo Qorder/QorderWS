@@ -14,19 +14,11 @@
         <start-class>com.qorder.qorderws.WebServiceApplication</start-class>
 
         <skipTests>false</skipTests>
-        <junit-version>4.11</junit-version>
-        <org.springframework-version>4.0.2.RELEASE</org.springframework-version>
-        <org.springframework.security-version>3.2.3.RELEASE</org.springframework.security-version>
-        <org.aspectj-version>1.6.10</org.aspectj-version>
-        <org.slf4j-version>1.6.6</org.slf4j-version>
-        <org.hibernate-version>4.2.7.SP1</org.hibernate-version>
-        <mysql-version>5.1.27</mysql-version>
-        <org.codehaus.jackson-version>1.9.12</org.codehaus.jackson-version>
-        <org.mockito-version>1.9.5</org.mockito-version>
-        <org.hsqldb-version>2.3.1</org.hsqldb-version>
-        <org.dbunit-version>2.4.9</org.dbunit-version>
-        <com.github.springtestdbunit>1.0.1</com.github.springtestdbunit>
-        <com.google.guava-version>15.0</com.google.guava-version>
+        <mysql.version>5.1.27</mysql.version>
+        <org.dbunit.version>2.4.9</org.dbunit.version>
+        <com.github.springtestdbunit.version>1.0.1</com.github.springtestdbunit.version>
+        <org.springframework.spring-mock.version>2.0.8</org.springframework.spring-mock.version>
+        <org.modelmapper.version>0.7.3</org.modelmapper.version>
     </properties>
 
     <parent>
@@ -77,13 +69,13 @@
         <dependency>
             <groupId>com.github.springtestdbunit</groupId>
             <artifactId>spring-test-dbunit</artifactId>
-            <version>${com.github.springtestdbunit}</version>
+            <version>${com.github.springtestdbunit.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.dbunit</groupId>
             <artifactId>dbunit</artifactId>
-            <version>${org.dbunit-version}</version>
+            <version>${org.dbunit.version}</version>
             <scope>test</scope>
         </dependency>
 
@@ -91,7 +83,7 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>${mysql-version}</version>
+            <version>${mysql.version}</version>
         </dependency>
 
         <!-- @Inject -->
@@ -105,13 +97,13 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-mock</artifactId>
-            <version>2.0.8</version>
+            <version>${org.springframework.spring-mock.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.modelmapper</groupId>
             <artifactId>modelmapper</artifactId>
-            <version>0.7.3</version>
+            <version>${org.modelmapper.version}</version>
         </dependency>
 
     </dependencies>

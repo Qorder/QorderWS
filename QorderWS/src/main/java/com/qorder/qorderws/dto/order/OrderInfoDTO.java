@@ -1,22 +1,22 @@
 package com.qorder.qorderws.dto.order;
 
-import com.qorder.qorderws.dto.product.ProductHolderDTO;
+import com.qorder.qorderws.model.EEntity;
+import com.qorder.qorderws.utils.providers.EDomainLinkProvider;
 
-import java.util.ArrayList;
-import java.util.List;
+public class OrderInfoDTO {
 
-public class OrderViewDTO {
+	private long id;
 
 	private String tableNumber;
 	
 	private String dateTime;
-	
+
 	private String totalPrice;
 	
 	private String status;
 
-	private List<ProductHolderDTO> orderedProducts = new ArrayList<>();
 
+	private final String productsRef = EDomainLinkProvider.INSTANCE.getHttpPathFor(EEntity.ORDER);
 
 	public String getTableNumber() {
 		return tableNumber;
@@ -32,18 +32,6 @@ public class OrderViewDTO {
 
 	public void setDateTime(String dateTime) {
 		this.dateTime = dateTime;
-	}
-
-	public List<ProductHolderDTO> getOrderedProducts() {
-		return orderedProducts;
-	}
-
-	public void setOrderedProducts(List<ProductHolderDTO> orderedProducts) {
-		this.orderedProducts = orderedProducts;
-	}
-
-	public void add(ProductHolderDTO productHolderDTO) {
-		this.orderedProducts.add(productHolderDTO);
 	}
 
 	public String getTotalPrice() {
@@ -62,4 +50,11 @@ public class OrderViewDTO {
 		this.status = orderStatus;
 	}
 
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public String getProductsRef() {
+		return productsRef + id + "/products";
+	}
 }

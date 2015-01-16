@@ -1,7 +1,7 @@
 package com.qorder.qorderws.entities;
 
-import com.qorder.qorderws.model.order.ProductHolder;
 import com.qorder.qorderws.model.product.Product;
+import com.qorder.qorderws.model.product.ProductHolder;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

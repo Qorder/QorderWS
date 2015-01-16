@@ -1,6 +1,7 @@
 package com.qorder.qorderws.model.order;
 
 import com.qorder.qorderws.model.business.Business;
+import com.qorder.qorderws.model.product.ProductHolder;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -18,7 +19,7 @@ public class Order implements Serializable {
 	@Id
 	@GeneratedValue
 	@Column(name = "ORDER_ID")
-	private long id;
+	private Long id;
 
 	@Column(name = "TABLE_NUMBER")
 	private String tableNumber;
@@ -46,11 +47,11 @@ public class Order implements Serializable {
 		dateTime = LocalDateTime.now().format(simpleDateFormat); //like: Nov 16, 2014 11:03:40 PM
 	}
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

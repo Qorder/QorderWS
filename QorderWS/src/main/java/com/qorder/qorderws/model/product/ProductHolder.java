@@ -1,6 +1,4 @@
-package com.qorder.qorderws.model.order;
-
-import com.qorder.qorderws.model.product.Product;
+package com.qorder.qorderws.model.product;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -26,7 +24,7 @@ public class ProductHolder implements Serializable {
 
 	@ManyToOne(targetEntity=Product.class, fetch = FetchType.LAZY)
 	@JoinColumn(name="FK_PRODUCT_ID", nullable=false)
-	private Product product;
+	private Product product = new Product();
 
 	public long getId() {
 		return id;

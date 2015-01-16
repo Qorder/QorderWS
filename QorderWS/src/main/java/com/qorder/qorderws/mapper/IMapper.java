@@ -8,7 +8,6 @@ import javax.validation.constraints.NotNull;
  *
  * @author Grigorios
  */
-@FunctionalInterface
 public interface IMapper {
 
 	/**
@@ -20,4 +19,7 @@ public interface IMapper {
 	 * @return T target instance
 	 */
 	<S, T> T map(@NotNull S source, @NotNull T target);
+
+	<S, T> T mapWithResolver(@NotNull S source, @NotNull T target, IMapResolver<S,T> resolver);
+
 }

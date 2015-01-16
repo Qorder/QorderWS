@@ -3,7 +3,6 @@ package com.qorder.qorderws.service;
 import com.qorder.qorderws.WebServiceApplication;
 import com.qorder.qorderws.dto.BusinessDTO;
 import com.qorder.qorderws.mapper.IMapper;
-import com.qorder.qorderws.mapper.ObjectMapWrapper;
 import com.qorder.qorderws.model.business.Business;
 import com.qorder.qorderws.model.menu.Menu;
 import com.qorder.qorderws.repository.IBusinessRepository;
@@ -21,6 +20,7 @@ import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.mockito.Matchers.anyLong;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.when;
 
@@ -36,7 +36,7 @@ public class BusinessServiceTest {
     private IBusinessRepository businessRepository;
 
     @Mock
-    private IMapper objectMapperAdapter = new ObjectMapWrapper();
+    private IMapper mapper;
 
     public BusinessServiceTest() {
         MockitoAnnotations.initMocks(this);
@@ -47,21 +47,32 @@ public class BusinessServiceTest {
         final Business persistedBusiness = new Business();
         persistedBusiness.setId(100L);
         persistedBusiness.setName("Mock Business");
+
         final Menu persistedMenu = new Menu();
         persistedMenu.setId(10L);
         persistedMenu.setCategoryList(new ArrayList<>());
         persistedMenu.setId(100L);
         persistedBusiness.setMenu(persistedMenu);
 
-        when(businessRepository.findOne(persistedBusiness.getId()))
+        final BusinessDTO businessDTO = new BusinessDTO();
+        businessDTO.setMenuId(persistedMenu.getId());
+        businessDTO.setName(persistedBusiness.getName());
+
+        when(businessRepository.findOne(anyLong()))
                 .thenReturn(persistedBusiness);
 
         when(businessRepository.save(any(Business.class)))
                 .thenReturn(persistedBusiness);
+
     }
 
     @Test
     public void testCreateBusiness() {
+        final Business business = new Business();
+        business.setId(100L);
+        when(mapper.map(any(BusinessDTO.class), any(Business.class)))
+                .thenReturn(business);
+
         BusinessDTO businessDto = new BusinessDTO();
         businessDto.setName("Fancy Business");
         long businessId = businessService.createBusiness(businessDto);
@@ -70,9 +81,15 @@ public class BusinessServiceTest {
 
     @Test
     public void testFetchBusinessByID() {
-        BusinessDTO businessDTO = businessService.fetchBusinessByID(100);
+        BusinessDTO dto = new BusinessDTO();
+        dto.setName("Mock Business");
+        when(mapper.map(any(Business.class), any(BusinessDTO.class)))
+                .thenReturn(dto);
+
+        final BusinessDTO businessDTO = businessService.fetchBusinessByID(100);
+        final Business business = businessRepository.findOne(100L);
+
         assertNotNull(businessDTO);
-        Business business = businessRepository.findOne(100L);
         assertEquals(businessDTO.getName(), business.getName());
     }
 }
