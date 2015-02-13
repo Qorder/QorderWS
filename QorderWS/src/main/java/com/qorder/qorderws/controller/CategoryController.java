@@ -33,14 +33,14 @@ public class CategoryController {
 
 	@RequestMapping(value = "/{categoryID}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	ResponseEntity<Collection<ProductDTO>> getCategory(@PathVariable Long categoryID) {
-		LOGGER.info("Request for category with id equals "+ categoryID);
+		LOGGER.info("Request for category to id equals "+ categoryID);
 		Collection<ProductDTO> categoryProducts = categoryService.fetchCategoryByID(categoryID);
 		return new ResponseEntity<>(categoryProducts, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "/{categoryID}/products", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	ResponseEntity<Void> storeProducts(@PathVariable Long categoryID, @RequestBody DetailedProductDTO productDTO) {
-		LOGGER.info("Request to store products save with category id equals :" + categoryID);
+		LOGGER.info("Request to store products save to category id equals :" + categoryID);
 		
 		long productID = categoryService.addProduct(categoryID, productDTO);
 		
@@ -52,7 +52,7 @@ public class CategoryController {
 	
 	@ExceptionHandler( IOException.class )
 	ResponseEntity<String> sendIOException(Exception ex) {
-		LOGGER.warn("Exception was thrown, with cause " + ex.getCause() + "\nMessage: " + ex.getLocalizedMessage(), ex );
+		LOGGER.warn("Exception was thrown, to cause " + ex.getCause() + "\nMessage: " + ex.getLocalizedMessage(), ex );
 		return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 }

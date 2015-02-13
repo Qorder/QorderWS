@@ -21,7 +21,7 @@ import java.sql.SQLException;
 
 /**
  * Abstract db unit test case, used as base class for test cases
- * that need to use transactions with a database instance.
+ * that need to use transactions to a database instance.
  *
  * @author Grigorios
  */

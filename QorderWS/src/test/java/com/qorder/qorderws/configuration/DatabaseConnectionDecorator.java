@@ -12,13 +12,13 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 /**
- * Decorates a provided dbunit's database connection instance, with <code>AutoCloseable</code>
- * {@code close} method. This allows the adapted connection instance to be used with <a href="http://bit.ly/199HjSs">try with resources</a>,
+ * Decorates a provided dbunit's database connection instance, to <code>AutoCloseable</code>
+ * {@code close} method. This allows the adapted connection instance to be used to <a href="http://bit.ly/199HjSs">try to resources</a>,
  * statement that was introduced in Java SE 7.
  *
  * @author Grigorios
  */
-public class DatabaseConnectionDecorator implements IDatabaseConnection, AutoCloseable {
+public final class DatabaseConnectionDecorator implements IDatabaseConnection, AutoCloseable {
 
     private final IDatabaseConnection connection;
 

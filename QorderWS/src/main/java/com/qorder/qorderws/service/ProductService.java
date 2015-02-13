@@ -14,21 +14,25 @@ import java.util.Objects;
 @Transactional
 public class ProductService implements IProductService {
 
-	private final IProductRepository productRepository;
+    private final IProductRepository productRepository;
 
-	private final IMapper mapper;
+    private final IMapper<?,?> mapper;
 
-	@Autowired
-	public ProductService(IProductRepository productRepository, IMapper mapper) {
-		this.productRepository = productRepository;
-		this.mapper = mapper;
-	}
+    @Autowired
+    public ProductService(IProductRepository productRepository, IMapper mapper) {
+        this.productRepository = productRepository;
+        this.mapper = mapper;
+    }
 
-	@Transactional(readOnly = true)
-	@Override
-	public DetailedProductDTO fetchProductById(long productId) {
-		Product product = productRepository.findOne(productId);
-		return Objects.nonNull(product) ? mapper.map(product, new DetailedProductDTO()) : new DetailedProductDTO();
-	}
-	
+    @Transactional(readOnly = true)
+    @Override
+    public DetailedProductDTO fetchProductById(long productId) {
+        Product product = productRepository.findOne(productId);
+        return Objects.nonNull(product)
+                ? mapper.map(product)
+                        .to(new DetailedProductDTO())
+                        .get()
+                : new DetailedProductDTO();
+    }
+
 }

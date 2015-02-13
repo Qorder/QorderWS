@@ -1,25 +1,49 @@
 package com.qorder.qorderws.mapper;
 
-import javax.validation.constraints.NotNull;
+import com.qorder.qorderws.mapper.resolver.IMapResolver;
 
 /**
- * Represents a knowledge transporter, between two instances.
- * The flow of information goes from source instance to target.
+ * Represents a knowledge transporter, between two instances. The flow of
+ * information goes from source instance to target.
  *
  * @author Grigorios
  */
-public interface IMapper {
+public interface IMapper<S1, T1> {
 
-	/**
-	 * Passes information from source instance to target
-	 * and returns the target
-	 *
-	 * @param source the instance used to get info from.
-	 * @param target the instance used to set info to.
-	 * @return T target instance
-	 */
-	<S, T> T map(@NotNull S source, @NotNull T target);
+    /**
+     * Enables explicit mapping option
+     * @return implementation tha uses explicit mapping
+     */
+    IMapper<S1,T1> explicit();
 
-	<S, T> T mapWithResolver(@NotNull S source, @NotNull T target, IMapResolver<S,T> resolver);
+    /**
+     * Appends an resolver for explicit mapping mode
+     * @param resolver an explicit mapping resolver
+     * @param <S> type of source object
+     * @param <T> type of target object
+     */
+    <S, T> void addResolver(IMapResolver<S, T> resolver);
+
+    /**
+     * Type safe method that sets an object as source of this mapping
+     * @param   source instance that will be used as source
+     * @param   <S> type of source object
+     * @return  a mapper with provided object as source
+     */
+    <S> IMapper<S, T1> map(S source);
+
+    /**
+     * Type safe method that sets an object as target of this mapping
+     * @param   target instance that will be used as target
+     * @param   <T> type of target object
+     * @return  a mapper with provided object as target
+     */
+    <T> IMapper<S1, T> to(T target);
+
+    /**
+     * Returs the provided target object of this mapping
+     * @return the mapped object instance
+     */
+    T1 get();
 
 }

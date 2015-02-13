@@ -21,39 +21,43 @@ import java.util.Objects;
 @Transactional
 public class CategoryService implements ICategoryService {
 
-	private final ICategoryRepository categoryRepository;
+    private final ICategoryRepository categoryRepository;
 
-	private final IMapper mapper;
+    private final IMapper<?,?> mapper;
 
-	@Autowired
-	public CategoryService(ICategoryRepository categoryRepository, IMapper mapper) {
-		this.categoryRepository = categoryRepository;
-		this.mapper = mapper;
-	}
+    @Autowired
+    public CategoryService(ICategoryRepository categoryRepository, IMapper mapper) {
+        this.categoryRepository = categoryRepository;
+        this.mapper = mapper;
+    }
 
-	@Transactional(readOnly = true)
-	@Override
-	public Collection<ProductDTO> fetchCategoryByID(long categoryId) {
-		Category fetchedCategory = categoryRepository.findOne(categoryId);
+    @Transactional(readOnly = true)
+    @Override
+    public Collection<ProductDTO> fetchCategoryByID(long categoryId) {
+        Category fetchedCategory = categoryRepository.findOne(categoryId);
 
-		List<ProductDTO> productList = new ArrayList<>();
-		if(Objects.nonNull(fetchedCategory)) {
-			fetchedCategory.getProductList().forEach((product) -> {
-				productList.add(mapper.map(product, new ProductDTO()));
-			});
-		}
-		return productList;
-	}
-	
-	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
-	@Override
-	public long addProduct(long categoryID, @NotNull DetailedProductDTO productDTO) {
-		Product product = mapper.map(productDTO,new Product());
-		
-		Category category = categoryRepository.findOne(categoryID);
-		category.addProduct(product);
+        List<ProductDTO> productList = new ArrayList<>();
+        if (Objects.nonNull(fetchedCategory)) {
+            fetchedCategory.getProductList().forEach((product) -> {
+                productList.add(mapper.map(product)
+                        .to(new ProductDTO())
+                        .get());
+            });
+        }
+        return productList;
+    }
 
-		categoryRepository.save(category);
-		return product.getId();
-	}
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
+    @Override
+    public long addProduct(long categoryID, @NotNull DetailedProductDTO productDTO) {
+        Product product = mapper.map(productDTO)
+                .to(new Product())
+                .get();
+
+        Category category = categoryRepository.findOne(categoryID);
+        category.addProduct(product);
+
+        categoryRepository.save(category);
+        return product.getId();
+    }
 }

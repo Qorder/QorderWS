@@ -36,7 +36,7 @@ public class BusinessServiceTest {
     private IBusinessRepository businessRepository;
 
     @Mock
-    private IMapper mapper;
+    private IMapper<?,?> mapper;
 
     public BusinessServiceTest() {
         MockitoAnnotations.initMocks(this);
@@ -70,7 +70,10 @@ public class BusinessServiceTest {
     public void testCreateBusiness() {
         final Business business = new Business();
         business.setId(100L);
-        when(mapper.map(any(BusinessDTO.class), any(Business.class)))
+        when(mapper.map(any(BusinessDTO.class))
+                .to(any(Business.class))
+                .get())
+
                 .thenReturn(business);
 
         BusinessDTO businessDto = new BusinessDTO();
@@ -83,7 +86,7 @@ public class BusinessServiceTest {
     public void testFetchBusinessByID() {
         BusinessDTO dto = new BusinessDTO();
         dto.setName("Mock Business");
-        when(mapper.map(any(Business.class), any(BusinessDTO.class)))
+        when(mapper.map(any(Business.class)).to(any(BusinessDTO.class)).get())
                 .thenReturn(dto);
 
         final BusinessDTO businessDTO = businessService.fetchBusinessByID(100);

@@ -7,9 +7,9 @@ import javax.validation.constraints.NotNull;
 import java.util.Collection;
 
 public interface ICategoryService {
-	
-	Collection<ProductDTO> fetchCategoryByID(long categoryId);
 
-	long addProduct(long categoryID, @NotNull DetailedProductDTO productDTO);
+    Collection<ProductDTO> fetchCategoryByID(long categoryId);
+
+    long addProduct(long categoryID, @NotNull DetailedProductDTO productDTO);
 
 }

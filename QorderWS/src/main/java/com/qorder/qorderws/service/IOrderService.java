@@ -9,16 +9,16 @@ import javax.validation.constraints.NotNull;
 import java.util.Collection;
 
 public interface IOrderService {
-    
-	long submitOrder(long businessId, @NotNull OrderDTO order);
 
-	Collection<OrderInfoDTO> fetchOrdersByBusinessID(long businessId);
+    long submitOrder(long businessId, @NotNull OrderDTO order);
 
-	Collection<OrderInfoDTO> fetchOrdersByStatus(long businessId, @NotNull EOrderStatus orderStatus);
+    Collection<OrderInfoDTO> fetchOrdersByBusinessID(long businessId);
 
-	void changeOrderStatus(long orderId, @NotNull EOrderStatus orderStatus);
+    Collection<OrderInfoDTO> fetchOrdersByStatus(long businessId, @NotNull EOrderStatus orderStatus);
 
-	OrderInfoDTO fetchOrderById(long orderId);
+    void changeOrderStatus(long orderId, @NotNull EOrderStatus orderStatus);
 
-	Collection<ProductHolderDTO> fetchOrderedProducts(long orderId);
+    OrderInfoDTO fetchOrderById(long orderId);
+
+    Collection<ProductHolderDTO> fetchOrderedProducts(long orderId);
 }

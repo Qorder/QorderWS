@@ -32,11 +32,11 @@ public class MenuController {
 	/**
 	 * 
 	 * @param menuID the unique id that represents a menu entity.
-	 * @return menu transfer object to client 
+	 * @return menu transfer object to client
 	 */
 	@RequestMapping(value = "/{menuID}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<MenuDTO> getMenuById(@PathVariable Long menuID) {
-		LOGGER.info("Request for menu with id parameter equal " + menuID.toString(), menuID);
+		LOGGER.info("Request for menu to id parameter equal " + menuID.toString(), menuID);
 		
 		MenuDTO menuDto = menuService.fetchMenuById(menuID);
 		return new ResponseEntity<>(menuDto, HttpStatus.OK);
@@ -45,7 +45,7 @@ public class MenuController {
 	
 	@RequestMapping(value="/{menuID}/categories", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	ResponseEntity<Void> crateCategory(@PathVariable Long menuID, @RequestBody CategoryDTO categoryDTO) {
-		LOGGER.info("Request for category creation with menu id equals :" + menuID);
+		LOGGER.info("Request for category creation to menu id equals :" + menuID);
 		
 		long categoryID = menuService.addCategory(menuID, categoryDTO);
 		
@@ -58,7 +58,7 @@ public class MenuController {
 	
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<String> sendException(Exception ex) {
-		LOGGER.warn("Exception was thrown, with cause " + ex.getCause() + "\nMessage: " + ex.getLocalizedMessage(), ex );
+		LOGGER.warn("Exception was thrown, to cause " + ex.getCause() + "\nMessage: " + ex.getLocalizedMessage(), ex );
 		return new ResponseEntity<>("Exception was raised", HttpStatus.CONFLICT);
 	}
 }

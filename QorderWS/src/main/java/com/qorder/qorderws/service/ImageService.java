@@ -10,17 +10,16 @@ import javax.validation.constraints.NotNull;
 @Service
 public class ImageService implements IImageService {
 
+    private final IFileProvider imageProvider;
 
-	private final IFileProvider imageProvider;
+    @Autowired
+    public ImageService(IFileProvider imageProvider) {
+        this.imageProvider = imageProvider;
+    }
 
-	@Autowired
-	public ImageService(IFileProvider imageProvider) {
-		this.imageProvider = imageProvider;
-	}
+    @Override
+    public byte[] getImageFor(@NotNull EEntity entity, long entityID) {
+        return imageProvider.getResourceByteArrayFor(entity, entityID);
+    }
 
-	@Override
-	public byte[] getImageFor(@NotNull EEntity entity, long entityID) {
-		return imageProvider.getResourceByteArrayFor(entity, entityID);
-	}
-	
 }

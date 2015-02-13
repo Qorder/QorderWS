@@ -27,7 +27,7 @@ public class ProductController {
 
 	@RequestMapping(value = "/{productID}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	ResponseEntity<DetailedProductDTO> getProductById(@PathVariable Long productID) {
-		LOGGER.info("Request for product with id parameter equal " + productID.toString(), productID);
+		LOGGER.info("Request for product to id parameter equal " + productID.toString(), productID);
 		
 		return new ResponseEntity<>(productService.fetchProductById(productID), HttpStatus.OK); 
 	}
@@ -35,7 +35,7 @@ public class ProductController {
 	
 	@ExceptionHandler({ IOException.class })
 	ResponseEntity<String> sendIOException(Exception ex) {
-		LOGGER.warn("Exception was thrown, with cause " + ex.getCause() + "\nMessage: " + ex.getLocalizedMessage(), ex );
+		LOGGER.warn("Exception was thrown, to cause " + ex.getCause() + "\nMessage: " + ex.getLocalizedMessage(), ex );
 		return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 }

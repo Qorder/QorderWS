@@ -1,11 +1,9 @@
-package com.qorder.qorderws.mapper;
+package com.qorder.qorderws.mapper.resolver;
 
 import org.modelmapper.Condition;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
-import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -15,12 +13,15 @@ import javax.validation.constraints.NotNull;
  *
  * @author Grigorios
  */
-@Component
-public final class ObjectMapWrapper implements IMapper {
+public final class BasicMapWrapper<S, T> implements IMapResolver<S, T> {
 
     private final ModelMapper modelMapper = new ModelMapper();
 
-    @PostConstruct
+
+    public BasicMapWrapper() {
+        configureMapper();
+    }
+
     private void configureMapper() {
         modelMapper.getConfiguration()
                 .setMatchingStrategy(MatchingStrategies.LOOSE);
@@ -31,14 +32,8 @@ public final class ObjectMapWrapper implements IMapper {
     }
 
     @Override
-    public <S, T> T map(@NotNull S source, @NotNull T target) {
+    public T doMap(@NotNull S source, @NotNull T target) {
         modelMapper.map(source, target);
         return target;
     }
-
-    @Override
-    public <S, T> T mapWithResolver(@NotNull S source, @NotNull T target, IMapResolver<S, T> resolver) {
-        return resolver.doMap(source, target);
-    }
-
 }

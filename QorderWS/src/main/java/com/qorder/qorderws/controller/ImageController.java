@@ -28,7 +28,7 @@ public class ImageController {
 	@RequestMapping(value = "/product/{productID}", method = RequestMethod.GET,
 			produces = { MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE })
 	public ResponseEntity<byte[]> getProductImage(@PathVariable long productID) throws IOException, NullPointerException {
-		LOGGER.info("Request for menu with id parameter equal " + productID, productID);
+		LOGGER.info("Request for menu to id parameter equal " + productID, productID);
 		
 		byte[] imageByteArray = imageService.getImageFor(EEntity.PRODUCT_IMAGE, productID);
 		return new ResponseEntity<>(imageByteArray, HttpStatus.OK);
@@ -36,7 +36,7 @@ public class ImageController {
 
 	@ExceptionHandler({NullPointerException.class, IOException.class})
 	public ResponseEntity<String> sendBadRequestException(Exception ex) {
-		LOGGER.warn("Exception was thrown, with cause " + ex.getCause() + "\nMessage: " + ex.getLocalizedMessage(), ex);
+		LOGGER.warn("Exception was thrown, to cause " + ex.getCause() + "\nMessage: " + ex.getLocalizedMessage(), ex);
 		return new ResponseEntity<>("An Exception was raised", HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
