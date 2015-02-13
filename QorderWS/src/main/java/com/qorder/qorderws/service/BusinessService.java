@@ -32,7 +32,9 @@ public class BusinessService implements IBusinessService {
     @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
     @Override
     public long createBusiness(@NotNull BusinessDTO businessDTO) {
-        Business business = (Business) mapper.get();
+        Business business = mapper.map(businessDTO)
+                .to(new Business())
+                .get();
         business = businessRepository.save(business);
 
         return business.getId();
