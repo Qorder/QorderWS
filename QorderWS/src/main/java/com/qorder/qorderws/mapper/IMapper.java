@@ -41,7 +41,7 @@ public interface IMapper<S1, T1> {
     <T> IMapper<S1, T> to(T target);
 
     /**
-     * Returs the provided target object of this mapping
+     * Returns the provided target object of this mapping
      * @return the mapped object instance
      */
     T1 get();

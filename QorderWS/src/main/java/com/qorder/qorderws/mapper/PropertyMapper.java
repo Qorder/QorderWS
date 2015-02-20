@@ -1,6 +1,6 @@
 package com.qorder.qorderws.mapper;
 
-import com.qorder.qorderws.mapper.resolver.BasicMapWrapper;
+import com.qorder.qorderws.mapper.resolver.BasicResolverWrapper;
 import com.qorder.qorderws.mapper.resolver.EMapType;
 import com.qorder.qorderws.mapper.resolver.IMapResolver;
 import org.springframework.stereotype.Component;
@@ -16,18 +16,15 @@ import java.util.Objects;
  * @author Grigorios
  */
 @Component
-public class PropertyMapper<S1, T1> implements IMapper<S1, T1> {
+public final class PropertyMapper<S1, T1> implements IMapper<S1, T1> {
 
     private static final Map<EMapType, IMapResolver> resolvers = new EnumMap<>(EMapType.class);
-    private static EMapType mapType;
 
     static {
-        resolvers.put(EMapType.Basic, new BasicMapWrapper<>());
+        resolvers.put(EMapType.Basic, new BasicResolverWrapper<>());
 
         //explicit not in use yet
         resolvers.put(EMapType.Explicit, null);
-
-        mapType = EMapType.Basic;
     }
 
 
@@ -35,25 +32,32 @@ public class PropertyMapper<S1, T1> implements IMapper<S1, T1> {
     private final S1 source;
     private final T1 target;
 
+    private EMapType mapType;
 
     public PropertyMapper() {
         this.source = null;
         this.target = null;
+
+        this.mapType  = EMapType.Basic;
     }
 
-    private PropertyMapper(S1 source) {
+    private PropertyMapper(S1 source, EMapType mapType) {
         this.source = Objects.requireNonNull(source,"source can not be null");
         this.target = null;
+
+        this.mapType = mapType;
     }
 
-    private PropertyMapper(S1 source, T1 target) {
+    private PropertyMapper(S1 source, T1 target, EMapType mapType) {
         this.source = Objects.requireNonNull(source,"source can not be null");
         this.target = Objects.requireNonNull(target, "target can not be null");
+
+        this.mapType = mapType;
         doMap();
     }
 
     void doMap() {
-            resolvers.get(mapType).doMap(source, target);
+        resolvers.get(mapType).doMap(source, target);
     }
 
     @Override
@@ -69,12 +73,12 @@ public class PropertyMapper<S1, T1> implements IMapper<S1, T1> {
 
     @Override
     public <S> IMapper<S, T1> map(@NotNull S source) {
-        return new PropertyMapper<>(source);
+        return new PropertyMapper<>(source, mapType);
     }
 
     @Override
     public <T> IMapper<S1, T> to(@NotNull T target) {
-        return new PropertyMapper<>(source, target);
+        return new PropertyMapper<>(source, target, mapType);
     }
 
     @Override

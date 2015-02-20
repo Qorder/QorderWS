@@ -5,6 +5,7 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 
 import javax.validation.constraints.NotNull;
+import java.util.Objects;
 
 /**
  * Wraps the real model mapper into @{link IMapper} representation interface.
@@ -13,12 +14,12 @@ import javax.validation.constraints.NotNull;
  *
  * @author Grigorios
  */
-public final class BasicMapWrapper<S, T> implements IMapResolver<S, T> {
+public final class BasicResolverWrapper<S, T> implements IMapResolver<S, T> {
 
     private final ModelMapper modelMapper = new ModelMapper();
 
 
-    public BasicMapWrapper() {
+    public BasicResolverWrapper() {
         configureMapper();
     }
 
@@ -26,13 +27,15 @@ public final class BasicMapWrapper<S, T> implements IMapResolver<S, T> {
         modelMapper.getConfiguration()
                 .setMatchingStrategy(MatchingStrategies.LOOSE);
 
-        //Do not map if source instance is a null reference
+        // Only map object properties that are not null
         Condition notNull = (context) -> context.getSource() != null;
         modelMapper.getConfiguration().setPropertyCondition(notNull);
     }
 
     @Override
     public T doMap(@NotNull S source, @NotNull T target) {
+        Objects.requireNonNull(source, "Mapping source can not be null!!");
+        Objects.requireNonNull(target, "Mapping target can not be null!!");
         modelMapper.map(source, target);
         return target;
     }

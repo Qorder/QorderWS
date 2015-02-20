@@ -12,11 +12,11 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 
-public class FlowMapperTest {
+public class MapperTest {
 
     private IMapper<?,?> mapper;
 
-    public FlowMapperTest() {
+    public MapperTest() {
 
     }
 
