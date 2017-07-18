@@ -1,13 +1,13 @@
-#QorderWs
+# QorderWs
 
 Complete ordering system using QR codes / Web service part
 
-##Goals
+## Goals
 We believe in simplicity and the ease of use. We want to make ordering easy, fast and clear.
 
-##Do you run a business?
+## Do you run a business?
 ------------------------
-###See what our web service can offer to you
+### See what our web service can offer to you
 
 * **Ease of use for business owners**<br>
   Simply create an account, submit your business and your products and that's it.<br>
